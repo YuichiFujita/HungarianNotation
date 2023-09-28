@@ -149,7 +149,7 @@ CTutorialManager *CTutorialManager::Create(void)
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pTutorialManager))
+	if (pTutorialManager != NULL)
 	{ // 使用されている場合
 		
 		// チュートリアルマネージャーの初期化
@@ -175,7 +175,7 @@ CTutorialManager *CTutorialManager::Create(void)
 //============================================================
 HRESULT CTutorialManager::Release(CTutorialManager *&prTutorialManager)
 {
-	if (USED(prTutorialManager))
+	if (prTutorialManager != NULL)
 	{ // 使用中の場合
 
 		// チュートリアルマネージャーの終了

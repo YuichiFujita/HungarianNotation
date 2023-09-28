@@ -62,7 +62,7 @@ HRESULT CMultiModel::Init(void)
 void CMultiModel::Uninit(void)
 {
 	// マテリアルへのポインタを破棄
-	if (USED(m_pMat))
+	if (m_pMat != NULL)
 	{ // ポインタが使用されていた場合
 
 		// メモリ開放
@@ -174,7 +174,7 @@ CMultiModel *CMultiModel::Create(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rRo
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pMultiModel))
+	if (pMultiModel != NULL)
 	{ // 確保に成功している場合
 
 		// マルチモデルの初期化
@@ -209,7 +209,7 @@ CMultiModel *CMultiModel::Create(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rRo
 //============================================================
 HRESULT CMultiModel::Release(CMultiModel *&prMultiModel)
 {
-	if (USED(prMultiModel))
+	if (prMultiModel != NULL)
 	{ // 使用中の場合
 
 		// マルチモデルの終了
@@ -230,7 +230,7 @@ HRESULT CMultiModel::Release(CMultiModel *&prMultiModel)
 //============================================================
 void CMultiModel::BindModel(CModel::Model *pModel)
 {
-	if (USED(pModel))
+	if (pModel != NULL)
 	{ // 割り当てるモデルが使用中の場合
 
 		// モデルを割り当て
@@ -369,7 +369,7 @@ HRESULT CMultiModel::SetMaterial(const LPD3DXBUFFER pBuffMat, const int nNumMat)
 	//--------------------------------------------------------
 	//	メモリ開放・確保
 	//--------------------------------------------------------
-	if (USED(m_pMat))
+	if (m_pMat != NULL)
 	{ // ポインタが使用されていた場合
 
 		// メモリ開放
@@ -383,7 +383,7 @@ HRESULT CMultiModel::SetMaterial(const LPD3DXBUFFER pBuffMat, const int nNumMat)
 		// マテリアル数分のメモリ確保
 		m_pMat = new D3DXMATERIAL[nNumMat];
 
-		if (USED(m_pMat))
+		if (m_pMat != NULL)
 		{ // 確保に成功した場合
 
 			// メモリクリア

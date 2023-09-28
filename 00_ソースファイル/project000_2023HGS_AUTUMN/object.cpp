@@ -26,7 +26,7 @@ int CObject::m_nNumAll = 0;					// オブジェクトの総数
 //============================================================
 CObject::CObject()
 {
-	if (USED(m_apCur[DEFAULT_PRIO]))
+	if (m_apCur[DEFAULT_PRIO] != NULL)
 	{ // 最後尾が存在する場合
 
 		// 現在の最後尾オブジェクトの次オブジェクトを自身に設定
@@ -77,7 +77,7 @@ CObject::CObject()
 //============================================================
 CObject::CObject(const LABEL label, const int nPriority)
 {
-	if (USED(m_apCur[nPriority]))
+	if (m_apCur[nPriority] != NULL)
 	{ // 最後尾が存在する場合
 
 		// 現在の最後尾オブジェクトの次オブジェクトを自身に設定
@@ -222,7 +222,7 @@ void CObject::SetPriority(const int nPriority)
 	//	リストの再接続
 	//--------------------------------------------------------
 	// 前のオブジェクトをつなぎなおす
-	if (USED(m_pNext))
+	if (m_pNext != NULL)
 	{ // 次のオブジェクトが存在する場合
 
 		// 前のオブジェクトを変更
@@ -230,7 +230,7 @@ void CObject::SetPriority(const int nPriority)
 	}
 
 	// 次のオブジェクトをつなぎなおす
-	if (USED(m_pPrev))
+	if (m_pPrev != NULL)
 	{ // 前のオブジェクトが存在する場合
 
 		// 次のオブジェクトを変更
@@ -260,7 +260,7 @@ void CObject::SetPriority(const int nPriority)
 	m_nPriority = nPriority;
 
 	// 自身のオブジェクトを引数の優先順位リストに変更
-	if (USED(m_apCur[nPriority]))
+	if (m_apCur[nPriority] != NULL)
 	{ // 最後尾が存在する場合
 
 		// 現在の最後尾オブジェクトの次オブジェクトを自身に設定
@@ -417,13 +417,13 @@ void CObject::ReleaseAll(void)
 	for (int nCntPri = 0; nCntPri < MAX_PRIO; nCntPri++)
 	{ // 優先順位の総数分繰り返す
 
-		if (USED(m_apTop[nCntPri]))
+		if (m_apTop[nCntPri] != NULL)
 		{ // 先頭が存在する場合
 
 			// オブジェクトの先頭を代入
 			pObject = m_apTop[nCntPri];
 
-			while (USED(pObject))
+			while (pObject != NULL)
 			{ // オブジェクトが使用されている場合繰り返す
 
 				// ポインタを宣言
@@ -460,13 +460,13 @@ void CObject::UpdateAll(void)
 	for (int nCntPri = 0; nCntPri < MAX_PRIO; nCntPri++)
 	{ // 優先順位の総数分繰り返す
 
-		if (USED(m_apTop[nCntPri]))
+		if (m_apTop[nCntPri] != NULL)
 		{ // 先頭が存在する場合
 
 			// オブジェクトの先頭を代入
 			pObject = m_apTop[nCntPri];
 
-			while (USED(pObject))
+			while (pObject != NULL)
 			{ // オブジェクトが使用されている場合繰り返す
 
 				// ポインタを宣言
@@ -504,13 +504,13 @@ void CObject::DrawAll(void)
 	for (int nCntPri = 0; nCntPri < MAX_PRIO; nCntPri++)
 	{ // 優先順位の総数分繰り返す
 
-		if (USED(m_apTop[nCntPri]))
+		if (m_apTop[nCntPri] != NULL)
 		{ // 先頭が存在する場合
 
 			// オブジェクトの先頭を代入
 			pObject = m_apTop[nCntPri];
 
-			while (USED(pObject))
+			while (pObject != NULL)
 			{ // オブジェクトが使用されている場合繰り返す
 
 				// ポインタを宣言
@@ -541,13 +541,13 @@ void CObject::DeathAll(void)
 	for (int nCntPri = 0; nCntPri < MAX_PRIO; nCntPri++)
 	{ // 優先順位の総数分繰り返す
 
-		if (USED(m_apTop[nCntPri]))
+		if (m_apTop[nCntPri] != NULL)
 		{ // 先頭が存在する場合
 
 			// オブジェクトの先頭を代入
 			pObject = m_apTop[nCntPri];
 
-			while (USED(pObject))
+			while (pObject != NULL)
 			{ // オブジェクトが使用されている場合繰り返す
 
 				// ポインタを宣言
@@ -556,11 +556,11 @@ void CObject::DeathAll(void)
 				if (pObject->m_bDeath)
 				{ // 死亡フラグが立っている場合
 
-					if (USED(pObject))
+					if (pObject != NULL)
 					{ // 使用されている場合
 
 						// 前のオブジェクトをつなぎなおす
-						if (USED(pObject->m_pNext))
+						if (pObject->m_pNext != NULL)
 						{ // 次のオブジェクトが存在する場合
 
 							// 前のオブジェクトを変更
@@ -568,7 +568,7 @@ void CObject::DeathAll(void)
 						}
 
 						// 次のオブジェクトをつなぎなおす
-						if (USED(pObject->m_pPrev))
+						if (pObject->m_pPrev != NULL)
 						{ // 前のオブジェクトが存在する場合
 
 							// 次のオブジェクトを変更
@@ -620,19 +620,19 @@ bool CObject::CheckUse(const CObject *pObject)
 	// ポインタを宣言
 	CObject *pObjCheck;	// オブジェクト代入用
 
-	if (USED(pObject))
+	if (pObject != NULL)
 	{ // ポインタが使用中の場合
 
 		for (int nCntPri = 0; nCntPri < MAX_PRIO; nCntPri++)
 		{ // 優先順位の総数分繰り返す
 
-			if (USED(m_apTop[nCntPri]))
+			if (m_apTop[nCntPri] != NULL)
 			{ // 先頭が存在する場合
 
 				// オブジェクトの先頭を代入
 				pObjCheck = m_apTop[nCntPri];
 
-				while (USED(pObjCheck))
+				while (pObjCheck != NULL)
 				{ // オブジェクトが使用されている場合繰り返す
 
 					// ポインタを宣言
@@ -784,7 +784,7 @@ CObject *CObject::GetNext(void) const
 //============================================================
 void CObject::Release(void)
 {
-	if (USED(this))
+	if (this != NULL)
 	{ // 使用されている場合
 
 		if (!m_bDeath)

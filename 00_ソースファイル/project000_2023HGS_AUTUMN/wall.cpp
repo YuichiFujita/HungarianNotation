@@ -119,7 +119,7 @@ CWall *CWall::Create
 	}
 	else { assert(false); return NULL; }	// g—p’†
 
-	if (USED(pWall))
+	if (pWall != NULL)
 	{ // Šm•Û‚É¬Œ÷‚µ‚Ä‚¢‚éê‡
 
 		// •Ç‚Ì‰Šú‰»

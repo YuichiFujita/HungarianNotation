@@ -236,7 +236,7 @@ CTimerManager *CTimerManager::Create
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pTimerManager))
+	if (pTimerManager != NULL)
 	{ // 確保に成功している場合
 
 		// タイマーマネージャーの初期化
@@ -277,7 +277,7 @@ CTimerManager *CTimerManager::Create
 //============================================================
 HRESULT CTimerManager::Release(CTimerManager *&prTimerManager)
 {
-	if (USED(prTimerManager))
+	if (prTimerManager != NULL)
 	{ // 使用中の場合
 
 		// タイマーマネージャーの終了
@@ -710,7 +710,7 @@ void CTimerManager::SetSpacePart(const D3DXVECTOR3& rSpace)
 //============================================================
 void CTimerManager::SetPriority(const int nPriority)
 {
-	if (USED(m_apValue[0]))
+	if (m_apValue[0] != NULL)
 	{ // スコアの先頭の数値が使用されている場合
 
 		// 数字オブジェクトの優先順位を設定
@@ -735,7 +735,7 @@ void CTimerManager::SetPriority(const int nPriority)
 //============================================================
 void CTimerManager::SetEnableUpdate(const bool bUpdate)
 {
-	if (USED(m_apValue[0]))
+	if (m_apValue[0] != NULL)
 	{ // スコアの先頭の数値が使用されている場合
 
 		// 数字オブジェクトの更新状況を設定
@@ -760,7 +760,7 @@ void CTimerManager::SetEnableUpdate(const bool bUpdate)
 //============================================================
 void CTimerManager::SetEnableDraw(const bool bDraw)
 {
-	if (USED(m_apValue[0]))
+	if (m_apValue[0] != NULL)
 	{ // スコアの先頭の数値が使用されている場合
 
 		// 数字オブジェクトの描画状況を設定
@@ -837,7 +837,7 @@ void CTimerManager::SetDrawValue(void)
 	int nNumValue = 0;	// 数字の生成数
 	int nNumPart = 0;	// 区切りの生成数
 
-	if (USED(m_apValue[0]) && USED(m_apPart[0]))
+	if (m_apValue[0] != NULL && m_apPart[0] != NULL)
 	{ // タイマーの先頭数値、タイマーの先頭区切りが使用されている場合
 
 		for (int nCntTimer = 0; nCntTimer < MAX_TIMER + MAX_PART; nCntTimer++)

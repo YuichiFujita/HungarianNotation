@@ -133,7 +133,7 @@ CScenery *CScenery::Create
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pScenery))
+	if (pScenery != NULL)
 	{ // 確保に成功している場合
 
 		// 景色の初期化

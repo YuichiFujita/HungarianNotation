@@ -166,7 +166,7 @@ CStage *CStage::Create(void)
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pStage))
+	if (pStage != NULL)
 	{ // 確保に成功している場合
 
 		// ステージの初期化
@@ -191,7 +191,7 @@ CStage *CStage::Create(void)
 //============================================================
 HRESULT CStage::Release(CStage *&prStage)
 {
-	if (USED(prStage))
+	if (prStage != NULL)
 	{ // 使用中の場合
 
 		// ステージの終了

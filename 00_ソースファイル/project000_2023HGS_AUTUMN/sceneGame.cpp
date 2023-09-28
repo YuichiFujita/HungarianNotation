@@ -249,7 +249,7 @@ void CSceneGame::Update(void)
 
 #endif
 
-	if (USED(m_pTimerManager))
+	if (m_pTimerManager != NULL)
 	{ // 使用中の場合
 
 		// タイマーマネージャーの更新
@@ -257,7 +257,7 @@ void CSceneGame::Update(void)
 	}
 	else { assert(false); }	// 非使用中
 
-	if (USED(m_pPause))
+	if (m_pPause != NULL)
 	{ // 使用中の場合
 
 		// ポーズの更新
@@ -268,7 +268,7 @@ void CSceneGame::Update(void)
 	if (!m_pPause->IsPause())
 	{ // ポーズ中ではない場合
 
-		if (USED(m_pGameManager))
+		if (m_pGameManager != NULL)
 		{ // 使用中の場合
 
 			// ゲームマネージャーの更新

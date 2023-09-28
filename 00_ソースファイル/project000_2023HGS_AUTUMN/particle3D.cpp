@@ -940,7 +940,7 @@ CParticle3D *CParticle3D::Create(const TYPE type, const D3DXVECTOR3& rPos, const
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pParticle3D))
+	if (pParticle3D != NULL)
 	{ // 確保に成功している場合
 
 		// パーティクル3Dの初期化

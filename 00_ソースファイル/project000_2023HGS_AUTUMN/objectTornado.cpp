@@ -106,7 +106,7 @@ HRESULT CObjectTornado::Init(void)
 void CObjectTornado::Uninit(void)
 {
 	// 頂点バッファの破棄
-	if (USED(m_pVtxBuff))
+	if (m_pVtxBuff != NULL)
 	{ // 頂点バッファが使用中の場合
 
 		// メモリ開放
@@ -199,7 +199,7 @@ void CObjectTornado::Draw(void)
 	//--------------------------------------------------------
 	//	マトリックスを掛け合わせる
 	//--------------------------------------------------------
-	if (USED(m_tornado.pMtxParent))	// TODO：親マトリックスがNULLじゃなくなったときに判断できない
+	if (m_tornado.pMtxParent != NULL)	// TODO：親マトリックスがNULLじゃなくなったときに判断できない
 	{ // 親のマトリックスが存在する場合
 
 		// 親のマトリックスと掛け合わせる
@@ -275,7 +275,7 @@ CObjectTornado *CObjectTornado::Create
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pObjectTornado))
+	if (pObjectTornado != NULL)
 	{ // 確保に成功している場合
 
 		// オブジェクト竜巻の初期化
@@ -533,7 +533,7 @@ HRESULT CObjectTornado::SetVortex(const int nNumAround, const int nPattern)
 	m_nNumVtx = m_nNumAround * m_nPattern * MAX_OFFSET;
 
 	// 頂点バッファの破棄
-	if (USED(m_pVtxBuff))
+	if (m_pVtxBuff != NULL)
 	{ // 頂点バッファが使用中の場合
 
 		// メモリ開放
@@ -693,7 +693,7 @@ void CObjectTornado::SetVtx(void)
 	// ポインタを宣言
 	VERTEX_3D *pVtx;	// 頂点情報へのポインタ
 
-	if (USED(m_pVtxBuff))
+	if (m_pVtxBuff != NULL)
 	{ // 竜巻の頂点バッファが使用中の場合
 
 		// 頂点バッファをロックし、頂点情報へのポインタを取得

@@ -63,7 +63,7 @@
 #define XCOL_BLUE	(D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f))	// 青(不透明)
 
 // ポインタ使用判定
-#define USED(p)		((p) != NULL)	// 使用中
+//#define USED(p)		((p) != NULL)	// 使用中
 #define UNUSED(p)	((p) == NULL)	// 未使用
 
 //************************************************************

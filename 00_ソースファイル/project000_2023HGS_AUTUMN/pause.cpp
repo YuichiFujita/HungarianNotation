@@ -252,7 +252,7 @@ CPause *CPause::Create(void)
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pPause))
+	if (pPause != NULL)
 	{ // 確保に成功している場合
 
 		// ポーズの初期化
@@ -278,7 +278,7 @@ CPause *CPause::Create(void)
 //============================================================
 HRESULT CPause::Release(CPause *&prPause)
 {
-	if (USED(prPause))
+	if (prPause != NULL)
 	{ // 使用中の場合
 
 		// ポーズの終了

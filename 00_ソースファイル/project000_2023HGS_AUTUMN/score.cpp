@@ -136,7 +136,7 @@ CScore *CScore::Create
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pScore))
+	if (pScore != NULL)
 	{ // 確保に成功している場合
 
 		// スコアの初期化
@@ -249,7 +249,7 @@ void CScore::SetPriority(const int nPriority)
 	// 自身の優先順位を設定
 	CObject::SetPriority(nPriority);
 
-	if (USED(m_apValue[0]))
+	if (m_apValue[0] != NULL)
 	{ // スコアの先頭の数値が使用されている場合
 
 		// 数字オブジェクトの優先順位を設定
@@ -270,7 +270,7 @@ void CScore::SetEnableUpdate(const bool bUpdate)
 	// 自身の更新状況を設定
 	CObject::SetEnableUpdate(bUpdate);
 
-	if (USED(m_apValue[0]))
+	if (m_apValue[0] != NULL)
 	{ // スコアの先頭の数値が使用されている場合
 
 		// 数字オブジェクトの更新状況を設定
@@ -291,7 +291,7 @@ void CScore::SetEnableDraw(const bool bDraw)
 	// 自身の描画状況を設定
 	CObject::SetEnableDraw(bDraw);
 
-	if (USED(m_apValue[0]))
+	if (m_apValue[0] != NULL)
 	{ // スコアの先頭の数値が使用されている場合
 
 		// 数字オブジェクトの描画状況を設定
@@ -336,7 +336,7 @@ D3DXVECTOR3 CScore::GetSpace(void) const
 //============================================================
 void CScore::SetDrawValue(void)
 {
-	if (USED(m_apValue[0]))
+	if (m_apValue[0] != NULL)
 	{ // スコアの先頭の数値が使用されている場合
 
 		for (int nCntScore = 0; nCntScore < MAX_SCORE; nCntScore++)

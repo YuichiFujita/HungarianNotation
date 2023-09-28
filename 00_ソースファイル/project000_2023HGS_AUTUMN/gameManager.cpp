@@ -70,7 +70,7 @@ CGameManager *CGameManager::Create(void)
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pGameManager))
+	if (pGameManager != NULL)
 	{ // 使用されている場合
 		
 		// ゲームマネージャーの初期化
@@ -96,7 +96,7 @@ CGameManager *CGameManager::Create(void)
 //============================================================
 HRESULT CGameManager::Release(CGameManager *&prGameManager)
 {
-	if (USED(prGameManager))
+	if (prGameManager != NULL)
 	{ // 使用中の場合
 
 		// ゲームマネージャーの終了

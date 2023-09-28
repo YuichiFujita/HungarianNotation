@@ -117,7 +117,7 @@ CValue *CValue::Create(const TEXTURE texture)
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pValue))
+	if (pValue != NULL)
 	{ // 確保に成功している場合
 
 		// 数字の初期化
@@ -157,7 +157,7 @@ CValue *CValue::Create(const TEXTURE texture, const D3DXVECTOR3& rPos, const D3D
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pValue))
+	if (pValue != NULL)
 	{ // 確保に成功している場合
 
 		// 数字の初期化

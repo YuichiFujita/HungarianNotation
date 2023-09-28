@@ -203,7 +203,7 @@ CAnim2D *CAnim2D::Create(const int nWidthPtrn, const int nHeightPtrn, const D3DX
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pAnim2D))
+	if (pAnim2D != NULL)
 	{ // 確保に成功している場合
 
 		// アニメーション2Dの初期化

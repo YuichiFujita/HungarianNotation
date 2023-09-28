@@ -111,7 +111,7 @@ HRESULT CObjectOrbit::Init(void)
 void CObjectOrbit::Uninit(void)
 {
 	// 各頂点座標の破棄
-	if (USED(m_orbit.pPosPoint))
+	if (m_orbit.pPosPoint != NULL)
 	{ // 各頂点座標が使用中の場合
 
 		// メモリ開放
@@ -120,7 +120,7 @@ void CObjectOrbit::Uninit(void)
 	}
 
 	// 各頂点カラーの破棄
-	if (USED(m_orbit.pColPoint))
+	if (m_orbit.pColPoint != NULL)
 	{ // 各頂点カラーが使用中の場合
 
 		// メモリ開放
@@ -129,7 +129,7 @@ void CObjectOrbit::Uninit(void)
 	}
 
 	// 頂点バッファの破棄
-	if (USED(m_pVtxBuff))
+	if (m_pVtxBuff != NULL)
 	{ // 頂点バッファが使用中の場合
 
 		// メモリ開放
@@ -369,7 +369,7 @@ CObjectOrbit *CObjectOrbit::Create
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pObjectOrbit))
+	if (pObjectOrbit != NULL)
 	{ // 確保に成功している場合
 
 		// オブジェクト軌跡の初期化
@@ -549,7 +549,7 @@ HRESULT CObjectOrbit::SetLength(const int nPart)
 	//	各頂点座標の破棄・生成
 	//--------------------------------------------------------
 	// 各頂点座標の破棄
-	if (USED(m_orbit.pPosPoint))
+	if (m_orbit.pPosPoint != NULL)
 	{ // 各頂点座標が使用中の場合
 
 		// メモリ開放
@@ -564,7 +564,7 @@ HRESULT CObjectOrbit::SetLength(const int nPart)
 		// 各頂点座標のメモリ確保
 		m_orbit.pPosPoint = new D3DXVECTOR3[m_nNumVtx];
 
-		if (USED(m_orbit.pPosPoint))
+		if (m_orbit.pPosPoint != NULL)
 		{ // 確保に成功した場合
 
 			// メモリクリア
@@ -578,7 +578,7 @@ HRESULT CObjectOrbit::SetLength(const int nPart)
 	//	各頂点カラーの破棄・生成
 	//--------------------------------------------------------
 	// 各頂点カラーの破棄
-	if (USED(m_orbit.pColPoint))
+	if (m_orbit.pColPoint != NULL)
 	{ // 各頂点カラーが使用中の場合
 
 		// メモリ開放
@@ -593,7 +593,7 @@ HRESULT CObjectOrbit::SetLength(const int nPart)
 		// 各頂点カラーのメモリ確保
 		m_orbit.pColPoint = new D3DXCOLOR[m_nNumVtx];
 
-		if (USED(m_orbit.pColPoint))
+		if (m_orbit.pColPoint != NULL)
 		{ // 確保に成功した場合
 
 			// メモリクリア
@@ -607,7 +607,7 @@ HRESULT CObjectOrbit::SetLength(const int nPart)
 	//	頂点バッファの破棄・生成
 	//--------------------------------------------------------
 	// 頂点バッファの破棄
-	if (USED(m_pVtxBuff))
+	if (m_pVtxBuff != NULL)
 	{ // 頂点バッファが使用中の場合
 
 		// メモリ開放
@@ -653,7 +653,7 @@ void CObjectOrbit::SetVtx(void)
 	// ポインタを宣言
 	VERTEX_3D *pVtx;	// 頂点情報へのポインタ
 
-	if (USED(m_pVtxBuff))
+	if (m_pVtxBuff != NULL)
 	{ // 軌跡の頂点バッファが使用中の場合
 
 		// 頂点バッファをロックし、頂点情報へのポインタを取得

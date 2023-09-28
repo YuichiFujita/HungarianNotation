@@ -232,7 +232,7 @@ CFade *CFade::Create(void)
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pFade))
+	if (pFade != NULL)
 	{ // 確保に成功している場合
 
 		// フェードの初期化
@@ -258,7 +258,7 @@ CFade *CFade::Create(void)
 //============================================================
 HRESULT CFade::Release(CFade *&prFade)
 {
-	if (USED(prFade))
+	if (prFade != NULL)
 	{ // 使用中の場合
 
 		// フェードの終了

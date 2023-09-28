@@ -79,7 +79,7 @@ void CTexture::Unload(void)
 	{ // テクスチャの最大数分繰り返す
 
 		// テクスチャの破棄
-		if (USED(m_apTexture[nCntTexture]))
+		if (m_apTexture[nCntTexture] != NULL)
 		{ // テクスチャが使用中の場合
 
 			// メモリ開放
@@ -100,7 +100,7 @@ int CTexture::Regist(const char *pFileName)
 	// ポインタを宣言
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();	// デバイスのポインタ
 
-	if (USED(pFileName))
+	if (pFileName != NULL)
 	{ // ポインタが使用されている場合
 
 		for (int nCntTexture = 0; nCntTexture < m_nNumAll; nCntTexture++)
@@ -182,7 +182,7 @@ CTexture *CTexture::Create(void)
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pTexture))
+	if (pTexture != NULL)
 	{ // 確保に成功している場合
 
 		// テクスチャの読込
@@ -209,7 +209,7 @@ CTexture *CTexture::Create(void)
 //============================================================
 HRESULT CTexture::Release(CTexture *&prTexture)
 {
-	if (USED(prTexture))
+	if (prTexture != NULL)
 	{ // 使用中の場合
 
 		// テクスチャの破棄

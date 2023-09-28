@@ -130,7 +130,7 @@ HRESULT CSceneResult::Uninit(void)
 //============================================================
 void CSceneResult::Update(void)
 {
-	if (USED(m_pResultManager))
+	if (m_pResultManager != NULL)
 	{ // 使用中の場合
 
 		// リザルトマネージャーの更新

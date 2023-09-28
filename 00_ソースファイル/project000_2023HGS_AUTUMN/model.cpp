@@ -84,7 +84,7 @@ void CModel::Unload(void)
 	{ // モデルの最大数分繰り返す
 
 		// テクスチャインデックスの破棄
-		if (USED(m_aModel[nCntModel].pTextureID))
+		if (m_aModel[nCntModel].pTextureID != NULL)
 		{ // テクスチャインデックスが使用中の場合
 
 			// メモリ開放
@@ -93,7 +93,7 @@ void CModel::Unload(void)
 		}
 
 		// メッシュの破棄
-		if (USED(m_aModel[nCntModel].pMesh))
+		if (m_aModel[nCntModel].pMesh != NULL)
 		{ // メッシュが使用中の場合
 
 			// メモリ開放
@@ -102,7 +102,7 @@ void CModel::Unload(void)
 		}
 
 		// マテリアルの破棄
-		if (USED(m_aModel[nCntModel].pBuffMat))
+		if (m_aModel[nCntModel].pBuffMat != NULL)
 		{ // マテリアルが使用中の場合
 
 			// メモリ開放
@@ -191,7 +191,7 @@ CModel *CModel::Create(void)
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pModel))
+	if (pModel != NULL)
 	{ // 確保に成功している場合
 
 		// モデルの読込
@@ -218,7 +218,7 @@ CModel *CModel::Create(void)
 //============================================================
 HRESULT CModel::Release(CModel *&prModel)
 {
-	if (USED(prModel))
+	if (prModel != NULL)
 	{ // 使用中の場合
 
 		// モデルの破棄
@@ -304,7 +304,7 @@ HRESULT CModel::LoadTextureModel(const int nID)
 	for (int nCntMat = 0; nCntMat < (int)m_aModel[nID].dwNumMat; nCntMat++)
 	{ // マテリアルの数分繰り返す
 
-		if (USED(pMat[nCntMat].pTextureFilename))
+		if (pMat[nCntMat].pTextureFilename != NULL)
 		{ // テクスチャファイルが存在する場合
 
 			// テクスチャを登録

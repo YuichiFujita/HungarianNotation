@@ -114,7 +114,7 @@ CDebug *CDebug::Create(void)
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pDebug))
+	if (pDebug != NULL)
 	{ // 確保に成功している場合
 
 		// デバッグの初期化
@@ -140,7 +140,7 @@ CDebug *CDebug::Create(void)
 //============================================================
 HRESULT CDebug::Release(CDebug *&prDebug)
 {
-	if (USED(prDebug))
+	if (prDebug != NULL)
 	{ // 使用中の場合
 
 		// デバッグの終了

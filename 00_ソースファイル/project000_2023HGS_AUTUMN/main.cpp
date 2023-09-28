@@ -157,7 +157,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR lpCmdLine
 			if ((dwCurrentTime - dwExecLastTime) >= APP_FPS)
 			{ // 60分の1秒経過
 
-				if (USED(pManager))
+				if (pManager != NULL)
 				{ // 使用中の場合
 
 					// マネージャーの更新
@@ -165,7 +165,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR lpCmdLine
 				}
 				else { assert(false); return -1; }	// 非使用中
 
-				if (USED(pManager))
+				if (pManager != NULL)
 				{ // 使用中の場合
 
 					// マネージャーの描画

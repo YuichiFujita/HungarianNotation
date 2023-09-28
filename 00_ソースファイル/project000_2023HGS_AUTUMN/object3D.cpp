@@ -121,7 +121,7 @@ HRESULT CObject3D::Init(void)
 		// 座標のずれバッファのメモリ確保
 		m_pPosGapBuff = new D3DXVECTOR3[MAX_VERTEX];
 
-		if (USED(m_pPosGapBuff))
+		if (m_pPosGapBuff != NULL)
 		{ // 確保に成功した場合
 
 			// メモリクリア
@@ -144,7 +144,7 @@ HRESULT CObject3D::Init(void)
 void CObject3D::Uninit(void)
 {
 	// 頂点バッファの破棄
-	if (USED(m_pVtxBuff))
+	if (m_pVtxBuff != NULL)
 	{ // 頂点バッファが使用中の場合
 
 		// メモリ開放
@@ -153,7 +153,7 @@ void CObject3D::Uninit(void)
 	}
 
 	// 座標のずれバッファの破棄
-	if (USED(m_pPosGapBuff))
+	if (m_pPosGapBuff != NULL)
 	{ // 座標のずれバッファが使用中の場合
 
 		// メモリ開放
@@ -259,7 +259,7 @@ CObject3D *CObject3D::Create
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pObject3D))
+	if (pObject3D != NULL)
 	{ // 確保に成功している場合
 
 		// オブジェクト3Dの初期化
@@ -425,7 +425,7 @@ void CObject3D::SetVertexPosition(const int nID, const D3DXVECTOR3& rPos)
 	// ポインタを宣言
 	VERTEX_3D *pVtx;	// 頂点情報へのポインタ
 
-	if (USED(m_pVtxBuff))
+	if (m_pVtxBuff != NULL)
 	{ // 使用中の場合
 
 		if (nID < MAX_VERTEX)
@@ -454,7 +454,7 @@ void CObject3D::SetVertexPosition(const int nID, const D3DXVECTOR3& rPos)
 //============================================================
 void CObject3D::SetGapPosition(const int nID, const D3DXVECTOR3& rPos)
 {
-	if (USED(m_pPosGapBuff))
+	if (m_pPosGapBuff != NULL)
 	{ // 使用中の場合
 
 		if (nID < MAX_VERTEX)
@@ -564,7 +564,7 @@ D3DXVECTOR3 CObject3D::GetVertexPosition(const int nID)
 	// ポインタを宣言
 	VERTEX_3D *pVtx;	// 頂点情報へのポインタ
 
-	if (USED(m_pVtxBuff))
+	if (m_pVtxBuff != NULL)
 	{ // 使用中の場合
 
 		if (nID < MAX_VERTEX)
@@ -596,7 +596,7 @@ D3DXVECTOR3 CObject3D::GetGapPosition(const int nID)
 	// 変数を宣言
 	D3DXVECTOR3 pos = VEC3_ZERO;	// 頂点のずれの代入用
 
-	if (USED(m_pPosGapBuff))
+	if (m_pPosGapBuff != NULL)
 	{ // 使用中の場合
 
 		if (nID < MAX_VERTEX)

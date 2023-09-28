@@ -124,7 +124,7 @@ HRESULT CSceneTutorial::Uninit(void)
 //============================================================
 void CSceneTutorial::Update(void)
 {
-	if (USED(m_pTutorialManager))
+	if (m_pTutorialManager != NULL)
 	{ // 使用中の場合
 
 		// チュートリアルマネージャーの更新

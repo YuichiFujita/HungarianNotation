@@ -113,7 +113,7 @@ HRESULT CScene::Uninit(void)
 //============================================================
 void CScene::Update(void)
 {
-	if (USED(m_pStage))
+	if (m_pStage != NULL)
 	{ // 使用中の場合
 
 		// ステージの更新
@@ -121,7 +121,7 @@ void CScene::Update(void)
 	}
 	else { assert(false); }	// 非使用中
 
-	if (USED(CManager::GetLight()))
+	if (CManager::GetLight() != NULL)
 	{ // 使用中の場合
 
 		// ライトの更新
@@ -129,7 +129,7 @@ void CScene::Update(void)
 	}
 	else { assert(false); }	// 非使用中
 
-	if (USED(CManager::GetCamera()))
+	if (CManager::GetCamera() != NULL)
 	{ // 使用中の場合
 
 		// カメラの更新
@@ -137,7 +137,7 @@ void CScene::Update(void)
 	}
 	else { assert(false); }	// 非使用中
 
-	if (USED(CManager::GetRenderer()))
+	if (CManager::GetRenderer() != NULL)
 	{ // 使用中の場合
 
 		// レンダラーの更新
@@ -195,7 +195,7 @@ CScene *CScene::Create(MODE mode)
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pScene))
+	if (pScene != NULL)
 	{ // 確保に成功している場合
 
 		// シーンの初期化
@@ -235,7 +235,7 @@ CScene *CScene::Create(MODE mode)
 //============================================================
 HRESULT CScene::Release(CScene *&prScene)
 {
-	if (USED(prScene))
+	if (prScene != NULL)
 	{ // 使用中の場合
 
 		// シーンの終了

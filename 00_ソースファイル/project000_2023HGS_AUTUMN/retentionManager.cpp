@@ -78,7 +78,7 @@ CRetentionManager *CRetentionManager::Create(void)
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pRetentionManager))
+	if (pRetentionManager != NULL)
 	{ // 使用されている場合
 		
 		// データ保存マネージャーの初期化
@@ -104,7 +104,7 @@ CRetentionManager *CRetentionManager::Create(void)
 //============================================================
 HRESULT CRetentionManager::Release(CRetentionManager *&prRetentionManager)
 {
-	if (USED(prRetentionManager))
+	if (prRetentionManager != NULL)
 	{ // 使用中の場合
 
 		// データ保存マネージャーの終了

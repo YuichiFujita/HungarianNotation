@@ -340,7 +340,7 @@ CSound *CSound::Create(HWND hWnd)
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pSound))
+	if (pSound != NULL)
 	{ // 確保に成功している場合
 
 		// サウンドの初期化
@@ -366,7 +366,7 @@ CSound *CSound::Create(HWND hWnd)
 //============================================================
 HRESULT CSound::Release(CSound *&prSound)
 {
-	if (USED(prSound))
+	if (prSound != NULL)
 	{ // 使用中の場合
 
 		// サウンドの終了

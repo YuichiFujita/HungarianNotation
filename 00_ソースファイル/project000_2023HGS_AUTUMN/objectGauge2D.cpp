@@ -162,7 +162,7 @@ HRESULT CObjectGauge2D::Init(void)
 void CObjectGauge2D::Uninit(void)
 {
 	// 頂点バッファの破棄
-	if (USED(m_pVtxBuff))
+	if (m_pVtxBuff != NULL)
 	{ // 頂点バッファが使用中の場合
 
 		// メモリ開放
@@ -279,7 +279,7 @@ CObjectGauge2D *CObjectGauge2D::Create
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pObjectGauge2D))
+	if (pObjectGauge2D != NULL)
 	{ // 確保に成功している場合
 
 		// オブジェクトゲージ2Dの初期化
@@ -543,7 +543,7 @@ void CObjectGauge2D::SetVtx(void)
 	// ポインタを宣言
 	VERTEX_2D *pVtx;	// 頂点情報へのポインタ
 
-	if (USED(m_pVtxBuff))
+	if (m_pVtxBuff != NULL)
 	{ // 使用中の場合
 
 		// 頂点バッファをロックし、頂点情報へのポインタを取得

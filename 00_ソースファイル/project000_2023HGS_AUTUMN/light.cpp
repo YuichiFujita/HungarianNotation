@@ -113,7 +113,7 @@ CLight *CLight::Create(void)
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pLight))
+	if (pLight != NULL)
 	{ // 確保に成功している場合
 
 		// ライトの初期化
@@ -139,7 +139,7 @@ CLight *CLight::Create(void)
 //============================================================
 HRESULT CLight::Release(CLight *&prLight)
 {
-	if (USED(prLight))
+	if (prLight != NULL)
 	{ // 使用中の場合
 
 		// ライトの終了

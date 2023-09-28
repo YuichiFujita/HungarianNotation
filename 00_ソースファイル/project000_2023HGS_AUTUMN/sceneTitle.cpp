@@ -131,7 +131,7 @@ HRESULT CSceneTitle::Uninit(void)
 //============================================================
 void CSceneTitle::Update(void)
 {
-	if (USED(m_pTitleManager))
+	if (m_pTitleManager != NULL)
 	{ // 使用中の場合
 
 		// タイトルマネージャーの更新

@@ -80,7 +80,7 @@ void CField::Uninit(void)
 	for (int nCntField = 0; nCntField < TERRAIN_MAX; nCntField++)
 	{ // 地形情報の最大数分繰り返す
 
-		if (USED(m_aTerrainInfo[nCntField].pPosGap))
+		if (m_aTerrainInfo[nCntField].pPosGap != NULL)
 		{ // 頂点座標のずれ量情報が使用中の場合
 
 			// メモリ開放
@@ -139,7 +139,7 @@ CField *CField::Create
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pField))
+	if (pField != NULL)
 	{ // 確保に成功している場合
 
 		// 地面の初期化
@@ -277,7 +277,7 @@ void CField::LoadSetup(void)
 									m_aTerrainInfo[nID].pPosGap = new D3DXVECTOR3[nNumVtx];
 
 									// 例外処理
-									assert(USED(m_aTerrainInfo[nID].pPosGap));	// 非使用中
+									assert(m_aTerrainInfo[nID].pPosGap != NULL);	// 非使用中
 								}
 								else { assert(false); }	// 使用中
 							}

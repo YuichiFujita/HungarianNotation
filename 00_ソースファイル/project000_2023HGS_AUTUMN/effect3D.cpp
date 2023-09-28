@@ -226,7 +226,7 @@ CEffect3D *CEffect3D::Create
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pEffect3D))
+	if (pEffect3D != NULL)
 	{ // 確保に成功している場合
 
 		// エフェクト3Dの初期化

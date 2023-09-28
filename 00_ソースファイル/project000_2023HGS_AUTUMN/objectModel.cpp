@@ -163,7 +163,7 @@ CObjectModel *CObjectModel::Create(const D3DXVECTOR3& rPos, const D3DXVECTOR3& r
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pObjectModel))
+	if (pObjectModel != NULL)
 	{ // 確保に成功している場合
 
 		// オブジェクトモデルの初期化
@@ -198,7 +198,7 @@ CObjectModel *CObjectModel::Create(const D3DXVECTOR3& rPos, const D3DXVECTOR3& r
 //============================================================
 void CObjectModel::BindModel(CModel::Model *pModel)
 {
-	if (USED(pModel))
+	if (pModel != NULL)
 	{ // 割り当てるモデルが使用中の場合
 
 		// モデルを割り当て

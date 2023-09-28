@@ -129,7 +129,7 @@ CSky *CSky::Create
 	}
 	else { assert(false); return NULL; }	// g—p’†
 
-	if (USED(pSky))
+	if (pSky != NULL)
 	{ // Šm•Û‚É¬Œ÷‚µ‚Ä‚¢‚éê‡
 
 		// ‹ó‚Ì‰Šú‰»

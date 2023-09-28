@@ -308,7 +308,7 @@ CPlayer *CPlayer::Create
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pPlayer))
+	if (pPlayer != NULL)
 	{ // 使用されている場合
 
 		// プレイヤーの初期化
@@ -708,7 +708,7 @@ CPlayer::MOTION CPlayer::UpdateNormal(void)
 	// ポインタを宣言
 	CStage *pStage = CScene::GetStage();	// ステージ情報
 
-	if (USED(pStage))
+	if (pStage != NULL)
 	{ // ステージが使用されている場合
 
 		// 移動操作

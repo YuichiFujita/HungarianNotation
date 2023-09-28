@@ -91,7 +91,7 @@ HRESULT CObjectMeshWall::Init(void)
 void CObjectMeshWall::Uninit(void)
 {
 	// 頂点バッファの破棄
-	if (USED(m_pVtxBuff))
+	if (m_pVtxBuff != NULL)
 	{ // 頂点バッファが使用中の場合
 
 		// メモリ開放
@@ -100,7 +100,7 @@ void CObjectMeshWall::Uninit(void)
 	}
 
 	// インデックスバッファの破棄
-	if (USED(m_pIdxBuff))
+	if (m_pIdxBuff != NULL)
 	{ // インデックスバッファが使用中の場合
 
 		// メモリ開放
@@ -207,7 +207,7 @@ CObjectMeshWall *CObjectMeshWall::Create
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pObjectMeshWall))
+	if (pObjectMeshWall != NULL)
 	{ // 確保に成功している場合
 
 		// オブジェクトメッシュウォールの初期化
@@ -346,7 +346,7 @@ HRESULT CObjectMeshWall::SetPattern(const POSGRID2& rPart)
 	m_nNumIdx = (m_part.x + 1) * (((m_part.y + 1) * 2) - 2) + (m_part.y * 2) - 2; // 必要インデックス数
 
 	// 頂点バッファの破棄
-	if (USED(m_pVtxBuff))
+	if (m_pVtxBuff != NULL)
 	{ // 頂点バッファが使用中の場合
 
 		// メモリ開放
@@ -378,7 +378,7 @@ HRESULT CObjectMeshWall::SetPattern(const POSGRID2& rPart)
 	else { assert(false); return E_FAIL; }	// 使用中
 
 	// インデックスバッファの破棄
-	if (USED(m_pIdxBuff))
+	if (m_pIdxBuff != NULL)
 	{ // インデックスバッファが使用中の場合
 
 		// メモリ開放
@@ -488,7 +488,7 @@ void CObjectMeshWall::SetVtx(void)
 	// ポインタを宣言
 	VERTEX_3D *pVtx;	// 頂点情報へのポインタ
 
-	if (USED(m_pVtxBuff))
+	if (m_pVtxBuff != NULL)
 	{ // 使用中の場合
 
 		// 頂点バッファをロックし、頂点情報へのポインタを取得
@@ -535,7 +535,7 @@ void CObjectMeshWall::SetIdx(void)
 	// ポインタを宣言
 	WORD *pIdx;	// インデックス情報へのポインタ
 
-	if (USED(m_pIdxBuff))
+	if (m_pIdxBuff != NULL)
 	{ // 使用中の場合
 
 		// インデックスバッファをロックし、頂点番号データへのポインタを取得
@@ -578,7 +578,7 @@ void CObjectMeshWall::SetScrollTex(const float fTexU, const float fTexV)
 	// ポインタを宣言
 	VERTEX_3D *pVtx;	// 頂点情報へのポインタ
 
-	if (USED(m_pVtxBuff))
+	if (m_pVtxBuff != NULL)
 	{ // 使用中の場合
 
 		// 頂点バッファをロックし、頂点情報へのポインタを取得

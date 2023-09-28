@@ -114,7 +114,7 @@ HRESULT CRenderer::Init(HWND hWnd, BOOL bWindow)
 void CRenderer::Uninit(void)
 {
 	// Direct3Dデバイスの破棄
-	if (USED(m_pD3DDevice))
+	if (m_pD3DDevice != NULL)
 	{ // Direct3Dデバイスが使用中の場合
 
 		// メモリ開放
@@ -123,7 +123,7 @@ void CRenderer::Uninit(void)
 	}
 
 	// Direct3Dオブジェクトの破棄
-	if (USED(m_pD3D))
+	if (m_pD3D != NULL)
 	{ // Direct3Dオブジェクトが使用中の場合
 
 		// メモリ開放
@@ -208,7 +208,7 @@ CRenderer *CRenderer::Create(HWND hWnd)
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pRenderer))
+	if (pRenderer != NULL)
 	{ // 確保に成功している場合
 
 		// レンダラーの初期化
@@ -234,7 +234,7 @@ CRenderer *CRenderer::Create(HWND hWnd)
 //============================================================
 HRESULT CRenderer::Release(CRenderer *&prRenderer)
 {
-	if (USED(prRenderer))
+	if (prRenderer != NULL)
 	{ // 使用中の場合
 
 		// レンダラーの終了

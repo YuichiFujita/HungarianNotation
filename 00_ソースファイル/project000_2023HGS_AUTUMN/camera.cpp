@@ -395,7 +395,7 @@ CCamera *CCamera::Create(void)
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pCamera))
+	if (pCamera != NULL)
 	{ // 確保に成功している場合
 
 		// カメラの初期化
@@ -421,7 +421,7 @@ CCamera *CCamera::Create(void)
 //============================================================
 HRESULT CCamera::Release(CCamera *&prCamera)
 {
-	if (USED(prCamera))
+	if (prCamera != NULL)
 	{ // 使用中の場合
 
 		// カメラの終了
@@ -472,7 +472,7 @@ void CCamera::Rotate(void)
 //============================================================
 void CCamera::Follow(void)
 {
-	if (USED(CScene::GetPlayer()))
+	if (CScene::GetPlayer() != NULL)
 	{ // プレイヤーが使用されている場合
 
 		// 変数を宣言

@@ -163,7 +163,7 @@ HRESULT CObjectGauge3D::Init(void)
 void CObjectGauge3D::Uninit(void)
 {
 	// 頂点バッファの破棄
-	if (USED(m_pVtxBuff))
+	if (m_pVtxBuff != NULL)
 	{ // 頂点バッファが使用中の場合
 
 		// メモリ開放
@@ -351,7 +351,7 @@ CObjectGauge3D *CObjectGauge3D::Create
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pObjectGauge3D))
+	if (pObjectGauge3D != NULL)
 	{ // 確保に成功している場合
 
 		// オブジェクトゲージ3Dの初期化
@@ -654,7 +654,7 @@ void CObjectGauge3D::SetVtx(void)
 	// ポインタを宣言
 	VERTEX_3D *pVtx;	// 頂点情報へのポインタ
 
-	if (USED(m_pVtxBuff))
+	if (m_pVtxBuff != NULL)
 	{ // 使用中の場合
 
 		// 頂点バッファをロックし、頂点情報へのポインタを取得

@@ -326,7 +326,7 @@ CTitleManager *CTitleManager::Create(void)
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pTitleManager))
+	if (pTitleManager != NULL)
 	{ // 使用されている場合
 		
 		// タイトルマネージャーの初期化
@@ -352,7 +352,7 @@ CTitleManager *CTitleManager::Create(void)
 //============================================================
 HRESULT CTitleManager::Release(CTitleManager *&prTitleManager)
 {
-	if (USED(prTitleManager))
+	if (prTitleManager != NULL)
 	{ // 使用中の場合
 
 		// タイトルマネージャーの終了

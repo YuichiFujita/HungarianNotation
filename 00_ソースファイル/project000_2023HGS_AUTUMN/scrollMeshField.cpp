@@ -171,7 +171,7 @@ CScrollMeshField *CScrollMeshField::Create
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pScrollMeshField))
+	if (pScrollMeshField != NULL)
 	{ // 確保に成功している場合
 
 		// スクロールメッシュフィールドの初期化

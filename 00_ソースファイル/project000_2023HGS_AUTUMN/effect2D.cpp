@@ -201,7 +201,7 @@ CEffect2D *CEffect2D::Create
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pEffect2D))
+	if (pEffect2D != NULL)
 	{ // 確保に成功している場合
 
 		// エフェクト2Dの初期化

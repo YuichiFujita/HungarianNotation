@@ -113,7 +113,7 @@ HRESULT CObject2D::Init(void)
 void CObject2D::Uninit(void)
 {
 	// 頂点バッファの破棄
-	if (USED(m_pVtxBuff))
+	if (m_pVtxBuff != NULL)
 	{ // 頂点バッファが使用中の場合
 
 		// メモリ開放
@@ -172,7 +172,7 @@ CObject2D *CObject2D::Create(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize, 
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pObject2D))
+	if (pObject2D != NULL)
 	{ // 確保に成功している場合
 
 		// オブジェクト2Dの初期化
@@ -317,7 +317,7 @@ void CObject2D::SetVtx(void)
 	// ポインタを宣言
 	VERTEX_2D *pVtx;	// 頂点情報へのポインタ
 
-	if (USED(m_pVtxBuff))
+	if (m_pVtxBuff != NULL)
 	{ // 使用中の場合
 
 		// 頂点バッファをロックし、頂点情報へのポインタを取得
@@ -377,7 +377,7 @@ void CObject2D::SetAnimTex(const int nPattern, const int nWidthPtrn, const int n
 	// ポインタを宣言
 	VERTEX_2D *pVtx;	// 頂点情報へのポインタ
 
-	if (USED(m_pVtxBuff))
+	if (m_pVtxBuff != NULL)
 	{ // 使用中の場合
 
 		// 頂点バッファをロックし、頂点情報へのポインタを取得
@@ -402,7 +402,7 @@ void CObject2D::SetScrollTex(const float fTexU, const float fTexV)
 	// ポインタを宣言
 	VERTEX_2D *pVtx;	// 頂点情報へのポインタ
 
-	if (USED(m_pVtxBuff))
+	if (m_pVtxBuff != NULL)
 	{ // 使用中の場合
 
 		// 頂点バッファをロックし、頂点情報へのポインタを取得

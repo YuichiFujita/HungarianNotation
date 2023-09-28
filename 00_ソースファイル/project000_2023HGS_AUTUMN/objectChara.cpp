@@ -83,7 +83,7 @@ void CObjectChara::Uninit(void)
 	for (int nCntObjectChara = 0; nCntObjectChara < MAX_PARTS; nCntObjectChara++)
 	{ // パーツの最大数分繰り返す
 
-		if (USED(m_apMultiModel[nCntObjectChara]))
+		if (m_apMultiModel[nCntObjectChara] != NULL)
 		{ // パーツが使用中の場合
 
 			// 破棄処理
@@ -96,7 +96,7 @@ void CObjectChara::Uninit(void)
 		}
 	}
 
-	if (USED(m_pMotion))
+	if (m_pMotion != NULL)
 	{ // モーションが使われている場合
 
 		// モーションを破棄
@@ -182,7 +182,7 @@ void CObjectChara::SetPartsInfo
 	// ポインタを宣言
 	CModel *pModel = CManager::GetModel();	// モデルへのポインタ
 
-	if (nID < MAX_PARTS && nParentID < MAX_PARTS && USED(pFileName))
+	if (nID < MAX_PARTS && nParentID < MAX_PARTS && pFileName != NULL)
 	{ // パーツ・親インデックスが配列範囲内且つ、ファイル名が存在する場合
 
 		// モデルの生成

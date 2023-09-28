@@ -160,7 +160,7 @@ CScroll2D *CScroll2D::Create(const float fMoveU, const float fMoveV, const D3DXV
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pScroll2D))
+	if (pScroll2D != NULL)
 	{ // 確保に成功している場合
 
 		// スクロール2Dの初期化

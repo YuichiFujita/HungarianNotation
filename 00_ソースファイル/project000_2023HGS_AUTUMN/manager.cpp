@@ -385,7 +385,7 @@ void CManager::Update(void)
 
 #endif	// _DEBUG
 
-	if (USED(m_pPad))
+	if (m_pPad != NULL)
 	{ // 使用中の場合
 
 		// パッドの更新
@@ -393,7 +393,7 @@ void CManager::Update(void)
 	}
 	else { assert(false); }	// 非使用中
 
-	if (USED(m_pMouse))
+	if (m_pMouse != NULL)
 	{ // 使用中の場合
 
 		// マウスの更新
@@ -401,7 +401,7 @@ void CManager::Update(void)
 	}
 	else { assert(false); }	// 非使用中
 
-	if (USED(m_pKeyboard))
+	if (m_pKeyboard != NULL)
 	{ // 使用中の場合
 
 		// キーボードの更新
@@ -409,7 +409,7 @@ void CManager::Update(void)
 	}
 	else { assert(false); }	// 非使用中
 
-	if (USED(m_pFade))
+	if (m_pFade != NULL)
 	{ // 使用中の場合
 
 		// フェードの更新
@@ -417,7 +417,7 @@ void CManager::Update(void)
 	}
 	else { assert(false); }	// 非使用中
 
-	if (USED(m_pScene))
+	if (m_pScene != NULL)
 	{ // 使用中の場合
 
 		// シーンの更新
@@ -425,7 +425,7 @@ void CManager::Update(void)
 	}
 	else { assert(false); }	// 非使用中
 
-	if (USED(m_pRetentionManager))
+	if (m_pRetentionManager != NULL)
 	{ // 使用中の場合
 
 		// データ保存マネージャーの更新
@@ -436,7 +436,7 @@ void CManager::Update(void)
 	//--------------------------------------------------------
 	//	デバッグ用
 	//--------------------------------------------------------
-	if (USED(m_pDebugProc))
+	if (m_pDebugProc != NULL)
 	{ // 使用中の場合
 
 		// デバッグ表示の更新
@@ -450,7 +450,7 @@ void CManager::Update(void)
 //============================================================
 void CManager::Draw(void)
 {
-	if (USED(m_pRenderer))
+	if (m_pRenderer != NULL)
 	{ // 使用中の場合
 
 		// レンダラーの描画
@@ -475,7 +475,7 @@ CManager *CManager::Create(HINSTANCE hInstance, HWND hWnd)
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pManager))
+	if (pManager != NULL)
 	{ // 確保に成功している場合
 
 		// マネージャーの初期化
@@ -515,7 +515,7 @@ CManager *CManager::Create(HINSTANCE hInstance, HWND hWnd)
 //============================================================
 HRESULT CManager::Release(CManager *&prManager)
 {
-	if (USED(prManager))
+	if (prManager != NULL)
 	{ // 使用中の場合
 
 		// マネージャーの終了
@@ -554,7 +554,7 @@ HRESULT CManager::SetMode(const CScene::MODE mode)
 	// サウンドを停止
 	m_pSound->Stop();
 
-	if (USED(m_pScene))
+	if (m_pScene != NULL)
 	{ // シーンが使用中の場合
 
 		// シーンの破棄

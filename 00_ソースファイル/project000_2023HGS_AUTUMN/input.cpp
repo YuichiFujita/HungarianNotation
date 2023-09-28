@@ -85,7 +85,7 @@ HRESULT CInput::Init(HINSTANCE hInstance, HWND hWnd)
 void CInput::Uninit(void)
 {
 	// DirectInputデバイスの破棄
-	if (USED(m_pDevice))
+	if (m_pDevice != NULL)
 	{ // DirectInputデバイスが使用中の場合
 
 		// アクセス権開放
@@ -100,7 +100,7 @@ void CInput::Uninit(void)
 	if (m_nNumAll <= 1)
 	{ // 最後のDirectInputデバイスが破棄された場合
 
-		if (USED(m_pInput))
+		if (m_pInput != NULL)
 		{ // DirectInputオブジェクトが使用中の場合
 
 			// メモリ開放
@@ -270,7 +270,7 @@ CInputKeyboard *CInputKeyboard::Create(HINSTANCE hInstance, HWND hWnd)
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pKeyboard))
+	if (pKeyboard != NULL)
 	{ // 確保に成功している場合
 
 		// キーボードの初期化
@@ -296,7 +296,7 @@ CInputKeyboard *CInputKeyboard::Create(HINSTANCE hInstance, HWND hWnd)
 //============================================================
 HRESULT CInputKeyboard::Release(CInputKeyboard *&prKeyboard)
 {
-	if (USED(prKeyboard))
+	if (prKeyboard != NULL)
 	{ // 使用中の場合
 
 		// キーボードの終了
@@ -504,7 +504,7 @@ CInputMouse *CInputMouse::Create(HINSTANCE hInstance, HWND hWnd)
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pMouse))
+	if (pMouse != NULL)
 	{ // 確保に成功している場合
 
 		// マウスの初期化
@@ -530,7 +530,7 @@ CInputMouse *CInputMouse::Create(HINSTANCE hInstance, HWND hWnd)
 //============================================================
 HRESULT CInputMouse::Release(CInputMouse *&prMouse)
 {
-	if (USED(prMouse))
+	if (prMouse != NULL)
 	{ // 使用中の場合
 
 		// マウスの終了
@@ -892,7 +892,7 @@ CInputPad *CInputPad::Create(void)
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pPad))
+	if (pPad != NULL)
 	{ // 確保に成功している場合
 
 		// パッドの初期化
@@ -918,7 +918,7 @@ CInputPad *CInputPad::Create(void)
 //============================================================
 HRESULT CInputPad::Release(CInputPad *&prPad)
 {
-	if (USED(prPad))
+	if (prPad != NULL)
 	{ // 使用中の場合
 
 		// パッドの終了

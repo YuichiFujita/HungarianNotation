@@ -64,7 +64,7 @@ void CMultiValue::Uninit(void)
 	for (int nCntValue = 0; nCntValue < MAX_DIGIT; nCntValue++)
 	{ // 桁数の最大数分繰り返す
 
-		if (USED(m_apValue[nCntValue]))
+		if (m_apValue[nCntValue] != NULL)
 		{ // 使用されている場合
 
 			// 数字の終了
@@ -84,7 +84,7 @@ void CMultiValue::Update(void)
 	for (int nCntValue = 0; nCntValue < MAX_DIGIT; nCntValue++)
 	{ // 桁数の最大数分繰り返す
 
-		if (USED(m_apValue[nCntValue]))
+		if (m_apValue[nCntValue] != NULL)
 		{ // 使用されている場合
 
 			// 数字の更新
@@ -159,7 +159,7 @@ CMultiValue *CMultiValue::Create
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pMultiValue))
+	if (pMultiValue != NULL)
 	{ // 確保に成功している場合
 
 		// マルチ数字の初期化
@@ -251,7 +251,7 @@ HRESULT CMultiValue::SetDigit(const int nDigit)
 	// 引数の桁数を設定
 	m_nDigit = nDigit;
 
-	if (USED(m_apValue[0]))
+	if (m_apValue[0] != NULL)
 	{ // 先頭が使用されている場合
 
 		// 現在の設定を取得
@@ -267,7 +267,7 @@ HRESULT CMultiValue::SetDigit(const int nDigit)
 	for (int nCntValue = 0; nCntValue < MAX_DIGIT; nCntValue++)
 	{ // 桁数の最大数分繰り返す
 
-		if (USED(m_apValue[nCntValue]))
+		if (m_apValue[nCntValue] != NULL)
 		{ // 使用されている場合
 
 			// 数字の終了
@@ -489,7 +489,7 @@ D3DXVECTOR3 CMultiValue::GetPosition(void) const
 D3DXVECTOR3 CMultiValue::GetRotation(void) const
 {
 	// 例外処理
-	assert(USED(m_apValue[0]));	// 非使用チェック
+	assert(m_apValue[0] != NULL);	// 非使用チェック
 
 	// 先頭数字の向きを返す
 	return m_apValue[0]->GetRotation();
@@ -501,7 +501,7 @@ D3DXVECTOR3 CMultiValue::GetRotation(void) const
 D3DXVECTOR3 CMultiValue::GetScaling(void) const
 {
 	// 例外処理
-	assert(USED(m_apValue[0]));	// 非使用チェック
+	assert(m_apValue[0] != NULL);	// 非使用チェック
 
 	// 先頭数字の大きさを返す
 	return m_apValue[0]->GetScaling();
@@ -513,7 +513,7 @@ D3DXVECTOR3 CMultiValue::GetScaling(void) const
 D3DXCOLOR CMultiValue::GetColor(void) const
 {
 	// 例外処理
-	assert(USED(m_apValue[0]));	// 非使用チェック
+	assert(m_apValue[0] != NULL);	// 非使用チェック
 
 	// 先頭数字の色を返す
 	return m_apValue[0]->GetColor();
@@ -560,7 +560,7 @@ void CMultiValue::SetTexNum(void)
 	for (int nCntValue = 0; nCntValue < m_nDigit; nCntValue++)
 	{ // 桁数分繰り返す
 
-		if (USED(m_apValue[nCntValue]))
+		if (m_apValue[nCntValue] != NULL)
 		{ // 使用されている場合
 
 			// 数字の設定

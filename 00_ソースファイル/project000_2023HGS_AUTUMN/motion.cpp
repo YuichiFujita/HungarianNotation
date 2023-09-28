@@ -257,7 +257,7 @@ CMotion *CMotion::Create(void)
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pMotion))
+	if (pMotion != NULL)
 	{ // 確保に成功している場合
 
 		// モーションの初期化
@@ -283,7 +283,7 @@ CMotion *CMotion::Create(void)
 //============================================================
 HRESULT CMotion::Release(CMotion *&prMotion)
 {
-	if (USED(prMotion))
+	if (prMotion != NULL)
 	{ // 使用中の場合
 
 		// モーションの終了

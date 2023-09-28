@@ -57,7 +57,7 @@ bool collision::Circle2D
 	fLength = (centerPos.x - targetPos.x) * (centerPos.x - targetPos.x)
 			+ (centerPos.z - targetPos.z) * (centerPos.z - targetPos.z);
 
-	if (USED(pLength))
+	if (pLength != NULL)
 	{ // ポインタが使用されている場合
 
 		// 判定目標との距離を代入
@@ -133,7 +133,7 @@ bool collision::Sector
 	fLength = (centerPos.x - targetPos.x) * (centerPos.x - targetPos.x)
 			+ (centerPos.z - targetPos.z) * (centerPos.z - targetPos.z);
 
-	if (USED(pLength))
+	if (pLength != NULL)
 	{ // ポインタが使用されている場合
 
 		// 判定目標との距離を代入

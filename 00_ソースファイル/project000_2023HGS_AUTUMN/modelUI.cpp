@@ -121,7 +121,7 @@ CModelUI *CModelUI::Create
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pModelUI))
+	if (pModelUI != NULL)
 	{ // 使用されている場合
 		
 		// モデルUIの初期化

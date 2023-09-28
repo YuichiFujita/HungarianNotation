@@ -457,7 +457,7 @@ CResultManager *CResultManager::Create(void)
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pResultManager))
+	if (pResultManager != NULL)
 	{ // 使用されている場合
 		
 		// リザルトマネージャーの初期化
@@ -483,7 +483,7 @@ CResultManager *CResultManager::Create(void)
 //============================================================
 HRESULT CResultManager::Release(CResultManager *&prResultManager)
 {
-	if (USED(prResultManager))
+	if (prResultManager != NULL)
 	{ // 使用中の場合
 
 		// リザルトマネージャーの終了

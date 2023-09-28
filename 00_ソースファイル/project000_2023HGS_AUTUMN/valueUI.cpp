@@ -167,7 +167,7 @@ CValueUI *CValueUI::Create
 	}
 	else { assert(false); return NULL; }	// g—p’†
 
-	if (USED(pValueUI))
+	if (pValueUI != NULL)
 	{ // Šm•Û‚É¬Œ÷‚µ‚Ä‚¢‚éê‡
 
 		// ”šUI‚Ì‰Šú‰»

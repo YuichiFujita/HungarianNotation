@@ -155,7 +155,7 @@ CShadow *CShadow::Create
 	}
 	else { assert(false); return NULL; }	// g—p’†
 
-	if (USED(pShadow))
+	if (pShadow != NULL)
 	{ // Šm•Û‚É¬Œ÷‚µ‚Ä‚¢‚éê‡
 
 		// ‰e‚Ì‰Šú‰»

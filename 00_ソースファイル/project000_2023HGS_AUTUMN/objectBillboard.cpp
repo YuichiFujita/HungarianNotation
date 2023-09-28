@@ -129,7 +129,7 @@ HRESULT CObjectBillboard::Init(void)
 void CObjectBillboard::Uninit(void)
 {
 	// 頂点バッファの破棄
-	if (USED(m_pVtxBuff))
+	if (m_pVtxBuff != NULL)
 	{ // 頂点バッファが使用中の場合
 
 		// メモリ開放
@@ -258,7 +258,7 @@ CObjectBillboard *CObjectBillboard::Create
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pObjectBillboard))
+	if (pObjectBillboard != NULL)
 	{ // 確保に成功している場合
 
 		// オブジェクトビルボードの初期化

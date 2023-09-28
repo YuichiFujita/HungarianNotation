@@ -228,7 +228,7 @@ CDebugProc *CDebugProc::Create(HWND hWnd)
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pDebugProc))
+	if (pDebugProc != NULL)
 	{ // 確保に成功している場合
 
 		// デバッグ表示の初期化
@@ -245,7 +245,7 @@ CDebugProc *CDebugProc::Create(HWND hWnd)
 //==========================================================
 HRESULT CDebugProc::Release(CDebugProc *&prDebugProc)
 {
-	if (USED(prDebugProc))
+	if (prDebugProc != NULL)
 	{ // 使用中の場合
 
 		// デバッグプロックの終了

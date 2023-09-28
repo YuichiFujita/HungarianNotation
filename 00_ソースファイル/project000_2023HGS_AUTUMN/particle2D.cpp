@@ -320,7 +320,7 @@ CParticle2D *CParticle2D::Create(const TYPE type, const D3DXVECTOR3& rPos, const
 	}
 	else { assert(false); return NULL; }	// 使用中
 
-	if (USED(pParticle2D))
+	if (pParticle2D != NULL)
 	{ // 確保に成功している場合
 
 		// パーティクル2Dの初期化
