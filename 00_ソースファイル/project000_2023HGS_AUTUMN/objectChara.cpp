@@ -62,7 +62,7 @@ HRESULT CObjectChara::Init(void)
 
 	// モーションオブジェクトの生成
 	m_pMotion = CMotion::Create();
-	if (UNUSED(m_pMotion))
+	if (m_pMotion == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す

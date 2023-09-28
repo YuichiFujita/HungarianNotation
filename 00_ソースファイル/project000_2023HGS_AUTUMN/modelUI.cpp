@@ -113,7 +113,7 @@ CModelUI *CModelUI::Create
 	// ポインタを宣言
 	CModelUI *pModelUI = NULL;	// モデルUI生成用
 
-	if (UNUSED(pModelUI))
+	if (pModelUI == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

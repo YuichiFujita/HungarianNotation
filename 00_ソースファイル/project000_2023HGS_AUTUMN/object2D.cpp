@@ -78,7 +78,7 @@ HRESULT CObject2D::Init(void)
 	// ポインタを宣言
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();	// デバイスのポインタ
 
-	if (UNUSED(m_pVtxBuff))
+	if (m_pVtxBuff == NULL)
 	{ // 非使用中の場合
 
 		// 頂点バッファの生成
@@ -164,7 +164,7 @@ CObject2D *CObject2D::Create(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize, 
 	// ポインタを宣言
 	CObject2D *pObject2D = NULL;	// オブジェクト2D生成用
 
-	if (UNUSED(pObject2D))
+	if (pObject2D == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

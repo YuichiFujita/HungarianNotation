@@ -195,7 +195,7 @@ CAnim2D *CAnim2D::Create(const int nWidthPtrn, const int nHeightPtrn, const D3DX
 	// ポインタを宣言
 	CAnim2D *pAnim2D = NULL;	// アニメーション2D生成用
 
-	if (UNUSED(pAnim2D))
+	if (pAnim2D == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

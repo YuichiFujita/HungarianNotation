@@ -106,7 +106,7 @@ CDebug *CDebug::Create(void)
 	// ポインタを宣言
 	CDebug *pDebug = NULL;	// デバッグ生成用
 
-	if (UNUSED(pDebug))
+	if (pDebug == NULL)
 	{ // 使用されていない場合
 
 		// メモリを確保

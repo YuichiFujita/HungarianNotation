@@ -127,7 +127,7 @@ HRESULT CObjectGauge2D::Init(void)
 	// ポインタを宣言
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();	// デバイスのポインタ
 
-	if (UNUSED(m_pVtxBuff))
+	if (m_pVtxBuff == NULL)
 	{ // 非使用中の場合
 
 		// 頂点バッファの生成
@@ -271,7 +271,7 @@ CObjectGauge2D *CObjectGauge2D::Create
 	CTexture *pTexture = CManager::GetTexture();	// テクスチャへのポインタ
 	CObjectGauge2D *pObjectGauge2D = NULL;			// オブジェクトゲージ2D生成用
 
-	if (UNUSED(pObjectGauge2D))
+	if (pObjectGauge2D == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

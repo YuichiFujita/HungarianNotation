@@ -147,7 +147,7 @@ CShadow *CShadow::Create
 	CTexture *pTexture = CManager::GetTexture();	// テクスチャへのポインタ
 	CShadow *pShadow = NULL;	// 影生成用
 
-	if (UNUSED(pShadow))
+	if (pShadow == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

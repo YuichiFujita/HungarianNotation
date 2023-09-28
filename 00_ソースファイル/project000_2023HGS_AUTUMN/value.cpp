@@ -109,7 +109,7 @@ CValue *CValue::Create(const TEXTURE texture)
 	// ポインタを宣言
 	CValue *pValue = NULL;		// 数字生成用
 
-	if (UNUSED(pValue))
+	if (pValue == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保
@@ -149,7 +149,7 @@ CValue *CValue::Create(const TEXTURE texture, const D3DXVECTOR3& rPos, const D3D
 	// ポインタを宣言
 	CValue *pValue = NULL;		// 数字生成用
 
-	if (UNUSED(pValue))
+	if (pValue == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

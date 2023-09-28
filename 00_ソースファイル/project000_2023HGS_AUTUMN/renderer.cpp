@@ -48,7 +48,7 @@ HRESULT CRenderer::Init(HWND hWnd, BOOL bWindow)
 
 	// Direct3Dオブジェクトの生成
 	m_pD3D = Direct3DCreate9(D3D_SDK_VERSION);
-	if (UNUSED(m_pD3D))
+	if (m_pD3D == NULL)
 	{ // オブジェクトの生成に失敗した場合
 
 		// 失敗を返す
@@ -200,7 +200,7 @@ CRenderer *CRenderer::Create(HWND hWnd)
 	// ポインタを宣言
 	CRenderer *pRenderer = NULL;	// レンダラー生成用
 
-	if (UNUSED(pRenderer))
+	if (pRenderer == NULL)
 	{ // 使用されていない場合
 
 		// メモリを確保

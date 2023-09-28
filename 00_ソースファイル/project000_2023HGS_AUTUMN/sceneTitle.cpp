@@ -58,7 +58,7 @@ HRESULT CSceneTitle::Init(void)
 	//--------------------------------------------------------
 	// タイトルマネージャーの生成
 	m_pTitleManager = CTitleManager::Create();
-	if (UNUSED(m_pTitleManager))
+	if (m_pTitleManager == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す

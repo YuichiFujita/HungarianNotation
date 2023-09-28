@@ -152,7 +152,7 @@ CScroll2D *CScroll2D::Create(const float fMoveU, const float fMoveV, const D3DXV
 	// ポインタを宣言
 	CScroll2D *pScroll2D = NULL;	// スクロール2D生成用
 
-	if (UNUSED(pScroll2D))
+	if (pScroll2D == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

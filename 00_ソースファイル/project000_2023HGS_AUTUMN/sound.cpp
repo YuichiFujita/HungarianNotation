@@ -332,7 +332,7 @@ CSound *CSound::Create(HWND hWnd)
 	// ポインタを宣言
 	CSound *pSound = NULL;	// サウンド生成用
 
-	if (UNUSED(pSound))
+	if (pSound == NULL)
 	{ // 使用されていない場合
 
 		// メモリを確保

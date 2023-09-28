@@ -249,7 +249,7 @@ CMotion *CMotion::Create(void)
 	// ポインタを宣言
 	CMotion *pMotion = NULL;	// モーション生成用
 
-	if (UNUSED(pMotion))
+	if (pMotion == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

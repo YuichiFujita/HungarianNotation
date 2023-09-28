@@ -174,7 +174,7 @@ CTexture *CTexture::Create(void)
 	// ポインタを宣言
 	CTexture *pTexture = NULL;	// テクスチャ生成用
 
-	if (UNUSED(pTexture))
+	if (pTexture == NULL)
 	{ // 使用されていない場合
 
 		// メモリを確保

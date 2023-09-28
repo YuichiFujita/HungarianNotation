@@ -183,7 +183,7 @@ CModel *CModel::Create(void)
 	// ポインタを宣言
 	CModel *pModel = NULL;	// モデル生成用
 
-	if (UNUSED(pModel))
+	if (pModel == NULL)
 	{ // 使用されていない場合
 
 		// メモリを確保
@@ -268,14 +268,14 @@ HRESULT CModel::LoadXFileModel(const int nID, const char *pFileName)
 		return E_FAIL;
 	}
 
-	if (UNUSED(m_aModel[nID].pTextureID))
+	if (m_aModel[nID].pTextureID == NULL)
 	{ // 使用されていない場合
 
 		// 確保したメモリのアドレスを取得
 		m_aModel[nID].pTextureID = (int*)malloc(m_aModel[nID].dwNumMat * sizeof(int*));
 	}
 
-	if (UNUSED(m_aModel[nID].pTextureID))
+	if (m_aModel[nID].pTextureID == NULL)
 	{ // 動的確保に失敗した場合
 
 		// エラーメッセージボックス

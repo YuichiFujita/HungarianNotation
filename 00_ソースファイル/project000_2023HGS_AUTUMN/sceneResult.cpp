@@ -58,7 +58,7 @@ HRESULT CSceneResult::Init(void)
 	//--------------------------------------------------------
 	// リザルトマネージャーの生成
 	m_pResultManager = CResultManager::Create();
-	if (UNUSED(m_pResultManager))
+	if (m_pResultManager == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す

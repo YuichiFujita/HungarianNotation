@@ -111,7 +111,7 @@ CWall *CWall::Create
 	CTexture *pTexture = CManager::GetTexture();	// テクスチャへのポインタ
 	CWall *pWall = NULL;	// 壁生成用
 
-	if (UNUSED(pWall))
+	if (pWall == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

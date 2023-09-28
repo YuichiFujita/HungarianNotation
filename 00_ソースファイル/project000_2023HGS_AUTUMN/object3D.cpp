@@ -93,7 +93,7 @@ HRESULT CObject3D::Init(void)
 	m_bLight	= true;				// ライティング状況
 	m_nTextureID = NONE_IDX;		// テクスチャインデックス
 
-	if (UNUSED(m_pVtxBuff))
+	if (m_pVtxBuff == NULL)
 	{ // 非使用中の場合
 
 		// 頂点バッファの生成
@@ -115,7 +115,7 @@ HRESULT CObject3D::Init(void)
 	}
 	else { assert(false); return E_FAIL; }	// 使用中
 
-	if (UNUSED(m_pPosGapBuff))
+	if (m_pPosGapBuff == NULL)
 	{ // 非使用中の場合
 
 		// 座標のずれバッファのメモリ確保
@@ -251,7 +251,7 @@ CObject3D *CObject3D::Create
 	// ポインタを宣言
 	CObject3D *pObject3D = NULL;	// オブジェクト3D生成用
 
-	if (UNUSED(pObject3D))
+	if (pObject3D == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

@@ -105,7 +105,7 @@ CLight *CLight::Create(void)
 	// ポインタを宣言
 	CLight *pLight = NULL;	// ライト生成用
 
-	if (UNUSED(pLight))
+	if (pLight == NULL)
 	{ // 使用されていない場合
 
 		// メモリを確保

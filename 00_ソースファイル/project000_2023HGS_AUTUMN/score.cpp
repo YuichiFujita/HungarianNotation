@@ -61,7 +61,7 @@ HRESULT CScore::Init(void)
 
 		// 数字の生成
 		m_apValue[nCntScore] = CValue::Create(CValue::TEXTURE_MAGIC_GREEN);
-		if (UNUSED(m_apValue[nCntScore]))
+		if (m_apValue[nCntScore] == NULL)
 		{ // 生成に失敗した場合
 
 			// 失敗を返す
@@ -128,7 +128,7 @@ CScore *CScore::Create
 	// ポインタを宣言
 	CScore *pScore = NULL;		// スコア生成用
 
-	if (UNUSED(pScore))
+	if (pScore == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

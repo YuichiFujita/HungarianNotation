@@ -71,7 +71,7 @@ HRESULT CTutorialManager::Init(void)
 		SCREEN_CENT,	// 位置
 		SCREEN_SIZE		// 大きさ
 	);
-	if (UNUSED(m_pExplain))
+	if (m_pExplain == NULL)
 	{ // 生成に失敗した場合
 
 		// 失敗を返す
@@ -141,7 +141,7 @@ CTutorialManager *CTutorialManager::Create(void)
 	// ポインタを宣言
 	CTutorialManager *pTutorialManager = NULL;	// チュートリアルマネージャー生成用
 
-	if (UNUSED(pTutorialManager))
+	if (pTutorialManager == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

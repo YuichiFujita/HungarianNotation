@@ -77,7 +77,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	//--------------------------------------------------------
 	// レンダラーの生成
 	m_pRenderer = CRenderer::Create(hWnd);
-	if (UNUSED(m_pRenderer))
+	if (m_pRenderer == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -87,7 +87,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	// キーボードの生成
 	m_pKeyboard = CInputKeyboard::Create(hInstance, hWnd);
-	if (UNUSED(m_pKeyboard))
+	if (m_pKeyboard == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -97,7 +97,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	// マウスの生成
 	m_pMouse = CInputMouse::Create(hInstance, hWnd);
-	if (UNUSED(m_pMouse))
+	if (m_pMouse == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -107,7 +107,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	// パッドの生成
 	m_pPad = CInputPad::Create();
-	if (UNUSED(m_pPad))
+	if (m_pPad == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -117,7 +117,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	// サウンドの生成
 	m_pSound = CSound::Create(hWnd);
-	if (UNUSED(m_pSound))
+	if (m_pSound == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -127,7 +127,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	// カメラの生成
 	m_pCamera = CCamera::Create();
-	if (UNUSED(m_pCamera))
+	if (m_pCamera == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -137,7 +137,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	// ライトの生成
 	m_pLight = CLight::Create();
-	if (UNUSED(m_pLight))
+	if (m_pLight == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -147,7 +147,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	// データ保存マネージャーの生成
 	m_pRetentionManager = CRetentionManager::Create();
-	if (UNUSED(m_pRetentionManager))
+	if (m_pRetentionManager == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -160,7 +160,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	//--------------------------------------------------------
 	// テクスチャの生成・読込
 	m_pTexture = CTexture::Create();
-	if (UNUSED(m_pTexture))
+	if (m_pTexture == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -170,7 +170,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	// モデルの生成・読込
 	m_pModel = CModel::Create();
-	if (UNUSED(m_pModel))
+	if (m_pModel == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -180,7 +180,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	// フェードの生成・シーンの設定
 	m_pFade = CFade::Create();
-	if (UNUSED(m_pFade))
+	if (m_pFade == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -193,7 +193,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	//--------------------------------------------------------
 	// デバッグ表示の生成
 	m_pDebugProc = CDebugProc::Create(hWnd);
-	if (UNUSED(m_pDebugProc))
+	if (m_pDebugProc == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -205,7 +205,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	// デバッグの生成
 	m_pDebug = CDebug::Create();
-	if (UNUSED(m_pDebug))
+	if (m_pDebug == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -467,7 +467,7 @@ CManager *CManager::Create(HINSTANCE hInstance, HWND hWnd)
 	// ポインタを宣言
 	CManager *pManager = NULL;		// マネージャー生成用
 
-	if (UNUSED(pManager))
+	if (pManager == NULL)
 	{ // 使用されていない場合
 
 		// メモリを確保
@@ -570,12 +570,12 @@ HRESULT CManager::SetMode(const CScene::MODE mode)
 	// オブジェクトの全破棄
 	CObject::ReleaseAll();
 
-	if (UNUSED(m_pScene))
+	if (m_pScene == NULL)
 	{ // シーンが非使用中の場合
 
 		// シーンの生成
 		m_pScene = CScene::Create(mode);
-		if (UNUSED(m_pScene))
+		if (m_pScene == NULL)
 		{ // 非使用中の場合
 
 			// 失敗を返す

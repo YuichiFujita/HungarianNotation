@@ -158,7 +158,7 @@ CStage *CStage::Create(void)
 	// ポインタを宣言
 	CStage *pStage = NULL;		// ステージ生成用
 
-	if (UNUSED(pStage))
+	if (pStage == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

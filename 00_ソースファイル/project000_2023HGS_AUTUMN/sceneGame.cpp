@@ -84,7 +84,7 @@ HRESULT CSceneGame::Init(void)
 		TIME_VAL_SPACE,	// 数字の空白
 		TIME_PART_SPACE	// 区切りの空白
 	);
-	if (UNUSED(m_pTimerManager))
+	if (m_pTimerManager == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -99,7 +99,7 @@ HRESULT CSceneGame::Init(void)
 		SCO_SIZE,	// 大きさ
 		SCO_SPACE	// 空白
 	);
-	if (UNUSED(m_pScore))
+	if (m_pScore == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -112,7 +112,7 @@ HRESULT CSceneGame::Init(void)
 
 	// ゲームマネージャーの生成
 	m_pGameManager = CGameManager::Create();
-	if (UNUSED(m_pGameManager))
+	if (m_pGameManager == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -122,7 +122,7 @@ HRESULT CSceneGame::Init(void)
 
 	// ポーズの生成
 	m_pPause = CPause::Create();
-	if (UNUSED(m_pPause))
+	if (m_pPause == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す

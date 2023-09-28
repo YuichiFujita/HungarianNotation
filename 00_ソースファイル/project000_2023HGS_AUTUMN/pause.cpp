@@ -88,7 +88,7 @@ HRESULT CPause::Init(void)
 		VEC3_ZERO,		// 向き
 		BG_COL			// 色
 	);
-	if (UNUSED(m_pBG))
+	if (m_pBG == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -110,7 +110,7 @@ HRESULT CPause::Init(void)
 			VEC3_ZERO,	// 向き
 			DEFAULT_COL	// 色
 		);
-		if (UNUSED(m_apSelect[nCntPause]))
+		if (m_apSelect[nCntPause] == NULL)
 		{ // 非使用中の場合
 
 			// 失敗を返す
@@ -244,7 +244,7 @@ CPause *CPause::Create(void)
 	// ポインタを宣言
 	CPause *pPause = NULL;		// ポーズ生成用
 
-	if (UNUSED(pPause))
+	if (pPause == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

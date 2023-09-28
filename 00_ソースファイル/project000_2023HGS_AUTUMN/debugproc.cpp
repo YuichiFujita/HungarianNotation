@@ -220,7 +220,7 @@ CDebugProc *CDebugProc::Create(HWND hWnd)
 	// ポインタを宣言
 	CDebugProc *pDebugProc = NULL;		// デバッグ表示生成用
 
-	if (UNUSED(pDebugProc))
+	if (pDebugProc == NULL)
 	{ // 使用されていない場合
 
 		// メモリを確保

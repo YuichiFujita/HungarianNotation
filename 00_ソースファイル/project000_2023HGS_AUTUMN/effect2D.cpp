@@ -193,7 +193,7 @@ CEffect2D *CEffect2D::Create
 	CTexture *pTexture = CManager::GetTexture();	// テクスチャへのポインタ
 	CEffect2D *pEffect2D = NULL;	// エフェクト2D生成用
 
-	if (UNUSED(pEffect2D))
+	if (pEffect2D == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

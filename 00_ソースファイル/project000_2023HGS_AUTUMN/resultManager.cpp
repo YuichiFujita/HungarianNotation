@@ -133,7 +133,7 @@ HRESULT CResultManager::Init(void)
 		VEC3_ZERO,		// 向き
 		INITCOL_FADE	// 色
 	);
-	if (UNUSED(m_pFade))
+	if (m_pFade == NULL)
 	{ // 生成に失敗した場合
 
 		// 失敗を返す
@@ -156,7 +156,7 @@ HRESULT CResultManager::Init(void)
 			aPosResult[nCntResult],			// 位置
 			SIZE_RESULT * SET_RESULT_SCALE	// 大きさ
 		);
-		if (UNUSED(m_apResult[nCntResult]))
+		if (m_apResult[nCntResult] == NULL)
 		{ // 生成に失敗した場合
 
 			// 失敗を返す
@@ -183,7 +183,7 @@ HRESULT CResultManager::Init(void)
 		POS_SCORE_LOGO,						// 位置
 		SIZE_SCORE_LOGO * SET_SCORE_SCALE	// 大きさ
 	);
-	if (UNUSED(m_pScoreLogo))
+	if (m_pScoreLogo == NULL)
 	{ // 生成に失敗した場合
 
 		// 失敗を返す
@@ -210,7 +210,7 @@ HRESULT CResultManager::Init(void)
 		SIZE_SCORE * SET_SCORE_SCALE,	// 大きさ
 		SPACE_SCORE						// 空白
 	);
-	if (UNUSED(m_pScore))
+	if (m_pScore == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -236,7 +236,7 @@ HRESULT CResultManager::Init(void)
 		POS_TIME_LOGO,					// 位置
 		SIZE_TIME_LOGO * SET_TIME_SCALE	// 大きさ
 	);
-	if (UNUSED(m_pTimeLogo))
+	if (m_pTimeLogo == NULL)
 	{ // 生成に失敗した場合
 
 		// 失敗を返す
@@ -265,7 +265,7 @@ HRESULT CResultManager::Init(void)
 		SPACE_TIME_VAL,						// 数字の空白
 		SPACE_TIME_PART						// 区切りの空白
 	);
-	if (UNUSED(m_pTime))
+	if (m_pTime == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -449,7 +449,7 @@ CResultManager *CResultManager::Create(void)
 	// ポインタを宣言
 	CResultManager *pResultManager = NULL;	// リザルトマネージャー生成用
 
-	if (UNUSED(pResultManager))
+	if (pResultManager == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

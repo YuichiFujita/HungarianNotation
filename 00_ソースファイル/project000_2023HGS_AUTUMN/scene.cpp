@@ -61,7 +61,7 @@ HRESULT CScene::Init(void)
 {
 	// ステージの生成
 	m_pStage = CStage::Create();
-	if (UNUSED(m_pStage))
+	if (m_pStage == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -71,7 +71,7 @@ HRESULT CScene::Init(void)
 
 	// 地面オブジェクトの生成
 	m_pField = CField::Create(CField::TEXTURE_FIELD, VEC3_ZERO, VEC3_ZERO, FIELD_SIZE, XCOL_WHITE, FIELD_PART);
-	if (UNUSED(m_pField))
+	if (m_pField == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -154,7 +154,7 @@ CScene *CScene::Create(MODE mode)
 	// ポインタを宣言
 	CScene *pScene = NULL;	// シーン生成用
 
-	if (UNUSED(pScene))
+	if (pScene == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

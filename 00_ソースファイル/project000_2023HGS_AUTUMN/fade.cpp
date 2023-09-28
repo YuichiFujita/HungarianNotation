@@ -69,7 +69,7 @@ HRESULT CFade::Init(void)
 		VEC3_ZERO,	// 向き
 		XCOL_WHITE	// 色
 	);
-	if (UNUSED(m_pObject2D))
+	if (m_pObject2D == NULL)
 	{ // 生成に失敗した場合
 
 		// 失敗を返す
@@ -224,7 +224,7 @@ CFade *CFade::Create(void)
 	// ポインタを宣言
 	CFade *pFade = NULL;	// フェード生成用
 
-	if (UNUSED(pFade))
+	if (pFade == NULL)
 	{ // 使用されていない場合
 
 		// メモリを確保

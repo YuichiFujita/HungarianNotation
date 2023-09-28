@@ -109,7 +109,7 @@ void CMultiModel::Draw(void)
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
 
 	// 親マトリックスを設定
-	if (UNUSED(m_pParent))
+	if (m_pParent == NULL)
 	{ // 親が存在しない場合
 
 		// 現在のマトリックスを取得
@@ -166,7 +166,7 @@ CMultiModel *CMultiModel::Create(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rRo
 	// ポインタを宣言
 	CMultiModel *pMultiModel = NULL;	// マルチモデル生成用
 
-	if (UNUSED(pMultiModel))
+	if (pMultiModel == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保
@@ -377,7 +377,7 @@ HRESULT CMultiModel::SetMaterial(const LPD3DXBUFFER pBuffMat, const int nNumMat)
 		m_pMat = NULL;
 	}
 
-	if (UNUSED(m_pMat))
+	if (m_pMat == NULL)
 	{ // ポインタが使用されていない場合
 
 		// マテリアル数分のメモリ確保

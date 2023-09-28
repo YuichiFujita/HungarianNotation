@@ -361,7 +361,7 @@ CObjectOrbit *CObjectOrbit::Create
 	// ポインタを宣言
 	CObjectOrbit *pObjectOrbit = NULL;		// オブジェクト軌跡生成用
 
-	if (UNUSED(pObjectOrbit))
+	if (pObjectOrbit == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保
@@ -558,7 +558,7 @@ HRESULT CObjectOrbit::SetLength(const int nPart)
 	}
 
 	// 各頂点座標の情報を設定
-	if (UNUSED(m_orbit.pPosPoint))
+	if (m_orbit.pPosPoint == NULL)
 	{ // 非使用中の場合
 
 		// 各頂点座標のメモリ確保
@@ -587,7 +587,7 @@ HRESULT CObjectOrbit::SetLength(const int nPart)
 	}
 
 	// 各頂点カラーの情報を設定
-	if (UNUSED(m_orbit.pColPoint))
+	if (m_orbit.pColPoint == NULL)
 	{ // 非使用中の場合
 
 		// 各頂点カラーのメモリ確保
@@ -616,7 +616,7 @@ HRESULT CObjectOrbit::SetLength(const int nPart)
 	}
 
 	// 頂点バッファの情報を設定
-	if (UNUSED(m_pVtxBuff))
+	if (m_pVtxBuff == NULL)
 	{ // 非使用中の場合
 
 		// 頂点バッファの生成

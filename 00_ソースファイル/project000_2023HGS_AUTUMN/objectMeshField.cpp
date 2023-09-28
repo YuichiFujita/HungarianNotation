@@ -242,7 +242,7 @@ CObjectMeshField *CObjectMeshField::Create
 	// ポインタを宣言
 	CObjectMeshField *pObjectMeshField = NULL;		// オブジェクトメッシュフィールド生成用
 
-	if (UNUSED(pObjectMeshField))
+	if (pObjectMeshField == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保
@@ -626,7 +626,7 @@ HRESULT CObjectMeshField::SetPattern(const POSGRID2& rPart)
 	}
 
 	// 頂点バッファの情報を設定
-	if (UNUSED(m_pVtxBuff))
+	if (m_pVtxBuff == NULL)
 	{ // 非使用中の場合
 
 		// 頂点バッファの生成
@@ -661,7 +661,7 @@ HRESULT CObjectMeshField::SetPattern(const POSGRID2& rPart)
 	}
 
 	// インデックスバッファの情報を設定
-	if (UNUSED(m_pIdxBuff))
+	if (m_pIdxBuff == NULL)
 	{ // 非使用中の場合
 
 		// インデックスバッファの生成
@@ -696,7 +696,7 @@ HRESULT CObjectMeshField::SetPattern(const POSGRID2& rPart)
 	}
 
 	// 座標のずれバッファの情報を設定
-	if (UNUSED(m_pPosGapBuff))
+	if (m_pPosGapBuff == NULL)
 	{ // 非使用中の場合
 
 		// 座標のずれバッファのメモリ確保
@@ -725,7 +725,7 @@ HRESULT CObjectMeshField::SetPattern(const POSGRID2& rPart)
 	}
 
 	// 法線バッファの情報を設定
-	if (UNUSED(m_pNorBuff))
+	if (m_pNorBuff == NULL)
 	{ // 非使用中の場合
 
 		// 変数を宣言
@@ -757,7 +757,7 @@ HRESULT CObjectMeshField::SetPattern(const POSGRID2& rPart)
 	}
 
 	// 法線の使用数バッファの情報を設定
-	if (UNUSED(m_pNumNorBuff))
+	if (m_pNumNorBuff == NULL)
 	{ // 非使用中の場合
 
 		// 法線の使用数バッファのメモリ確保

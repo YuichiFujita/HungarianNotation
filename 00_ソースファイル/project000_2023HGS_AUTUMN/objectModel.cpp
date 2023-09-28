@@ -155,7 +155,7 @@ CObjectModel *CObjectModel::Create(const D3DXVECTOR3& rPos, const D3DXVECTOR3& r
 	// ポインタを宣言
 	CObjectModel *pObjectModel = NULL;		// オブジェクトモデル生成用
 
-	if (UNUSED(pObjectModel))
+	if (pObjectModel == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

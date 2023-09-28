@@ -131,7 +131,7 @@ CField *CField::Create
 	CTexture *pTexture = CManager::GetTexture();	// テクスチャへのポインタ
 	CField *pField = NULL;	// 地面生成用
 
-	if (UNUSED(pField))
+	if (pField == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保
@@ -270,7 +270,7 @@ void CField::LoadSetup(void)
 								// 頂点数を設定
 								nNumVtx = (m_aTerrainInfo[nID].part.x + 1) * (m_aTerrainInfo[nID].part.y + 1);
 
-								if (UNUSED(m_aTerrainInfo[nID].pPosGap))
+								if (m_aTerrainInfo[nID].pPosGap == NULL)
 								{ // ポインタが使用されていない場合
 
 									// 頂点数分メモリ確保

@@ -218,7 +218,7 @@ CEffect3D *CEffect3D::Create
 	CTexture *pTexture = CManager::GetTexture();	// テクスチャへのポインタ
 	CEffect3D *pEffect3D = NULL;	// エフェクト3D生成用
 
-	if (UNUSED(pEffect3D))
+	if (pEffect3D == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

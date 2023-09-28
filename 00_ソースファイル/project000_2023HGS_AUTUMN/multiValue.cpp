@@ -151,7 +151,7 @@ CMultiValue *CMultiValue::Create
 	// ポインタを宣言
 	CMultiValue *pMultiValue = NULL;	// マルチ数字生成用
 
-	if (UNUSED(pMultiValue))
+	if (pMultiValue == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保
@@ -281,7 +281,7 @@ HRESULT CMultiValue::SetDigit(const int nDigit)
 
 		// 数字の生成
 		m_apValue[nCntValue] = CValue::Create(CValue::TEXTURE_NORMAL);
-		if (UNUSED(m_apValue[nCntValue]))
+		if (m_apValue[nCntValue] == NULL)
 		{ // 生成に失敗した場合
 
 			// 失敗を返す

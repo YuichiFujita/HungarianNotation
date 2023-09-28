@@ -113,7 +113,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR lpCmdLine
 
 	// マネージャーの生成
 	pManager = CManager::Create(hInstance, hWnd);
-	if (UNUSED(pManager))
+	if (pManager == NULL)
 	{ // 非使用中の場合
 
 		// 例外を返す

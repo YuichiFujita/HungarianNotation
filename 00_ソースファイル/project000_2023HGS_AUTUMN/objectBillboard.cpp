@@ -94,7 +94,7 @@ HRESULT CObjectBillboard::Init(void)
 	m_fLength  = 0.0f;			// 対角線の長さ
 	m_nTextureID = NONE_IDX;	// テクスチャインデックス
 
-	if (UNUSED(m_pVtxBuff))
+	if (m_pVtxBuff == NULL)
 	{ // 非使用中の場合
 
 		// 頂点バッファの生成
@@ -250,7 +250,7 @@ CObjectBillboard *CObjectBillboard::Create
 	// ポインタを宣言
 	CObjectBillboard *pObjectBillboard = NULL;	// オブジェクトビルボード生成用
 
-	if (UNUSED(pObjectBillboard))
+	if (pObjectBillboard == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

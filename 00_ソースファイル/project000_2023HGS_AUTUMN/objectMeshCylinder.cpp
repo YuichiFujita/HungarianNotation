@@ -201,7 +201,7 @@ CObjectMeshCylinder *CObjectMeshCylinder::Create
 	// ポインタを宣言
 	CObjectMeshCylinder *pObjectMeshCylinder = NULL;	// オブジェクトメッシュシリンダー生成用
 
-	if (UNUSED(pObjectMeshCylinder))
+	if (pObjectMeshCylinder == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保
@@ -372,7 +372,7 @@ HRESULT CObjectMeshCylinder::SetPattern(const POSGRID2& rPart)
 	}
 
 	// 頂点バッファの情報を設定
-	if (UNUSED(m_pVtxBuff))
+	if (m_pVtxBuff == NULL)
 	{ // 非使用中の場合
 
 		// 頂点バッファの生成
@@ -404,7 +404,7 @@ HRESULT CObjectMeshCylinder::SetPattern(const POSGRID2& rPart)
 	}
 
 	// インデックスバッファの情報を設定
-	if (UNUSED(m_pIdxBuff))
+	if (m_pIdxBuff == NULL)
 	{ // 非使用中の場合
 
 		// インデックスバッファの生成

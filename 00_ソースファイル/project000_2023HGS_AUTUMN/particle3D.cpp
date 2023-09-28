@@ -932,7 +932,7 @@ CParticle3D *CParticle3D::Create(const TYPE type, const D3DXVECTOR3& rPos, const
 	// ポインタを宣言
 	CParticle3D *pParticle3D = NULL;	// パーティクル3D生成用
 
-	if (UNUSED(pParticle3D))
+	if (pParticle3D == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

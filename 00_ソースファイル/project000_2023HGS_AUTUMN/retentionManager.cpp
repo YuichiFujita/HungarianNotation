@@ -70,7 +70,7 @@ CRetentionManager *CRetentionManager::Create(void)
 	// ポインタを宣言
 	CRetentionManager *pRetentionManager = NULL;	// データ保存マネージャー生成用
 
-	if (UNUSED(pRetentionManager))
+	if (pRetentionManager == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

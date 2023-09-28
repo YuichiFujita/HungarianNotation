@@ -267,7 +267,7 @@ CObjectTornado *CObjectTornado::Create
 	// ポインタを宣言
 	CObjectTornado *pObjectTornado = NULL;	// オブジェクト竜巻生成用
 
-	if (UNUSED(pObjectTornado))
+	if (pObjectTornado == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保
@@ -542,7 +542,7 @@ HRESULT CObjectTornado::SetVortex(const int nNumAround, const int nPattern)
 	}
 
 	// 頂点バッファの情報を設定
-	if (UNUSED(m_pVtxBuff))
+	if (m_pVtxBuff == NULL)
 	{ // 非使用中の場合
 
 		// 頂点バッファの生成

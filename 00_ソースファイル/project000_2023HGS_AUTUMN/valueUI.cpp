@@ -55,7 +55,7 @@ HRESULT CValueUI::Init(void)
 
 	// タイトル情報の生成
 	m_pTitle = CObject2D::Create(VEC3_ZERO);
-	if (UNUSED(m_pTitle))
+	if (m_pTitle == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -68,7 +68,7 @@ HRESULT CValueUI::Init(void)
 
 	// 数字情報の生成
 	m_pValue = CMultiValue::Create(CValue::TEXTURE_NORMAL, 0, 1, VEC3_ZERO, VEC3_ONE, VEC3_ZERO);
-	if (UNUSED(m_pValue))
+	if (m_pValue == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -159,7 +159,7 @@ CValueUI *CValueUI::Create
 	// ポインタを宣言
 	CValueUI *pValueUI = NULL;	// 数字UI生成用
 
-	if (UNUSED(pValueUI))
+	if (pValueUI == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

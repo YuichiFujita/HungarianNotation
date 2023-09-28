@@ -53,7 +53,7 @@ HRESULT CSceneTutorial::Init(void)
 	//--------------------------------------------------------
 	// チュートリアルマネージャーの生成
 	m_pTutorialManager = CTutorialManager::Create();
-	if (UNUSED(m_pTutorialManager))
+	if (m_pTutorialManager == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す

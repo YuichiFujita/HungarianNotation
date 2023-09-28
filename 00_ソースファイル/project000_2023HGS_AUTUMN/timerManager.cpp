@@ -92,7 +92,7 @@ HRESULT CTimerManager::Init(void)
 
 		// 数字の生成
 		m_apValue[nCntTimer] = CValue::Create(CValue::TEXTURE_MAGIC_GREEN);
-		if (UNUSED(m_apValue[nCntTimer]))
+		if (m_apValue[nCntTimer] == NULL)
 		{ // 生成に失敗した場合
 
 			// 失敗を返す
@@ -109,7 +109,7 @@ HRESULT CTimerManager::Init(void)
 
 		// 区切りの生成
 		m_apPart[nCntTimer] = CObject2D::Create(VEC3_ZERO);
-		if (UNUSED(m_apPart[nCntTimer]))
+		if (m_apPart[nCntTimer] == NULL)
 		{ // 生成に失敗した場合
 
 			// 失敗を返す
@@ -228,7 +228,7 @@ CTimerManager *CTimerManager::Create
 	// ポインタを宣言
 	CTimerManager *pTimerManager = NULL;	// タイマーマネージャー生成用
 
-	if (UNUSED(pTimerManager))
+	if (pTimerManager == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

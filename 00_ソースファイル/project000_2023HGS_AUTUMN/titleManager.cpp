@@ -119,7 +119,7 @@ HRESULT CTitleManager::Init(void)
 		VEC3_ZERO,		// 向き
 		COL_SELECTBG	// 色
 	);
-	if (UNUSED(m_pSelectBG))
+	if (m_pSelectBG == NULL)
 	{ // 生成に失敗した場合
 
 		// 失敗を返す
@@ -147,7 +147,7 @@ HRESULT CTitleManager::Init(void)
 			VEC3_ZERO,		// 向き
 			DEFAULT_COL		// 色
 		);
-		if (UNUSED(m_apSelect[nCntTitle]))
+		if (m_apSelect[nCntTitle] == NULL)
 		{ // 生成に失敗した場合
 
 			// 失敗を返す
@@ -177,7 +177,7 @@ HRESULT CTitleManager::Init(void)
 			aPosLogo[nCntTitle],	// 位置
 			SIZE_TITLE	// 大きさ
 		);
-		if (UNUSED(m_apLogo[nCntTitle]))
+		if (m_apLogo[nCntTitle] == NULL)
 		{ // 生成に失敗した場合
 
 			// 失敗を返す
@@ -206,7 +206,7 @@ HRESULT CTitleManager::Init(void)
 		VEC3_ZERO,		// 向き
 		COL_FADE		// 色
 	);
-	if (UNUSED(m_pFade))
+	if (m_pFade == NULL)
 	{ // 生成に失敗した場合
 
 		// 失敗を返す
@@ -318,7 +318,7 @@ CTitleManager *CTitleManager::Create(void)
 	// ポインタを宣言
 	CTitleManager *pTitleManager = NULL;	// タイトルマネージャー生成用
 
-	if (UNUSED(pTitleManager))
+	if (pTitleManager == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

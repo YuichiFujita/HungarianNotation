@@ -199,7 +199,7 @@ CObjectMeshWall *CObjectMeshWall::Create
 	// ポインタを宣言
 	CObjectMeshWall *pObjectMeshWall = NULL;		// オブジェクトメッシュウォール生成用
 
-	if (UNUSED(pObjectMeshWall))
+	if (pObjectMeshWall == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保
@@ -355,7 +355,7 @@ HRESULT CObjectMeshWall::SetPattern(const POSGRID2& rPart)
 	}
 
 	// 頂点バッファの情報を設定
-	if (UNUSED(m_pVtxBuff))
+	if (m_pVtxBuff == NULL)
 	{ // 非使用中の場合
 
 		// 頂点バッファの生成
@@ -387,7 +387,7 @@ HRESULT CObjectMeshWall::SetPattern(const POSGRID2& rPart)
 	}
 
 	// インデックスバッファの情報を設定
-	if (UNUSED(m_pIdxBuff))
+	if (m_pIdxBuff == NULL)
 	{ // 非使用中の場合
 
 		// インデックスバッファの生成

@@ -150,7 +150,7 @@ HRESULT CPlayer::Init(void)
 		CObjectGauge3D::TYPE_PLAYER,	// 枠種類
 		GAUGE_GAUGESIZE					// 枠大きさ
 	);
-	if (UNUSED(m_pLife))
+	if (m_pLife == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -160,7 +160,7 @@ HRESULT CPlayer::Init(void)
 
 	// 影の生成
 	m_pShadow = CShadow::Create(CShadow::TEXTURE_NORMAL, SHADOW_SIZE, this);
-	if (UNUSED(m_pShadow))
+	if (m_pShadow == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -300,7 +300,7 @@ CPlayer *CPlayer::Create
 	// ポインタを宣言
 	CPlayer *pPlayer = NULL;	// プレイヤー生成用
 
-	if (UNUSED(pPlayer))
+	if (pPlayer == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

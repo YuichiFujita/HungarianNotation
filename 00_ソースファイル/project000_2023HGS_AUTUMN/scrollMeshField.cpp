@@ -163,7 +163,7 @@ CScrollMeshField *CScrollMeshField::Create
 	// ポインタを宣言
 	CScrollMeshField *pScrollMeshField = NULL;	// スクロールメッシュフィールド生成用
 
-	if (UNUSED(pScrollMeshField))
+	if (pScrollMeshField == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

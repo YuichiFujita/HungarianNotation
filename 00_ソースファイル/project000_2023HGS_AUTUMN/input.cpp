@@ -62,7 +62,7 @@ HRESULT CInput::Init(HINSTANCE hInstance, HWND hWnd)
 	// メンバ変数を初期化
 	m_pDevice = NULL;	// DirectInputデバイス
 
-	if (UNUSED(m_pInput))
+	if (m_pInput == NULL)
 	{ // 入力デバイスが使用されていない場合
 
 		// DirectInputオブジェクトの生成
@@ -262,7 +262,7 @@ CInputKeyboard *CInputKeyboard::Create(HINSTANCE hInstance, HWND hWnd)
 	// ポインタを宣言
 	CInputKeyboard *pKeyboard = NULL;	// キーボード生成用
 
-	if (UNUSED(pKeyboard))
+	if (pKeyboard == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保
@@ -496,7 +496,7 @@ CInputMouse *CInputMouse::Create(HINSTANCE hInstance, HWND hWnd)
 	// ポインタを宣言
 	CInputMouse *pMouse = NULL;		// マウス生成用
 
-	if (UNUSED(pMouse))
+	if (pMouse == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保
@@ -884,7 +884,7 @@ CInputPad *CInputPad::Create(void)
 	// ポインタを宣言
 	CInputPad *pPad = NULL;		// パッド生成用
 
-	if (UNUSED(pPad))
+	if (pPad == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

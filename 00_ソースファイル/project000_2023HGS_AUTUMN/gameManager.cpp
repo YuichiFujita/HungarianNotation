@@ -62,7 +62,7 @@ CGameManager *CGameManager::Create(void)
 	// ポインタを宣言
 	CGameManager *pGameManager = NULL;	// ゲームマネージャー生成用
 
-	if (UNUSED(pGameManager))
+	if (pGameManager == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

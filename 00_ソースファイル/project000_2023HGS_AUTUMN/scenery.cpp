@@ -125,7 +125,7 @@ CScenery *CScenery::Create
 	CTexture *pTexture = CManager::GetTexture();	// テクスチャへのポインタ
 	CScenery *pScenery = NULL;	// 景色生成用
 
-	if (UNUSED(pScenery))
+	if (pScenery == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

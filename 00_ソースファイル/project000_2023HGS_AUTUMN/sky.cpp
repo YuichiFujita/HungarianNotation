@@ -121,7 +121,7 @@ CSky *CSky::Create
 	CTexture *pTexture = CManager::GetTexture();	// テクスチャへのポインタ
 	CSky *pSky = NULL;	// 空生成用
 
-	if (UNUSED(pSky))
+	if (pSky == NULL)
 	{ // 使用されていない場合
 
 		// メモリ確保

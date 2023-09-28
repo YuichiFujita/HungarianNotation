@@ -387,7 +387,7 @@ CCamera *CCamera::Create(void)
 	// ポインタを宣言
 	CCamera *pCamera = NULL;	// カメラ生成用
 
-	if (UNUSED(pCamera))
+	if (pCamera == NULL)
 	{ // 使用されていない場合
 
 		// メモリを確保
