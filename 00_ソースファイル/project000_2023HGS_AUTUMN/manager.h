@@ -19,18 +19,18 @@
 //************************************************************
 //	前方宣言
 //************************************************************
-class CRenderer;		// レンダラークラス
-class CInputKeyboard;	// キーボードクラス
-class CInputMouse;		// マウスクラス
-class CInputPad;		// パッドクラス
-class CSound;			// サウンドクラス
-class CCamera;			// カメラクラス
-class CLight;			// ライトクラス
-class CTexture;			// テクスチャクラス
-class CModel;			// モデルクラス
-class CFade;			// フェードクラス
-class CGameManager;		// ゲームマネージャークラス
-class CDebugProc;		// デバッグ表示クラス
+class CRenderer;			// レンダラークラス
+class CInputKeyboard;		// キーボードクラス
+class CInputMouse;			// マウスクラス
+class CInputPad;			// パッドクラス
+class CSound;				// サウンドクラス
+class CCamera;				// カメラクラス
+class CLight;				// ライトクラス
+class CTexture;				// テクスチャクラス
+class CModel;				// モデルクラス
+class CFade;				// フェードクラス
+class CRetentionManager;	// データ保存マネージャークラス
+class CDebugProc;			// デバッグ表示クラス
 
 #ifdef _DEBUG	// デバッグ処理
 
@@ -64,19 +64,19 @@ public:
 	static HRESULT SetMode(const CScene::MODE mode);					// モード設定
 	static CScene::MODE GetMode(void);									// モード取得
 
-	static CRenderer		*GetRenderer(void);		// レンダラー取得
-	static CInputKeyboard	*GetKeyboard(void);		// キーボード取得
-	static CInputMouse		*GetMouse(void);		// マウス取得
-	static CInputPad		*GetPad(void);			// パッド取得
-	static CSound			*GetSound(void);		// サウンド取得
-	static CCamera			*GetCamera(void);		// カメラ取得
-	static CLight			*GetLight(void);		// ライト取得
-	static CTexture			*GetTexture(void);		// テクスチャ取得
-	static CModel			*GetModel(void);		// モデル取得
-	static CFade			*GetFade(void);			// フェード取得
-	static CScene			*GetScene(void);		// シーン取得
-	static CGameManager		*GetGameManager(void);	// ゲームマネージャー取得
-	static CDebugProc		*GetDebugProc(void);	// デバッグ表示取得
+	static CRenderer			*GetRenderer(void);			// レンダラー取得
+	static CInputKeyboard		*GetKeyboard(void);			// キーボード取得
+	static CInputMouse			*GetMouse(void);			// マウス取得
+	static CInputPad			*GetPad(void);				// パッド取得
+	static CSound				*GetSound(void);			// サウンド取得
+	static CCamera				*GetCamera(void);			// カメラ取得
+	static CLight				*GetLight(void);			// ライト取得
+	static CTexture				*GetTexture(void);			// テクスチャ取得
+	static CModel				*GetModel(void);			// モデル取得
+	static CFade				*GetFade(void);				// フェード取得
+	static CScene				*GetScene(void);			// シーン取得
+	static CRetentionManager	*GetRetentionManager(void);	// データ保存マネージャー取得
+	static CDebugProc			*GetDebugProc(void);		// デバッグ表示取得
 
 #ifdef _DEBUG	// デバッグ処理
 
@@ -87,19 +87,19 @@ public:
 
 private:
 	// 静的メンバ変数
-	static CRenderer		*m_pRenderer;		// レンダラーオブジェクト
-	static CInputKeyboard	*m_pKeyboard;		// キーボードオブジェクト
-	static CInputMouse		*m_pMouse;			// マウスオブジェクト
-	static CInputPad		*m_pPad;			// パッドオブジェクト
-	static CSound			*m_pSound;			// サウンドオブジェクト
-	static CCamera			*m_pCamera;			// カメラオブジェクト
-	static CLight			*m_pLight;			// ライトオブジェクト
-	static CTexture			*m_pTexture;		// テクスチャオブジェクト
-	static CModel			*m_pModel;			// モデルオブジェクト
-	static CFade			*m_pFade;			// フェードオブジェクト
-	static CScene			*m_pScene;			// シーンオブジェクト
-	static CGameManager		*m_pGameManager;	// ゲームマネージャー
-	static CDebugProc		*m_pDebugProc;		// デバッグ表示オブジェクト
+	static CRenderer			*m_pRenderer;			// レンダラーオブジェクト
+	static CInputKeyboard		*m_pKeyboard;			// キーボードオブジェクト
+	static CInputMouse			*m_pMouse;				// マウスオブジェクト
+	static CInputPad			*m_pPad;				// パッドオブジェクト
+	static CSound				*m_pSound;				// サウンドオブジェクト
+	static CCamera				*m_pCamera;				// カメラオブジェクト
+	static CLight				*m_pLight;				// ライトオブジェクト
+	static CTexture				*m_pTexture;			// テクスチャオブジェクト
+	static CModel				*m_pModel;				// モデルオブジェクト
+	static CFade				*m_pFade;				// フェードオブジェクト
+	static CScene				*m_pScene;				// シーンオブジェクト
+	static CRetentionManager	*m_pRetentionManager;	// データ保存マネージャー
+	static CDebugProc			*m_pDebugProc;			// デバッグ表示オブジェクト
 
 #ifdef _DEBUG	// デバッグ処理
 

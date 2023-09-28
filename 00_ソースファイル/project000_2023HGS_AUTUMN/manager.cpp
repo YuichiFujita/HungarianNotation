@@ -16,7 +16,7 @@
 #include "fade.h"
 #include "texture.h"
 #include "model.h"
-#include "gameManager.h"
+#include "retentionManager.h"
 #include "object.h"
 
 #ifdef _DEBUG	// デバッグ処理
@@ -28,19 +28,19 @@
 //************************************************************
 //	静的メンバ変数宣言
 //************************************************************
-CRenderer		*CManager::m_pRenderer		= NULL;		// レンダラーオブジェクト
-CInputKeyboard	*CManager::m_pKeyboard		= NULL;		// キーボードオブジェクト
-CInputMouse		*CManager::m_pMouse			= NULL;		// マウスオブジェクト
-CInputPad		*CManager::m_pPad			= NULL;		// パッドオブジェクト
-CSound			*CManager::m_pSound			= NULL;		// サウンドオブジェクト
-CCamera			*CManager::m_pCamera		= NULL;		// カメラオブジェクト
-CLight			*CManager::m_pLight			= NULL;		// ライトオブジェクト
-CTexture		*CManager::m_pTexture		= NULL;		// テクスチャオブジェクト
-CModel			*CManager::m_pModel			= NULL;		// モデルオブジェクト
-CFade			*CManager::m_pFade			= NULL;		// フェードオブジェクト
-CScene			*CManager::m_pScene			= NULL;		// シーンオブジェクト
-CGameManager	*CManager::m_pGameManager	= NULL;		// ゲームマネージャー
-CDebugProc		*CManager::m_pDebugProc		= NULL;		// デバッグ表示オブジェクト
+CRenderer			*CManager::m_pRenderer			= NULL;		// レンダラーオブジェクト
+CInputKeyboard		*CManager::m_pKeyboard			= NULL;		// キーボードオブジェクト
+CInputMouse			*CManager::m_pMouse				= NULL;		// マウスオブジェクト
+CInputPad			*CManager::m_pPad				= NULL;		// パッドオブジェクト
+CSound				*CManager::m_pSound				= NULL;		// サウンドオブジェクト
+CCamera				*CManager::m_pCamera			= NULL;		// カメラオブジェクト
+CLight				*CManager::m_pLight				= NULL;		// ライトオブジェクト
+CTexture			*CManager::m_pTexture			= NULL;		// テクスチャオブジェクト
+CModel				*CManager::m_pModel				= NULL;		// モデルオブジェクト
+CFade				*CManager::m_pFade				= NULL;		// フェードオブジェクト
+CScene				*CManager::m_pScene				= NULL;		// シーンオブジェクト
+CRetentionManager	*CManager::m_pRetentionManager	= NULL;		// データ保存マネージャー
+CDebugProc			*CManager::m_pDebugProc			= NULL;		// デバッグ表示オブジェクト
 
 #ifdef _DEBUG	// デバッグ処理
 
@@ -145,9 +145,9 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 		return E_FAIL;
 	}
 
-	// ゲームマネージャーの生成
-	m_pGameManager = CGameManager::Create();
-	if (UNUSED(m_pGameManager))
+	// データ保存マネージャーの生成
+	m_pRetentionManager = CRetentionManager::Create();
+	if (UNUSED(m_pRetentionManager))
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -273,8 +273,8 @@ HRESULT CManager::Uninit(void)
 	//--------------------------------------------------------
 	//	システムの破棄
 	//--------------------------------------------------------
-	// ゲームマネージャーの破棄
-	if (FAILED(CGameManager::Release(m_pGameManager)))
+	// データ保存マネージャーの破棄
+	if (FAILED(CRetentionManager::Release(m_pRetentionManager)))
 	{ // 破棄に失敗した場合
 
 		// 失敗を返す
@@ -425,11 +425,11 @@ void CManager::Update(void)
 	}
 	else { assert(false); }	// 非使用中
 
-	if (USED(m_pGameManager))
+	if (USED(m_pRetentionManager))
 	{ // 使用中の場合
 
-		// ゲームマネージャーの更新
-		m_pGameManager->Update();
+		// データ保存マネージャーの更新
+		m_pRetentionManager->Update();
 	}
 	else { assert(false); }	// 非使用中
 
@@ -698,12 +698,12 @@ CScene *CManager::GetScene(void)
 }
 
 //============================================================
-//	ゲームマネージャー取得処理
+//	データ保存マネージャー取得処理
 //============================================================
-CGameManager *CManager::GetGameManager(void)
+CRetentionManager *CManager::GetRetentionManager(void)
 {
-	// ゲームマネージャーを返す
-	return m_pGameManager;
+	// データ保存マネージャーを返す
+	return m_pRetentionManager;
 }
 
 //============================================================

@@ -156,8 +156,7 @@ HRESULT CSceneGame::Init(void)
 	CManager::GetCamera()->SetDestFollow();	// 目標位置を設定
 
 	// タイムを計測開始
-	m_pTimerManager->Start();			// 計測を開始
-	m_pTimerManager->EnableStop(true);	// 計測を一時停止
+	m_pTimerManager->Start();	// 計測を開始
 
 	// UIの描画状況を設定
 	SetEnableDrawUI(m_bDrawUI);
@@ -241,6 +240,12 @@ void CSceneGame::Update(void)
 		// リザルトに遷移
 		CManager::SetScene(CScene::MODE_RESULT);	// リザルト画面
 	}
+
+	// デバッグ表示
+	CManager::GetDebugProc()->Print("[F2]：UI描画のON/OFF\n");
+	CManager::GetDebugProc()->Print("[F3]：ポーズ描画のON/OFF\n");
+	CManager::GetDebugProc()->Print("[F4]：カメラ操作のON/OFF\n");
+	CManager::GetDebugProc()->Print("[F5]：リザルト遷移\n");
 
 #endif
 
