@@ -13,7 +13,6 @@
 #include "renderer.h"
 #include "input.h"
 #include "player.h"
-#include "target.h"
 #include "stage.h"
 
 //************************************************************
@@ -190,28 +189,10 @@ void CCamera::Update(void)
 
 			break;
 
-		case STATE_BARGAINING:	// 寄り引き状態
+		case STATE_FOLLOW:	// 追従状態
 
-			// カメラの更新 (寄り引き)
-			Bargaining();
-
-			break;
-
-		case STATE_UP:	// 上向き状態
-
-			if (m_aCamera[TYPE_MAIN].posR.y < POSRUP_MAX)
-			{ // カメラの注視点Y座標が一定値より低い場合
-
-				// 注視点の現在位置を更新
-				m_aCamera[TYPE_MAIN].posR.y += POSRUP_ADD;
-
-				if (m_aCamera[TYPE_MAIN].posR.y > POSRUP_MAX)
-				{ // カメラの注視点Y座標が一定値を超えた場合
-
-					// 注視点の現在位置を補正
-					m_aCamera[TYPE_MAIN].posR.y += POSRUP_ADD;
-				}
-			}
+			// カメラの更新 (追従)
+			Follow();
 
 			break;
 
@@ -309,76 +290,11 @@ void CCamera::SetDestRotate(void)
 }
 
 //============================================================
-//	カメラの目標位置の設定処理 (寄り引き)
+//	カメラの目標位置の設定処理 (追従)
 //============================================================
-void CCamera::SetDestBargaining(void)
+void CCamera::SetDestFollow(void)
 {
-	if (m_state != STATE_BARGAINING)
-	{ // カメラの寄り引き状態ではない場合
 
-		// 処理を抜ける
-		return;
-	}
-
-	if (USED(CScene::GetPlayer()) && USED(CScene::GetTarget()))
-	{ // プレイヤー・ターゲットが使用されている場合
-
-		// 変数を宣言
-		D3DXVECTOR3 posPlayer = CScene::GetPlayer()->GetPosition();	// プレイヤー位置
-		D3DXVECTOR3 posTarget = CScene::GetTarget()->GetPosition();	// ターゲット位置
-		float fLength = 0.0f;	// ターゲット距離のカメラ注視点設定用の割合
-
-		float fDisTarget = CScene::GetPlayer()->GetDistanceTarget();	// ターゲットとプレイヤー間の距離
-		float fRateTarget = (1.0f / CScene::GetStage()->GetStageLimit().fRadius) * fDisTarget;	// ターゲットとプレイヤー間の距離の割合
-
-		//----------------------------------------------------
-		//	向きの更新
-		//----------------------------------------------------
-		// 距離が離れるにつれてカメラを上に向けていく
-		m_aCamera[TYPE_MAIN].destRot.x = INIT_DESTROT_X + (fRateTarget * REV_DESTROT_X);
-		useful::LimitNum(m_aCamera[TYPE_MAIN].destRot.x, MIN_DESTROT_X, MAX_DESTROT_X);		// 向き制限
-
-		// カメラをプレイヤーに向かせる
-		m_aCamera[TYPE_MAIN].destRot.y = atan2f(posTarget.x - posPlayer.x, posTarget.z - posPlayer.z);
-
-		// 目標向きを正規化
-		useful::Vec3NormalizeRot(m_aCamera[TYPE_MAIN].destRot);
-
-		// 現在向きに目標向きを設定
-		m_aCamera[TYPE_MAIN].rot = m_aCamera[TYPE_MAIN].destRot;
-
-		//----------------------------------------------------
-		//	距離の更新
-		//----------------------------------------------------
-		// 目標距離を設定
-		m_aCamera[TYPE_MAIN].fDestDis = INIT_DESTDIS - (fRateTarget * REV_DESTDIS);
-		useful::LimitNum(m_aCamera[TYPE_MAIN].fDestDis, MIN_DESTDIS, MAX_DESTDIS);	// 距離制限
-
-		// 現在距離に目標距離を設定
-		m_aCamera[TYPE_MAIN].fDis = m_aCamera[TYPE_MAIN].fDestDis;
-
-		//----------------------------------------------------
-		//	位置の更新
-		//----------------------------------------------------
-		// ターゲット距離のカメラ注視点設定用の割合を計算
-		fLength = (fRateTarget * REV_LENGTH);
-		useful::LimitNum(fLength, MIN_LENGTH, MAX_LENGTH);	// 距離制限
-
-		// 注視点の更新
-		m_aCamera[TYPE_MAIN].destPosR = posPlayer - ((posPlayer - posTarget) * fLength);
-		m_aCamera[TYPE_MAIN].destPosR.y = INIT_DESTPOS_Y - (fRateTarget * REV_DESTPOS_Y);
-
-		// 視点の更新
-		m_aCamera[TYPE_MAIN].destPosV.x = m_aCamera[TYPE_MAIN].destPosR.x + ((-m_aCamera[TYPE_MAIN].fDis * sinf(m_aCamera[TYPE_MAIN].rot.x)) * sinf(m_aCamera[TYPE_MAIN].rot.y));
-		m_aCamera[TYPE_MAIN].destPosV.y = m_aCamera[TYPE_MAIN].destPosR.y + ((-m_aCamera[TYPE_MAIN].fDis * cosf(m_aCamera[TYPE_MAIN].rot.x)));
-		m_aCamera[TYPE_MAIN].destPosV.z = m_aCamera[TYPE_MAIN].destPosR.z + ((-m_aCamera[TYPE_MAIN].fDis * sinf(m_aCamera[TYPE_MAIN].rot.x)) * cosf(m_aCamera[TYPE_MAIN].rot.y));
-
-		// 注視点の現在位置を更新
-		m_aCamera[TYPE_MAIN].posR = m_aCamera[TYPE_MAIN].destPosR;
-
-		// 視点の現在位置を更新
-		m_aCamera[TYPE_MAIN].posV = m_aCamera[TYPE_MAIN].destPosV;
-	}
 }
 
 //============================================================
@@ -552,34 +468,28 @@ void CCamera::Rotate(void)
 }
 
 //============================================================
-//	カメラの更新処理 (寄り引き)
+//	カメラの更新処理 (追従)
 //============================================================
-void CCamera::Bargaining(void)
+void CCamera::Follow(void)
 {
-	if (USED(CScene::GetPlayer()) && USED(CScene::GetTarget()))
-	{ // プレイヤー・ターゲットが使用されている場合
+	if (USED(CScene::GetPlayer()))
+	{ // プレイヤーが使用されている場合
 
 		// 変数を宣言
 		D3DXVECTOR3 posPlayer = CScene::GetPlayer()->GetPosition();	// プレイヤー位置
-		D3DXVECTOR3 posTarget = CScene::GetTarget()->GetPosition();	// ターゲット位置
 		D3DXVECTOR3 diffPosV = VEC3_ZERO;	// 視点の差分位置
 		D3DXVECTOR3 diffPosR = VEC3_ZERO;	// 注視点の差分位置
 		D3DXVECTOR3 diffRot = VEC3_ZERO;	// 差分向き
 		float fDiffDis = 0.0f;	// 目標距離
-		float fLength = 0.0f;	// ターゲット距離のカメラ注視点設定用の割合
-
-		float fDisTarget = CScene::GetPlayer()->GetDistanceTarget();	// ターゲットとプレイヤー間の距離
-		float fRateTarget = (1.0f / CScene::GetStage()->GetStageLimit().fRadius) * fDisTarget;	// ターゲットとプレイヤー間の距離の割合
 
 		//----------------------------------------------------
 		//	向きの更新
 		//----------------------------------------------------
 		// 距離が離れるにつれてカメラを上に向けていく
-		m_aCamera[TYPE_MAIN].destRot.x = INIT_DESTROT_X + (fRateTarget * REV_DESTROT_X);
-		useful::LimitNum(m_aCamera[TYPE_MAIN].destRot.x, MIN_DESTROT_X, MAX_DESTROT_X);		// 向き制限
+		m_aCamera[TYPE_MAIN].destRot.x = 1.85f;
 
 		// カメラをプレイヤーに向かせる
-		m_aCamera[TYPE_MAIN].destRot.y = atan2f(posTarget.x - posPlayer.x, posTarget.z - posPlayer.z);
+		m_aCamera[TYPE_MAIN].destRot.y = 0.0f;
 
 		// 目標向きを正規化
 		useful::Vec3NormalizeRot(m_aCamera[TYPE_MAIN].destRot);
@@ -596,25 +506,13 @@ void CCamera::Bargaining(void)
 		//	距離の更新
 		//----------------------------------------------------
 		// 目標距離を設定
-		m_aCamera[TYPE_MAIN].fDestDis = INIT_DESTDIS - (fRateTarget * REV_DESTDIS);
-		useful::LimitNum(m_aCamera[TYPE_MAIN].fDestDis, MIN_DESTDIS, MAX_DESTDIS);	// 距離制限
-
-		// 差分距離を計算
-		fDiffDis = m_aCamera[TYPE_MAIN].fDestDis - m_aCamera[TYPE_MAIN].fDis;
-
-		// 現在距離の更新
-		m_aCamera[TYPE_MAIN].fDis += fDiffDis * REV_BARG_DIS;
+		m_aCamera[TYPE_MAIN].fDis = m_aCamera[TYPE_MAIN].fDestDis = 800.0f;
 
 		//----------------------------------------------------
 		//	位置の更新
 		//----------------------------------------------------
-		// ターゲット距離のカメラ注視点設定用の割合を計算
-		fLength = (fRateTarget * REV_LENGTH);
-		useful::LimitNum(fLength, MIN_LENGTH, MAX_LENGTH);	// 距離制限
-
 		// 注視点の更新
-		m_aCamera[TYPE_MAIN].destPosR = posPlayer - ((posPlayer - posTarget) * fLength);
-		m_aCamera[TYPE_MAIN].destPosR.y = INIT_DESTPOS_Y - (fRateTarget * REV_DESTPOS_Y);
+		m_aCamera[TYPE_MAIN].destPosR = posPlayer;
 
 		// 視点の更新
 		m_aCamera[TYPE_MAIN].destPosV.x = m_aCamera[TYPE_MAIN].destPosR.x + ((-m_aCamera[TYPE_MAIN].fDis * sinf(m_aCamera[TYPE_MAIN].rot.x)) * sinf(m_aCamera[TYPE_MAIN].rot.y));

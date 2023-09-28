@@ -12,21 +12,15 @@
 #include "sound.h"
 #include "input.h"
 
-#include "waveManager.h"
+#include "gameManager.h"
 #include "timerManager.h"
 #include "stage.h"
 #include "pause.h"
 #include "score.h"
-#include "warningSpawn.h"
 
-#include "enemy.h"
-#include "magic.h"
-#include "sea.h"
 #include "wall.h"
 #include "scenery.h"
 #include "sky.h"
-#include "flower.h"
-#include "weed.h"
 #include "player.h"
 
 //************************************************************
@@ -47,7 +41,7 @@
 //************************************************************
 //	静的メンバ変数宣言
 //************************************************************
-CWaveManager	*CSceneGame::m_pWaveManager  = NULL;	// ウェーブマネージャー
+CGameManager	*CSceneGame::m_pGameManager  = NULL;	// ゲームマネージャー
 CTimerManager	*CSceneGame::m_pTimerManager = NULL;	// タイマーマネージャー
 CWarningSpawn	*CSceneGame::m_pWarningSpawn = NULL;	// 出現警告表示オブジェクト
 CPause	*CSceneGame::m_pPause	= NULL;					// ポーズ
@@ -113,26 +107,12 @@ HRESULT CSceneGame::Init(void)
 		return E_FAIL;
 	}
 
-	// 出現警告表示オブジェクトの生成
-	m_pWarningSpawn = CWarningSpawn::Create
-	( // 引数
-		SCREEN_CENT,	// 位置
-		WARNING_SIZE	// 大きさ
-	);
-	if (UNUSED(m_pWarningSpawn))
-	{ // 非使用中の場合
-
-		// 失敗を返す
-		assert(false);
-		return E_FAIL;
-	}
-
 	// シーンの初期化
-	CScene::Init();		// ステージ・地面・ターゲット・プレイヤーの生成
+	CScene::Init();		// ステージ・地面・プレイヤーの生成
 
-	// ウェーブマネージャーの生成
-	m_pWaveManager = CWaveManager::Create();
-	if (UNUSED(m_pWaveManager))
+	// ゲームマネージャーの生成
+	m_pGameManager = CGameManager::Create();
+	if (UNUSED(m_pGameManager))
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -150,14 +130,15 @@ HRESULT CSceneGame::Init(void)
 		return E_FAIL;
 	}
 
-	// 海オブジェクトの生成
-	CSea::Create();
+#if 0	// TODO：壁
 
 	// 壁オブジェクトの生成
 	CWall::Create(CWall::TEXTURE_NORMAL, D3DXVECTOR3( 0.0f,    0.0f, -3000.0f), D3DXToRadian(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),   D3DXVECTOR2(6000.0f, 400.0f), XCOL_WHITE, POSGRID2(18, 1));
 	CWall::Create(CWall::TEXTURE_NORMAL, D3DXVECTOR3(-3000.0f, 0.0f,  0.0f),    D3DXToRadian(D3DXVECTOR3(0.0f, 90.0f, 0.0f)),  D3DXVECTOR2(6000.0f, 400.0f), XCOL_WHITE, POSGRID2(18, 1));
 	CWall::Create(CWall::TEXTURE_NORMAL, D3DXVECTOR3( 0.0f,    0.0f,  3000.0f), D3DXToRadian(D3DXVECTOR3(0.0f, 180.0f, 0.0f)), D3DXVECTOR2(6000.0f, 400.0f), XCOL_WHITE, POSGRID2(18, 1));
 	CWall::Create(CWall::TEXTURE_NORMAL, D3DXVECTOR3( 3000.0f, 0.0f,  0.0f),    D3DXToRadian(D3DXVECTOR3(0.0f, 270.0f, 0.0f)), D3DXVECTOR2(6000.0f, 400.0f), XCOL_WHITE, POSGRID2(18, 1));
+
+#endif
 
 	// 景色オブジェクトの生成
 	CScenery::Create(CScenery::TEXTURE_NORMAL, VEC3_ZERO, VEC3_ZERO,                                    XCOL_WHITE,                        POSGRID2(32, 1), 12000.0f, 1000.0f, D3DCULL_CW, false);
@@ -170,27 +151,9 @@ HRESULT CSceneGame::Init(void)
 	//--------------------------------------------------------
 	//	初期設定
 	//--------------------------------------------------------
-	// 敵セットアップの読込
-	CEnemy::LoadSetup();
-
-	// 魔法セットアップの読込
-	CMagic::LoadSetup();
-
-	// マナフラワーセットアップの読込
-	CFlower::LoadSetup();
-
-	// 草セットアップの読込
-	CWeed::LoadSetup();
-
-	// マナフラワーランダム生成
-	CFlower::RandomSpawn(30, CFlower::TYPE_SPRING);	// TODO：定数変更
-
-	// 草ランダム生成
-	CWeed::RandomSpawn(200, CWeed::TYPE_SPRING);	// TODO：定数変更
-
 	// カメラを設定
-	CManager::GetCamera()->SetState(CCamera::STATE_BARGAINING);	// カメラを寄り引き状態に設定
-	CManager::GetCamera()->SetDestBargaining();	// 目標位置を設定
+	CManager::GetCamera()->SetState(CCamera::STATE_FOLLOW);	// カメラを追従状態に設定
+	CManager::GetCamera()->SetDestFollow();	// 目標位置を設定
 
 	// タイムを計測開始
 	m_pTimerManager->Start();			// 計測を開始
@@ -214,8 +177,8 @@ HRESULT CSceneGame::Init(void)
 //============================================================
 HRESULT CSceneGame::Uninit(void)
 {
-	// ウェーブマネージャーの破棄
-	if (FAILED(CWaveManager::Release(m_pWaveManager)))
+	// ゲームマネージャーの破棄
+	if (FAILED(CGameManager::Release(m_pGameManager)))
 	{ // 破棄に失敗した場合
 
 		// 失敗を返す
@@ -256,18 +219,30 @@ HRESULT CSceneGame::Uninit(void)
 //============================================================
 void CSceneGame::Update(void)
 {
+#if _DEBUG
+
 	if (CManager::GetKeyboard()->GetTrigger(DIK_F2))
 	{
+		// UIの描画状況を反転
 		SetEnableDrawUI((!m_bDrawUI) ? true : false);
 	}
 	else if (CManager::GetKeyboard()->GetTrigger(DIK_F3))
 	{
+		// ポーズの描画状況を反転
 		SetEnableDrawPause((!m_bDrawPause) ? true : false);
 	}
 	else if (CManager::GetKeyboard()->GetTrigger(DIK_F4))
 	{
+		// カメラの操作状況を反転
 		SetEnableControlCamera((!m_bControlCamera) ? true : false);
 	}
+	else if (CManager::GetKeyboard()->GetTrigger(DIK_F5))
+	{
+		// リザルトに遷移
+		CManager::SetScene(CScene::MODE_RESULT);	// リザルト画面
+	}
+
+#endif
 
 	if (USED(m_pTimerManager))
 	{ // 使用中の場合
@@ -288,17 +263,20 @@ void CSceneGame::Update(void)
 	if (!m_pPause->IsPause())
 	{ // ポーズ中ではない場合
 
-		if (USED(m_pWaveManager))
+		if (USED(m_pGameManager))
 		{ // 使用中の場合
 
-			// ウェーブマネージャーの更新
-			m_pWaveManager->Update();
+			// ゲームマネージャーの更新
+			m_pGameManager->Update();
 		}
 		else { assert(false); }	// 非使用中
 
 		// シーンの更新
 		CScene::Update();
 	}
+
+#if _DEBUG
+
 	else
 	{ // ポーズ中の場合
 
@@ -310,8 +288,7 @@ void CSceneGame::Update(void)
 		}
 	}
 
-	// TODO：遷移のタイミングで壊れる問題シーンにも死亡フラグ追加で回避
-	//		 シーンマネージャーを用意する
+#endif
 }
 
 //============================================================
@@ -323,12 +300,12 @@ void CSceneGame::Draw(void)
 }
 
 //============================================================
-//	ウェーブマネージャー取得処理
+//	ゲームマネージャー取得処理
 //============================================================
-CWaveManager *CSceneGame::GetWaveManager(void)
+CGameManager *CSceneGame::GetGameManager(void)
 {
-	// ウェーブマネージャーのポインタを返す
-	return m_pWaveManager;
+	// ゲームマネージャーのポインタを返す
+	return m_pGameManager;
 }
 
 //============================================================
@@ -385,8 +362,8 @@ void CSceneGame::SetEnableControlCamera(const bool bControl)
 	else
 	{ // 操作しない状況の場合
 
-		// 寄り引き状態に変更
-		CManager::GetCamera()->SetState(CCamera::STATE_BARGAINING);
+		// 追従状態に変更
+		CManager::GetCamera()->SetState(CCamera::STATE_FOLLOW);
 	}
 }
 
@@ -403,9 +380,6 @@ void CSceneGame::SetEnableDrawUI(const bool bDraw)
 
 	// スコアの描画状況を設定
 	m_pScore->SetEnableDraw(bDraw);
-
-	// プレイヤーの経験値を設定
-	GetPlayer()->SetEnableDrawExp(bDraw);
 }
 
 //============================================================

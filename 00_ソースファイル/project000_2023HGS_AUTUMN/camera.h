@@ -36,8 +36,7 @@ public:
 		STATE_NONE = 0,		// なにもしない状態
 		STATE_CONTROL,		// 操作状態
 		STATE_ROTATE,		// 回転状態
-		STATE_BARGAINING,	// 寄り引き状態
-		STATE_UP,			// 上向き状態
+		STATE_FOLLOW,		// 追従状態
 		STATE_MAX			// この列挙型の総数
 	};
 
@@ -68,12 +67,12 @@ public:
 	HRESULT Init(void);	// 初期化
 	void Uninit(void);	// 終了
 	void Update(void);	// 更新
-	void SetCamera(const TYPE type);	// カメラ設定
+	void   SetCamera(const TYPE type);	// カメラ設定
 	Camera GetCamera(const TYPE type);	// カメラ取得
-	void SetState(const STATE state);	// カメラ状態設定
+	void  SetState(const STATE state);	// カメラ状態設定
 	STATE GetState(void) const;			// カメラ状態取得
 	void SetDestRotate(void);			// カメラ目標位置設定 (回転)
-	void SetDestBargaining(void);		// カメラ目標位置設定 (寄り引き)
+	void SetDestFollow(void);			// カメラ目標位置設定 (追従)
 
 	void SetEnableUpdate(const bool bUpdate);		// 更新状況設定
 	void SetRotation(const D3DXVECTOR3& rRot);		// 現在向き設定
@@ -88,7 +87,7 @@ public:
 private:
 	// メンバ関数
 	void Rotate(void);		// カメラの更新 (回転)
-	void Bargaining(void);	// カメラの更新 (寄り引き)
+	void Follow(void);		// カメラの更新 (追従)
 	void Control(void);		// カメラの更新 (操作)
 	void Move(void);		// 位置の更新 (操作)
 	void Distance(void);	// 距離の更新 (操作)

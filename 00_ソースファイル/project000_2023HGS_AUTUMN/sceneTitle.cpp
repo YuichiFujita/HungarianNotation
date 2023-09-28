@@ -16,20 +16,10 @@
 #include "titleManager.h"
 
 #include "stage.h"
-#include "target.h"
 #include "field.h"
-#include "sea.h"
 #include "wall.h"
 #include "scenery.h"
 #include "sky.h"
-#include "flower.h"
-#include "weed.h"
-
-//************************************************************
-//	マクロ定義
-//************************************************************
-#define CREATE_FLOWER	(30)	// マナフラワーの生成数
-#define CREATE_WEED		(200)	// 草の生成数
 
 //************************************************************
 //	静的メンバ変数宣言
@@ -60,9 +50,6 @@ CSceneTitle::~CSceneTitle()
 //============================================================
 HRESULT CSceneTitle::Init(void)
 {
-	// 変数を宣言
-	CWaveManager::SEASON season = (CWaveManager::SEASON)(rand() % CWaveManager::SEASON_MAX);	// 季節
-
 	// ポインタを宣言
 	CTexture *pTexture = CManager::GetTexture();	// テクスチャへのポインタ
 
@@ -85,14 +72,15 @@ HRESULT CSceneTitle::Init(void)
 	//--------------------------------------------------------
 	//	オブジェクト生成・初期化
 	//--------------------------------------------------------
-	// 海オブジェクトの生成
-	CSea::Create();
+#if 0	// TODO：壁
 
 	// 壁オブジェクトの生成
 	CWall::Create(CWall::TEXTURE_NORMAL, D3DXVECTOR3( 0.0f,    0.0f, -3000.0f), D3DXToRadian(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),   D3DXVECTOR2(6000.0f, 400.0f), XCOL_WHITE, POSGRID2(18, 1));
 	CWall::Create(CWall::TEXTURE_NORMAL, D3DXVECTOR3(-3000.0f, 0.0f,  0.0f),    D3DXToRadian(D3DXVECTOR3(0.0f, 90.0f, 0.0f)),  D3DXVECTOR2(6000.0f, 400.0f), XCOL_WHITE, POSGRID2(18, 1));
 	CWall::Create(CWall::TEXTURE_NORMAL, D3DXVECTOR3( 0.0f,    0.0f,  3000.0f), D3DXToRadian(D3DXVECTOR3(0.0f, 180.0f, 0.0f)), D3DXVECTOR2(6000.0f, 400.0f), XCOL_WHITE, POSGRID2(18, 1));
 	CWall::Create(CWall::TEXTURE_NORMAL, D3DXVECTOR3( 3000.0f, 0.0f,  0.0f),    D3DXToRadian(D3DXVECTOR3(0.0f, 270.0f, 0.0f)), D3DXVECTOR2(6000.0f, 400.0f), XCOL_WHITE, POSGRID2(18, 1));
+
+#endif
 
 	// 景色オブジェクトの生成
 	CScenery::Create(CScenery::TEXTURE_NORMAL, VEC3_ZERO, VEC3_ZERO,                                    XCOL_WHITE,                        POSGRID2(32, 1), 12000.0f, 1000.0f, D3DCULL_CW, false);
@@ -105,30 +93,6 @@ HRESULT CSceneTitle::Init(void)
 	//--------------------------------------------------------
 	//	初期設定
 	//--------------------------------------------------------
-	// ステージエリア・バリアの描画を停止
-	GetStage()->SetEnableDrawArea(false);
-	GetStage()->SetEnableDrawBarrier(false);
-
-	// ターゲット体力の描画を停止
-	GetTarget()->SetEnableDrawLife(false);
-
-	// マナフラワーセットアップの読込
-	CFlower::LoadSetup();
-
-	// 草セットアップの読込
-	CWeed::LoadSetup();
-
-	// マナフラワーランダム生成
-	CFlower::RandomSpawn(CREATE_FLOWER, CFlower::TYPE_SPRING);
-
-	// 草ランダム生成
-	CWeed::RandomSpawn(CREATE_WEED, CWeed::TYPE_SPRING);
-
-	// 季節を設定
-	GetField()->SetSeason(season);	// 地面を変更
-	CFlower::SetSeason(season);		// 花を変更
-	CWeed::SetSeason(season);		// 草を変更
-
 	// カメラを設定
 	CManager::GetCamera()->SetState(CCamera::STATE_ROTATE);	// カメラを回転状態に設定
 	CManager::GetCamera()->SetDestRotate();					// 目標位置を設定

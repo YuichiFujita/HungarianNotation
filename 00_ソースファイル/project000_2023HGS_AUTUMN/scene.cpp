@@ -19,15 +19,19 @@
 
 #include "stage.h"
 #include "player.h"
-#include "target.h"
 #include "field.h"
+
+//************************************************************
+//	マクロ定義
+//************************************************************
+#define FIELD_SIZE	(D3DXVECTOR2(6000.0f, 6000.0f))	// 地面の大きさ
+#define FIELD_PART	(POSGRID2(120, 120))			// 地面の分割数
 
 //************************************************************
 //	静的メンバ変数宣言
 //************************************************************
 CStage *CScene::m_pStage = NULL;	// ステージ
 CPlayer	*CScene::m_pPlayer = NULL;	// プレイヤーオブジェクト
-CTarget *CScene::m_pTarget = NULL;	// ターゲットオブジェクト
 CField *CScene::m_pField = NULL;	// 地面オブジェクト
 
 //************************************************************
@@ -66,17 +70,8 @@ HRESULT CScene::Init(void)
 	}
 
 	// 地面オブジェクトの生成
-	if (FAILED(CreateField(m_mode)))
-	{ // 非使用中の場合
-
-		// 失敗を返す
-		assert(false);
-		return E_FAIL;
-	}
-
-	// ターゲットオブジェクトの生成
-	m_pTarget = CTarget::Create(CTarget::MODEL_NORMAL, GetStage()->GetStageLimit().center, VEC3_ZERO);
-	if (UNUSED(m_pTarget))
+	m_pField = CField::Create(CField::TEXTURE_FIELD, VEC3_ZERO, VEC3_ZERO, FIELD_SIZE, XCOL_WHITE, FIELD_PART);
+	if (UNUSED(m_pField))
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -85,7 +80,7 @@ HRESULT CScene::Init(void)
 	}
 
 	// プレイヤーオブジェクトの生成
-	m_pPlayer = CPlayer::Create(m_mode, VEC3_ZERO, VEC3_ZERO);
+	m_pPlayer = CPlayer::Create(VEC3_ZERO, VEC3_ZERO);
 
 	// 成功を返す
 	return S_OK;
@@ -107,7 +102,6 @@ HRESULT CScene::Uninit(void)
 
 	// 終了済みのオブジェクトポインタをNULLにする
 	m_pPlayer = NULL;	// プレイヤーオブジェクト
-	m_pTarget = NULL;	// ターゲットオブジェクト
 	m_pField = NULL;	// 地面オブジェクト
 
 	// 成功を返す
@@ -279,100 +273,6 @@ CPlayer *CScene::GetPlayer(void)
 {
 	// プレイヤーのポインタを返す
 	return m_pPlayer;
-}
-
-//============================================================
-//	ターゲット取得処理
-//============================================================
-CTarget *CScene::GetTarget(void)
-{
-	// ターゲットのポインタを返す
-	return m_pTarget;
-}
-
-//============================================================
-//	地面生成処理
-//============================================================
-HRESULT CScene::CreateField(MODE mode)
-{
-	switch (mode)
-	{ // モードごとの処理
-	case MODE_TITLE:
-
-		// 地面オブジェクトの生成
-		m_pField = CField::Create(CField::TEXTURE_SPRING, D3DXVECTOR3(0.0f, 400.0f, 0.0f), VEC3_ZERO, D3DXVECTOR2(6000.0f, 6000.0f), XCOL_WHITE, POSGRID2(120, 120));
-		if (UNUSED(m_pField))
-		{ // 非使用中の場合
-
-			// 失敗を返す
-			assert(false);
-			return E_FAIL;
-		}
-
-		// 地形を設定
-		m_pField->SetTerrain(CField::TERRAIN_120x120);
-
-		// 成功を返す
-		return S_OK;
-
-	case MODE_TUTORIAL:
-
-		// 地面オブジェクトの生成
-		m_pField = CField::Create(CField::TEXTURE_SPRING, D3DXVECTOR3(0.0f, 400.0f, 0.0f), VEC3_ZERO, D3DXVECTOR2(6000.0f, 6000.0f), XCOL_WHITE, POSGRID2(120, 120));
-		if (UNUSED(m_pField))
-		{ // 非使用中の場合
-
-			// 失敗を返す
-			assert(false);
-			return E_FAIL;
-		}
-
-		// 地形を設定
-		m_pField->SetTerrain(CField::TERRAIN_120x120);
-
-		// 成功を返す
-		return S_OK;
-
-	case MODE_GAME:
-
-		// 地面オブジェクトの生成
-		m_pField = CField::Create(CField::TEXTURE_SPRING, D3DXVECTOR3(0.0f, 400.0f, 0.0f), VEC3_ZERO, D3DXVECTOR2(6000.0f, 6000.0f), XCOL_WHITE, POSGRID2(120, 120));
-		if (UNUSED(m_pField))
-		{ // 非使用中の場合
-
-			// 失敗を返す
-			assert(false);
-			return E_FAIL;
-		}
-
-		// 地形を設定
-		m_pField->SetTerrain(CField::TERRAIN_120x120);
-
-		// 成功を返す
-		return S_OK;
-
-	case MODE_RESULT:
-
-		// 地面オブジェクトの生成
-		m_pField = CField::Create(CField::TEXTURE_SPRING, D3DXVECTOR3(0.0f, 400.0f, 0.0f), VEC3_ZERO, D3DXVECTOR2(6000.0f, 6000.0f), XCOL_WHITE, POSGRID2(120, 120));
-		if (UNUSED(m_pField))
-		{ // 非使用中の場合
-
-			// 失敗を返す
-			assert(false);
-			return E_FAIL;
-		}
-
-		// 地形を設定
-		m_pField->SetTerrain(CField::TERRAIN_120x120);
-
-		// 成功を返す
-		return S_OK;
-
-	default:	// 例外処理
-		assert(false);
-		return E_FAIL;
-	}
 }
 
 //============================================================

@@ -13,34 +13,13 @@
 #include "scene.h"
 #include "sceneGame.h"
 #include "player.h"
-#include "target.h"
 #include "field.h"
-#include "hurricane.h"
-#include "object3D.h"
 #include "collision.h"
-#include "wind.h"
 
 //************************************************************
 //	マクロ定義
 //************************************************************
 #define STAGE_SETUP_TXT	"data\\TXT\\stage.txt"	// セットアップテキスト相対パス
-
-#define AREA_PRIO	(2)			// エリア表示の優先順位
-#define AREA_ROT	(0.025f)	// エリアの回転量
-#define AREA_SUBROT	(0.003f)	// エリアの回転減算量
-
-#define WIND_POS	(3000.0f)	// 風生成位置
-#define WIND_CNT	(60)		// 風生成カウント
-#define WIND_SPAWN	(4)			// 風生成数
-
-//************************************************************
-//	静的メンバ変数宣言
-//************************************************************
-const char *CStage::mc_apTextureFile[] =	// テクスチャ定数
-{
-	"data\\TEXTURE\\area002.png",	// バリア表示テクスチャ
-	"data\\TEXTURE\\area000.png",	// エリア表示テクスチャ
-};
 
 //************************************************************
 //	親クラス [CStage] のメンバ関数
@@ -51,15 +30,7 @@ const char *CStage::mc_apTextureFile[] =	// テクスチャ定数
 CStage::CStage()
 {
 	// メンバ変数をクリア
-	m_pHurricane = NULL;	// ハリケーンの情報
-	m_pStageBarrier = NULL;	// バリア表示の情報
-	m_pStageArea = NULL;	// ステージエリア表示の情報
-	m_area = AREA_NONE;		// プレイヤーの現在エリア
-	m_bWind = false;		// 風生成状況
-	memset(&m_stageWind, 0, sizeof(m_stageWind));		// 風速
-	memset(&m_stageBarrier, 0, sizeof(m_stageBarrier));	// バリア
-	memset(&m_aStageArea[0], 0, sizeof(m_aStageArea));	// エリア
-	memset(&m_stageLimit, 0, sizeof(m_stageLimit));		// 範囲
+	memset(&m_stageLimit, 0, sizeof(m_stageLimit));	// 範囲
 }
 
 //============================================================
@@ -75,83 +46,8 @@ CStage::~CStage()
 //============================================================
 HRESULT CStage::Init(void)
 {
-	// ポインタを宣言
-	CTexture *pTexture = CManager::GetTexture();	// テクスチャへのポインタ
-
 	// メンバ変数を初期化
-	m_pHurricane = NULL;	// ハリケーンの情報
-	m_pStageBarrier = NULL;	// バリア表示の情報
-	m_pStageArea = NULL;	// ステージエリア表示の情報
-	m_area = AREA_NONE;		// プレイヤーの現在エリア
-	m_bWind = true;			// 風生成状況
-	memset(&m_stageWind, 0, sizeof(m_stageWind));		// 風速
-	memset(&m_stageBarrier, 0, sizeof(m_stageBarrier));	// バリア
-	memset(&m_aStageArea[0], 0, sizeof(m_aStageArea));	// エリア
-	memset(&m_stageLimit, 0, sizeof(m_stageLimit));		// 範囲
-
-	// ハリケーンの生成
-	m_pHurricane = CHurricane::Create(VEC3_ZERO);
-	if (UNUSED(m_pHurricane))
-	{ // 非使用中の場合
-
-		// 失敗を返す
-		assert(false);
-		return E_FAIL;
-	}
-
-	// ステージエリア表示の生成
-	m_pStageArea = CObject3D::Create
-	( // 引数
-		VEC3_ZERO,					// 位置
-		VEC3_ZERO,					// 大きさ
-		VEC3_ZERO,					// 向き
-		XCOL_WHITE,					// 色
-		CObject3D::ORIGIN_CENTER,	// 原点
-		D3DCULL_CCW,				// カリング状況
-		false,						// ライティング状況
-		D3DCMP_ALWAYS,				// Zテスト設定
-		false						// Zバッファの使用状況
-	);
-	if (UNUSED(m_pStageArea))
-	{ // 非使用中の場合
-
-		// 失敗を返す
-		assert(false);
-		return E_FAIL;
-	}
-
-	// テクスチャを登録・割当
-	m_pStageArea->BindTexture(pTexture->Regist(mc_apTextureFile[TEXTURE_AREA]));
-
-	// 優先順位を設定
-	m_pStageArea->SetPriority(AREA_PRIO);
-
-	// ステージバリア表示の生成
-	m_pStageBarrier = CObject3D::Create
-	( // 引数
-		VEC3_ZERO,					// 位置
-		VEC3_ZERO,					// 大きさ
-		VEC3_ZERO,					// 向き
-		XCOL_WHITE,					// 色
-		CObject3D::ORIGIN_CENTER,	// 原点
-		D3DCULL_CCW,				// カリング状況
-		false,						// ライティング状況
-		D3DCMP_ALWAYS,				// Zテスト設定
-		false						// Zバッファの使用状況
-	);
-	if (UNUSED(m_pStageBarrier))
-	{ // 非使用中の場合
-
-		// 失敗を返す
-		assert(false);
-		return E_FAIL;
-	}
-
-	// テクスチャを登録・割当
-	m_pStageBarrier->BindTexture(pTexture->Regist(mc_apTextureFile[TEXTURE_BARRIER]));
-
-	// 優先順位を設定
-	m_pStageBarrier->SetPriority(AREA_PRIO);
+	memset(&m_stageLimit, 0, sizeof(m_stageLimit));	// 範囲
 
 	// 成功を返す
 	return S_OK;
@@ -162,14 +58,7 @@ HRESULT CStage::Init(void)
 //============================================================
 void CStage::Uninit(void)
 {
-	// ハリケーンの終了
-	m_pHurricane->Uninit();
 
-	// ステージバリア表示の終了
-	m_pStageBarrier->Uninit();
-
-	// ステージエリア表示の終了
-	m_pStageArea->Uninit();
 }
 
 //============================================================
@@ -177,133 +66,25 @@ void CStage::Uninit(void)
 //============================================================
 void CStage::Update(void)
 {
-	// 変数を宣言
-	D3DXVECTOR3 posCenter;	// 世界の中心位置
-	D3DXVECTOR3 rotBarrier = m_pStageBarrier->GetRotation();	// バリア表示向き
 
-	// 世界の中心位置を設定
-	posCenter = m_stageLimit.center;	// 中心座標を設定
-	posCenter.y = CScene::GetField()->GetPosition().y;	// 地面の縦位置を設定
-
-	//--------------------------------------------------------
-	//	ハリケーンの更新
-	//--------------------------------------------------------
-	// ハリケーンの位置を設定
-	m_pHurricane->SetPosition(posCenter);
-
-	// ハリケーンの更新
-	m_pHurricane->Update();
-
-	//--------------------------------------------------------
-	//	バリア表示の更新
-	//--------------------------------------------------------
-	// バリア表示の位置を設定
-	m_pStageBarrier->SetPosition(posCenter);
-
-	// バリア表示の向きを設定
-	rotBarrier.y -= AREA_ROT;
-	m_pStageBarrier->SetRotation(rotBarrier);
-
-	//--------------------------------------------------------
-	//	風の生成
-	//--------------------------------------------------------
-	if (m_bWind)
-	{ // 風を生成する場合
-
-		if (m_stageWind.nCounter < WIND_CNT)
-		{ // カウンターが一定値より小さい場合
-
-			// カウンターを加算
-			m_stageWind.nCounter++;
-		}
-		else
-		{ // カウンターが一定値以上の場合
-
-			// 変数を宣言
-			D3DXVECTOR3 spawnPos;	// 生成位置
-			float fRot = (float)(rand() % 629 - 314) * 0.01f;	// 向き
-
-			// カウンターを初期化
-			m_stageWind.nCounter = 0;
-
-			for (int nCntWind = 0; nCntWind < WIND_SPAWN; nCntWind++)
-			{ // 風の生成数分繰り返す
-
-				// 生成位置を設定
-				spawnPos.x = sinf(fRot + ((D3DX_PI * 0.5f) * nCntWind)) * WIND_POS;
-				spawnPos.y = 0.0f;
-				spawnPos.z = cosf(fRot + ((D3DX_PI * 0.5f) * nCntWind)) * WIND_POS;
-
-				// 風の生成
-				CWind::Create(spawnPos);
-			}
-		}
-	}
-
-	//--------------------------------------------------------
-	//	エリア表示の更新
-	//--------------------------------------------------------
-	if (USED(CScene::GetPlayer()) && USED(CScene::GetTarget()))
-	{ // プレイヤー・ターゲットが使用されている場合
-
-		// 変数を宣言
-		D3DXVECTOR3 posPlayer = CScene::GetPlayer()->GetPosition();	// プレイヤー位置
-		D3DXVECTOR3 posTarget = CScene::GetTarget()->GetPosition();	// ターゲット位置
-		float fRadiusPlayer = CScene::GetPlayer()->GetRadius();		// プレイヤー半径
-
-		// 現在のエリアを初期化
-		m_area = AREA_NONE;
-
-		for (int nCntArea = 0; nCntArea < AREA_MAX; nCntArea++)
-		{ // エリアの最大数分繰り返す
-
-			if (collision::Circle2D(posPlayer, posTarget, fRadiusPlayer, m_aStageArea[nCntArea].fRadius))
-			{ // エリア内の場合
-
-				// エリア表示の大きさを設定
-				m_pStageArea->SetScaling(D3DXVECTOR3(m_aStageArea[nCntArea].fRadius * 2.0f, 0.0f, m_aStageArea[nCntArea].fRadius * 2.0f));
-
-				// エリア表示の色を設定
-				m_pStageArea->SetColor(m_aStageArea[nCntArea].col);
-
-				// 現在のエリアを設定
-				m_area = (AREA)nCntArea;
-
-				// 処理を抜ける
-				break;
-			}
-		}
-
-		// エリア表示の位置を設定
-		m_pStageArea->SetPosition(posCenter);
-
-		// エリア表示の向きを設定
-		m_pStageArea->SetRotation(D3DXVECTOR3(0.0f, atan2f(posPlayer.x - posTarget.x, posPlayer.z - posTarget.z), 0.0f));
-
-		// 例外処理
-		assert(m_area != AREA_NONE);	// エリア外
-	}
 }
 
 //============================================================
-//	バリアとの当たり判定
+//	ステージ範囲の設定処理
 //============================================================
-bool CStage::CollisionBarrier(D3DXVECTOR3& rPos, float fRadius)
+void CStage::SetStageLimit(const StageLimit& rLimit)
 {
-	// 変数を宣言
-	bool bHit = false;	// 判定確認用
+	// 引数のステージ範囲を設定
+	m_stageLimit = rLimit;
+}
 
-	// 円の当たり判定
-	bHit = collision::Circle2D
-	( // 引数
-		rPos,							// 判定位置
-		m_pStageBarrier->GetPosition(),	// 判定目標位置
-		fRadius,						// 判定半径
-		m_stageBarrier.fRadius			// 判定目標半径
-	);
-
-	// 判定状況を返す
-	return bHit;
+//============================================================
+//	ステージ範囲取得処理
+//============================================================
+CStage::StageLimit CStage::GetStageLimit(void) const
+{
+	// ステージ範囲を返す
+	return m_stageLimit;
 }
 
 //============================================================
@@ -370,120 +151,6 @@ bool CStage::LandPosition(D3DXVECTOR3& rPos, D3DXVECTOR3& rMove, const float fHe
 }
 
 //============================================================
-//	ステージ範囲の設定処理
-//============================================================
-void CStage::SetStageLimit(const StageLimit& rLimit)
-{
-	// 引数のステージ範囲を設定
-	m_stageLimit = rLimit;
-}
-
-//============================================================
-//	ステージ範囲取得処理
-//============================================================
-CStage::StageLimit CStage::GetStageLimit(void) const
-{
-	// ステージ範囲を返す
-	return m_stageLimit;
-}
-
-//============================================================
-//	ステージエリアの設定処理
-//============================================================
-void CStage::SetStageArea(const int nID, const StageArea& rArea)
-{
-	// 引数インデックスのステージエリアを設定
-	m_aStageArea[nID] = rArea;
-}
-
-//============================================================
-//	ステージエリア取得処理
-//============================================================
-CStage::StageArea CStage::GetStageArea(const int nID) const
-{
-	// 引数インデックスのステージエリアを返す
-	return m_aStageArea[nID];
-}
-
-//============================================================
-//	ステージエリアの描画設定処理
-//============================================================
-void CStage::SetEnableDrawArea(const bool bDraw)
-{
-	// 引数の描画状況をステージエリアに設定
-	m_pStageArea->SetEnableDraw(bDraw);
-}
-
-//============================================================
-//	プレイヤーの現在エリア取得処理
-//============================================================
-CStage::AREA CStage::GetAreaPlayer(void) const
-{
-	// プレイヤーの現在エリアを返す
-	return m_area;
-}
-
-//============================================================
-//	ステージバリアの設定処理
-//============================================================
-void CStage::SetStageBarrier(const StageArea& rBarrier)
-{
-	// 引数のステージバリアを設定
-	m_stageBarrier = rBarrier;
-
-	// エリア表示の大きさを設定
-	m_pStageBarrier->SetScaling(D3DXVECTOR3(m_stageBarrier.fRadius * 2.0f, 0.0f, m_stageBarrier.fRadius * 2.0f));
-
-	// エリア表示の色を設定
-	m_pStageBarrier->SetColor(m_stageBarrier.col);
-}
-
-//============================================================
-//	ステージバリア取得処理
-//============================================================
-CStage::StageArea CStage::GetStageBarrier(void) const
-{
-	// ステージバリアを返す
-	return m_stageBarrier;
-}
-
-//============================================================
-//	ステージバリアの描画設定処理
-//============================================================
-void CStage::SetEnableDrawBarrier(const bool bDraw)
-{
-	// 引数の描画状況をステージバリアに設定
-	m_pStageBarrier->SetEnableDraw(bDraw);
-}
-
-//============================================================
-//	ステージバリアの位置取得処理
-//============================================================
-D3DXVECTOR3 CStage::GetStageBarrierPosition(void) const
-{
-	// バリアの位置を返す
-	return m_pStageBarrier->GetPosition();
-}
-
-//============================================================
-//	ハリケーンの描画設定処理
-//============================================================
-void CStage::SetEnableDrawHurricane(const bool bDraw)
-{
-	// 引数の描画状況をハリケーンに設定
-	m_pHurricane->SetEnableDraw(bDraw);
-}
-
-//============================================================
-//	風の生成設定処理
-//============================================================
-void CStage::SetEnebleCreateWind(const bool bCreate)
-{
-	// 引数の生成状況を設定
-	m_bWind = bCreate;
-}
-
-//============================================================
 //	生成処理
 //============================================================
 CStage *CStage::Create(void)
@@ -546,10 +213,7 @@ HRESULT CStage::Release(CStage *&prStage)
 void CStage::LoadSetup(CStage *pStage)
 {
 	// 変数を宣言
-	StageArea stageBarrier;	// ステージバリアの代入用
-	StageArea stageArea;	// ステージエリアの代入用
 	StageLimit stageLimit;	// ステージ範囲の代入用
-	int nArea = 0;			// エリアの読み込み数
 	int nEnd = 0;			// テキスト読み込み終了の確認用
 
 	// 変数配列を宣言
@@ -643,91 +307,6 @@ void CStage::LoadSetup(CStage *pStage)
 
 				// ステージ範囲の設定
 				pStage->SetStageLimit(stageLimit);
-
-				// 例外処理
-				assert(stageLimit.mode == CStage::LIMIT_CIRCLE);	// 範囲制限エラー
-			}
-
-			// ステージバリアの設定
-			else if (strcmp(&aString[0], "BARRIERSET") == 0)
-			{ // 読み込んだ文字列が BARRIERSET の場合
-
-				do
-				{ // 読み込んだ文字列が END_BARRIERSET ではない場合ループ
-
-					// ファイルから文字列を読み込む
-					fscanf(pFile, "%s", &aString[0]);
-
-					if (strcmp(&aString[0], "COL") == 0)
-					{ // 読み込んだ文字列が COL の場合
-
-						fscanf(pFile, "%s", &aString[0]);			// = を読み込む (不要)
-						fscanf(pFile, "%f", &stageBarrier.col.r);	// 赤色を読み込む
-						fscanf(pFile, "%f", &stageBarrier.col.g);	// 緑色を読み込む
-						fscanf(pFile, "%f", &stageBarrier.col.b);	// 青色を読み込む
-						fscanf(pFile, "%f", &stageBarrier.col.a);	// α値を読み込む
-					}
-					else if (strcmp(&aString[0], "RADIUS") == 0)
-					{ // 読み込んだ文字列が RADIUS の場合
-
-						fscanf(pFile, "%s", &aString[0]);			// = を読み込む (不要)
-						fscanf(pFile, "%f", &stageBarrier.fRadius);	// 半径を読み込む
-					}
-				} while (strcmp(&aString[0], "END_BARRIERSET") != 0);	// 読み込んだ文字列が END_BARRIERSET ではない場合ループ
-
-				// ステージバリアの設定
-				pStage->SetStageBarrier(stageBarrier);
-			}
-
-			// ステージエリアの設定
-			else if (strcmp(&aString[0], "AREASET") == 0)
-			{ // 読み込んだ文字列が AREASET の場合
-
-				do
-				{ // 読み込んだ文字列が END_AREASET ではない場合ループ
-
-					// ファイルから文字列を読み込む
-					fscanf(pFile, "%s", &aString[0]);
-
-					if (strcmp(&aString[0], "AREA") == 0)
-					{ // 読み込んだ文字列が AREA の場合
-
-						do
-						{ // 読み込んだ文字列が END_AREA ではない場合ループ
-
-							// ファイルから文字列を読み込む
-							fscanf(pFile, "%s", &aString[0]);
-
-							if (strcmp(&aString[0], "COL") == 0)
-							{ // 読み込んだ文字列が COL の場合
-
-								fscanf(pFile, "%s", &aString[0]);			// = を読み込む (不要)
-								fscanf(pFile, "%f", &stageArea.col.r);		// 赤色を読み込む
-								fscanf(pFile, "%f", &stageArea.col.g);		// 緑色を読み込む
-								fscanf(pFile, "%f", &stageArea.col.b);		// 青色を読み込む
-								fscanf(pFile, "%f", &stageArea.col.a);		// α値を読み込む
-							}
-							else if (strcmp(&aString[0], "RADIUS") == 0)
-							{ // 読み込んだ文字列が RADIUS の場合
-
-								fscanf(pFile, "%s", &aString[0]);			// = を読み込む (不要)
-								fscanf(pFile, "%f", &stageArea.fRadius);	// 半径を読み込む
-							}
-						} while (strcmp(&aString[0], "END_AREA") != 0);	// 読み込んだ文字列が END_AREA ではない場合ループ
-
-						// 例外処理
-						assert(nArea < AREA_MAX);	// エリア数オーバー
-
-						// ステージエリアの設定
-						pStage->SetStageArea(nArea, stageArea);
-
-						// エリア数を加算
-						nArea++;
-					}
-				} while (strcmp(&aString[0], "END_AREASET") != 0);	// 読み込んだ文字列が END_AREASET ではない場合ループ
-
-				// 例外処理
-				assert(nArea == AREA_MAX);	// エリア未設定
 			}
 		} while (nEnd != EOF);	// 読み込んだ文字列が EOF ではない場合ループ
 		

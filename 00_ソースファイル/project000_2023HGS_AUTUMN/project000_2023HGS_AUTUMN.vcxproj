@@ -155,31 +155,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="anim2D.cpp" />
-    <ClCompile Include="bubble.cpp" />
-    <ClCompile Include="bullet.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="debugproc.cpp" />
     <ClCompile Include="effect2D.cpp" />
     <ClCompile Include="effect3D.cpp" />
-    <ClCompile Include="enemy.cpp" />
-    <ClCompile Include="enemyWay.cpp" />
-    <ClCompile Include="expManager.cpp" />
-    <ClCompile Include="expOrb.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="field.cpp" />
-    <ClCompile Include="flower.cpp" />
     <ClCompile Include="gameManager.cpp" />
-    <ClCompile Include="gaugeStar.cpp" />
-    <ClCompile Include="hurricane.cpp" />
     <ClCompile Include="input.cpp" />
-    <ClCompile Include="letterManager.cpp" />
-    <ClCompile Include="levelupManager.cpp" />
     <ClCompile Include="light.cpp" />
-    <ClCompile Include="lockCursor.cpp" />
-    <ClCompile Include="magic.cpp" />
-    <ClCompile Include="magicManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="manager.cpp" />
     <ClCompile Include="model.cpp" />
@@ -202,13 +188,10 @@
     <ClCompile Include="objectModel.cpp" />
     <ClCompile Include="objectOrbit.cpp" />
     <ClCompile Include="objectTornado.cpp" />
-    <ClCompile Include="omitShop.cpp" />
     <ClCompile Include="particle2D.cpp" />
     <ClCompile Include="particle3D.cpp" />
     <ClCompile Include="pause.cpp" />
     <ClCompile Include="player.cpp" />
-    <ClCompile Include="playerGame.cpp" />
-    <ClCompile Include="playerTutorial.cpp" />
     <ClCompile Include="precompile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -224,14 +207,10 @@
     <ClCompile Include="score.cpp" />
     <ClCompile Include="scroll2D.cpp" />
     <ClCompile Include="scrollMeshField.cpp" />
-    <ClCompile Include="sea.cpp" />
     <ClCompile Include="shadow.cpp" />
-    <ClCompile Include="shop.cpp" />
-    <ClCompile Include="shopManager.cpp" />
     <ClCompile Include="sky.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="stage.cpp" />
-    <ClCompile Include="target.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="timerManager.cpp" />
     <ClCompile Include="titleManager.cpp" />
@@ -240,39 +219,20 @@
     <ClCompile Include="value.cpp" />
     <ClCompile Include="valueUI.cpp" />
     <ClCompile Include="wall.cpp" />
-    <ClCompile Include="warningAttack.cpp" />
-    <ClCompile Include="warningSpawn.cpp" />
-    <ClCompile Include="waveManager.cpp" />
-    <ClCompile Include="weed.cpp" />
-    <ClCompile Include="wind.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="anim2D.h" />
-    <ClInclude Include="bubble.h" />
-    <ClInclude Include="bullet.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="debugproc.h" />
     <ClInclude Include="effect2D.h" />
     <ClInclude Include="effect3D.h" />
-    <ClInclude Include="enemy.h" />
-    <ClInclude Include="enemyWay.h" />
-    <ClInclude Include="expManager.h" />
-    <ClInclude Include="expOrb.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="field.h" />
-    <ClInclude Include="flower.h" />
     <ClInclude Include="gameManager.h" />
-    <ClInclude Include="gaugeStar.h" />
-    <ClInclude Include="hurricane.h" />
     <ClInclude Include="input.h" />
-    <ClInclude Include="letterManager.h" />
-    <ClInclude Include="levelupManager.h" />
     <ClInclude Include="light.h" />
-    <ClInclude Include="lockCursor.h" />
-    <ClInclude Include="magic.h" />
-    <ClInclude Include="magicManager.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="manager.h" />
     <ClInclude Include="model.h" />
@@ -295,13 +255,10 @@
     <ClInclude Include="objectModel.h" />
     <ClInclude Include="objectOrbit.h" />
     <ClInclude Include="objectTornado.h" />
-    <ClInclude Include="omitShop.h" />
     <ClInclude Include="particle2D.h" />
     <ClInclude Include="particle3D.h" />
     <ClInclude Include="pause.h" />
     <ClInclude Include="player.h" />
-    <ClInclude Include="playerGame.h" />
-    <ClInclude Include="playerTutorial.h" />
     <ClInclude Include="precompile.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="resource.h" />
@@ -315,14 +272,12 @@
     <ClInclude Include="score.h" />
     <ClInclude Include="scroll2D.h" />
     <ClInclude Include="scrollMeshField.h" />
-    <ClInclude Include="sea.h" />
     <ClInclude Include="shadow.h" />
     <ClInclude Include="shop.h" />
     <ClInclude Include="shopManager.h" />
     <ClInclude Include="sky.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="stage.h" />
-    <ClInclude Include="target.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="timerManager.h" />
     <ClInclude Include="titleManager.h" />
@@ -331,11 +286,6 @@
     <ClInclude Include="value.h" />
     <ClInclude Include="valueUI.h" />
     <ClInclude Include="wall.h" />
-    <ClInclude Include="warningAttack.h" />
-    <ClInclude Include="warningSpawn.h" />
-    <ClInclude Include="waveManager.h" />
-    <ClInclude Include="weed.h" />
-    <ClInclude Include="wind.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
