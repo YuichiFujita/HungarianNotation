@@ -682,7 +682,7 @@ void CResultManager::UpdateBack(void)
 			{ // フェード中ではない場合
 
 				// シーンの設定
-				CManager::SetScene(CScene::MODE_TITLE);	// タイトル画面
+				CManager::SetScene(CScene::MODE_RANKING);	// タイトル画面
 
 				// サウンドの再生
 				CManager::GetSound()->Play(CSound::LABEL_SE_DECISION_000);	// 決定音00

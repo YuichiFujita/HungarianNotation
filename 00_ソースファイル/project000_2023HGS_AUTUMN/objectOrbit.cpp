@@ -234,8 +234,8 @@ void CObjectOrbit::Draw(void)
 			{ // オフセットの数分繰り返す
 
 				// 基準位置を設定
-				m_orbit.aPos[nCntOff].x = posParent.x + sinf(rotParent.z) * m_orbit.aOffset[nCntOff];
-				m_orbit.aPos[nCntOff].y = posParent.y + cosf(rotParent.z) * m_orbit.aOffset[nCntOff];
+				m_orbit.aPos[nCntOff].x = posParent.x + sinf(rotParent.z - HALF_PI) * m_orbit.aOffset[nCntOff];
+				m_orbit.aPos[nCntOff].y = posParent.y + cosf(rotParent.z - HALF_PI) * m_orbit.aOffset[nCntOff];
 				m_orbit.aPos[nCntOff].z = 0.0f;
 			}
 

@@ -35,7 +35,7 @@ CPlayer::~CPlayer()
 HRESULT CPlayer::Init(void)
 {
 	// ‹OÕ‚Ì¶¬
-	m_pOrbit = CObjectOrbit::Create(this, XCOL_BLUE, CObjectOrbit::OFFSET_PLAYER, 500);
+	m_pOrbit = CObjectOrbit::Create(this, XCOL_BLUE, CObjectOrbit::OFFSET_PLAYER, 10);
 	m_pOrbit->SetLabel(LABEL_PLAYER);
 
 	//‰Šú‰»
@@ -115,7 +115,7 @@ CPlayer* CPlayer::Create(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize, cons
 			pPlayer->SetScaling(rSize);
 			pPlayer->SetRotation(rRot);
 			pPlayer->SetColor(rCol);
-			pPlayer->BindTexture(CManager::GetTexture()->Regist("data\\TEXTURE\\effect005.jpg"));
+			pPlayer->BindTexture(CManager::GetTexture()->Regist("data\\TEXTURE\\player000.png"));
 		}
 	}
 
