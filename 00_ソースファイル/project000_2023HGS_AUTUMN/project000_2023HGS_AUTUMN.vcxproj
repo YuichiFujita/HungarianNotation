@@ -42,7 +42,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -76,6 +76,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -159,6 +161,7 @@
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="debugproc.cpp" />
     <ClCompile Include="effect2D.cpp" />
+    <ClCompile Include="enemy.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="gameManager.cpp" />
     <ClCompile Include="input.cpp" />
@@ -202,6 +205,7 @@
     <ClInclude Include="debug.h" />
     <ClInclude Include="debugproc.h" />
     <ClInclude Include="effect2D.h" />
+    <ClInclude Include="enemy.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="gameManager.h" />
     <ClInclude Include="input.h" />
