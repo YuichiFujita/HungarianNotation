@@ -56,19 +56,18 @@ public:
 	static HRESULT Release(CGameManager *&prGameManager);	// 破棄
 	static CPlayer* GetPlayer(void) { return m_pPlayer; } //プレイヤーの取得
 	static CMap* GetMap(void) { return m_pMap; } //世界の取得
-	static CObjectGauge2D* GetObjectGauge2D(void) { return m_pObjectGauge2D; } //ゲージの取得
+	static STATE GetState(void) { return m_state; }
 
 private:
 
 	//メンバ変数
-	STATE m_state; //状態
 	int m_curtainInterbal; //状態
 
 	//静的メンバ変数
 	static CPlayer* m_pPlayer; //プレイヤーのポインタ
 	static CMap* m_pMap; //世界のポインタ
-	static CObjectGauge2D* m_pObjectGauge2D; //ゲージのポインタ
 	static CObject2D* m_pObject2D[2]; //ゲージのポインタ
+	static STATE m_state; //状態
 
 };
 

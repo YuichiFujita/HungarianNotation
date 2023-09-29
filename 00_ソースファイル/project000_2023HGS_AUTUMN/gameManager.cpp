@@ -23,8 +23,8 @@
 //==========================================
 CPlayer* CGameManager::m_pPlayer = nullptr;
 CMap* CGameManager::m_pMap = nullptr;
-CObjectGauge2D* CGameManager::m_pObjectGauge2D = nullptr;
-CObject2D* CGameManager::m_pObject2D[2] = { nullptr , nullptr};
+CObject2D* CGameManager::m_pObject2D[2] = { nullptr , nullptr };
+CGameManager::STATE CGameManager::m_state = STATE_START;
 
 //************************************************************
 //	親クラス [CGameManager] のメンバ関数
@@ -60,8 +60,6 @@ HRESULT CGameManager::Init(void)
 	//プレイヤーの生成
 	//CEnemy::Create(D3DXVECTOR3(640.0f, 100.0f, 0.0f), D3DXVECTOR3(100.0f, 10.0f, 0.0f), VEC3_ZERO, XCOL_WHITE, CEnemy::TYPE_STICK_SLIDE);
 	m_pPlayer = CPlayer::Create(m_pMap->GetHeightMin(), D3DXVECTOR3(100.0f, 100.0f, 0.0f));
-	m_pObjectGauge2D = CObjectGauge2D::Create(CObject::LABEL_GAUGE, 10, 5, D3DXVECTOR3(640.0f, 700.0f, 0.0f), D3DXVECTOR3(320.0f, 50.0f, 0.0f));
-	m_pObjectGauge2D->SetNum(0);
 
 	m_pObject2D[0] = CObject2D::Create(D3DXVECTOR3(320.0f, 360.0f, 0.0f), D3DXVECTOR3(640.0f, 720.0f, 0.0f));
 	m_pObject2D[1] = CObject2D::Create(D3DXVECTOR3(960.0f, 360.0f, 0.0f), D3DXVECTOR3(640.0f, 720.0f, 0.0f));
@@ -97,22 +95,22 @@ void CGameManager::Update(void)
 	{
 		m_curtainInterbal++;
 
-		if (m_curtainInterbal > 60)
+		if (m_curtainInterbal > 30)
 		{
 			D3DXVECTOR3 scale;
 			D3DXVECTOR3 pos;
 
 			pos = m_pObject2D[0]->GetPosition();
 			scale = m_pObject2D[0]->GetScaling();
-			pos.x -= 1.5f;
-			scale.x -= 3.0f;
+			pos.x -= 4.0f;
+			scale.x -= 8.0f;
 			m_pObject2D[0]->SetPosition(pos);
 			m_pObject2D[0]->SetScaling(scale);
 
 			pos = m_pObject2D[1]->GetPosition();
 			scale = m_pObject2D[1]->GetScaling();
-			pos.x += 1.5f;
-			scale.x -= 3.0f;
+			pos.x += 4.0f;
+			scale.x -= 8.0f;
 			m_pObject2D[1]->SetPosition(pos);
 			m_pObject2D[1]->SetScaling(scale);
 
