@@ -6,6 +6,8 @@
 //==========================================
 #include "map.h"
 #include "spot.h"
+#include "player.h"
+#include "gameManager.h"
 
 //==========================================
 //  Ã“Iƒƒ“ƒo•Ï”éŒ¾
@@ -66,7 +68,11 @@ void CMap::Update(void)
 	float fWorld = m_vecMove;
 
 	//¢ŠE‚Ì‰Á‘¬
-	if (GetHeightNext().y <= 150.0f)
+	if (CGameManager::GetPlayer()->GetMuteki() && GetHeightMin().y <= 600.0f)
+	{
+		fWorld *= 100.0f;
+	}
+	else if (GetHeightNext().y <= 150.0f || GetHeightMin().y <= 400.0f)
 	{
 		fWorld *= 30.0f;
 	}
