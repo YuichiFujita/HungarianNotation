@@ -16,9 +16,9 @@
 //==========================================
 //  コンストラクタ
 //==========================================
-CEnemy::CEnemy()
+CEnemy::CEnemy() : CObject2D(CObject::LABEL_ENEMY)
 {
-
+	m_moveSpeed = 3.0f;
 }
 
 //==========================================
@@ -87,6 +87,25 @@ void CEnemy::Update(void)
 	if (CManager::GetKeyboard()->GetTrigger(DIK_SPACE) || CManager::GetPad()->GetTrigger(CInputPad::KEY_A) || CManager::GetMouse()->GetTrigger(CInputMouse::KEY_LEFT))
 	{
 		Collision(GetPosition(), GetScaling(), GetRotation());
+	}
+
+	if (m_type == TYPE_STICK_SLIDE)
+	{
+		rPos.y += 1.0f;
+
+		rPos.x += m_moveSpeed;
+
+		if (rPos.x > 1230.0f)
+		{
+			rPos.x = 1230.0f;
+			m_moveSpeed *= -1.0;
+		}
+
+		if (rPos.x < 50.0f)
+		{
+			rPos.x = 50.0f;
+			m_moveSpeed *= -1.0;
+		}
 	}
 
 	SetPosition(rPos);
@@ -207,34 +226,6 @@ void CEnemy::Collision(D3DXVECTOR3 rPos, D3DXVECTOR3 rSize, D3DXVECTOR3 rRot)
 				0.0f,							// 透明度の減算量
 				CObject::LABEL_EFFECT2D			// オブジェクトラベル
 			);
-
-			CEffect2D::Create
-			(
-				CEffect2D::TYPE_NORMAL,			// テクスチャ
-				posCurrent,						// 位置
-				D3DXVECTOR3(0.0f, 0.0f, 0.0f),	// 移動量
-				D3DXVECTOR3(0.0f, 0.0f, 0.0f),	// 向き
-				XCOL_WHITE,						// 色
-				1,								// 寿命
-				10.0f,							// 半径
-				0.0f,							// 半径の減算量
-				0.0f,							// 透明度の減算量
-				CObject::LABEL_EFFECT2D			// オブジェクトラベル
-			);
-
-			CEffect2D::Create
-			(
-				CEffect2D::TYPE_NORMAL,			// テクスチャ
-				posNext,						// 位置
-				D3DXVECTOR3(0.0f, 0.0f, 0.0f),	// 移動量
-				D3DXVECTOR3(0.0f, 0.0f, 0.0f),	// 向き
-				XCOL_WHITE,						// 色
-				1,								// 寿命
-				10.0f,							// 半径
-				0.0f,							// 半径の減算量
-				0.0f,							// 透明度の減算量
-				CObject::LABEL_EFFECT2D			// オブジェクトラベル
-			);
 #endif
 
 			//基準点とプレイヤーの位置のベクトル
@@ -261,7 +252,7 @@ void CEnemy::Collision(D3DXVECTOR3 rPos, D3DXVECTOR3 rSize, D3DXVECTOR3 rRot)
 			//側面衝突判定
 			if (fOutToPos * fOutToPosOld < 0.0f && fRate < 1.0f && fRate > 0.0f)
 			{//移動ベクトルと棒のベクトルに交点がある時
-				CManager::GetDebugProc()->Print("動くと当たるよ\n");
+				CGameManager::GetPlayer()->SetMiss();
 			}
 			else
 			{//ない時は端っこと移動ベクトルの距離を求める
@@ -311,12 +302,7 @@ void CEnemy::Collision(D3DXVECTOR3 rPos, D3DXVECTOR3 rSize, D3DXVECTOR3 rRot)
 					(rot[1] < 1.57f && rot[1] > -1.57f))
 				{//鋭角の時
 
-					//距離によって衝突かかすりか判定
-					if ((answer[0] < 30.0f && answer[0] > -30.0f) || (answer[1] < 30.0f && answer[1] > -30.0f))
-					{
-						CManager::GetDebugProc()->Print("端っこ当たるよ\n");
-					}
-					else if ((answer[0] < 80.0f && answer[0] > -80.0f) || (answer[1] < 80.0f && answer[1] > -80.0f))
+					if ((answer[0] < ENEMY_GLAZE && answer[0] > -ENEMY_GLAZE) || (answer[1] < ENEMY_GLAZE && answer[1] > -ENEMY_GLAZE))
 					{
 						CGameManager::GetObjectGauge2D()->AddNum(1);
 

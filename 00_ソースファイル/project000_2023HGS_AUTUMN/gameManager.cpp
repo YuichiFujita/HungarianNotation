@@ -16,6 +16,9 @@
 #include "score.h"
 #include "timerManager.h"
 #include "objectGauge2D.h"
+#include "score.h"
+#include "texture.h"
+#include "enemymanager.h"
 
 //==========================================
 //  静的メンバ関数宣言
@@ -23,6 +26,8 @@
 CPlayer* CGameManager::m_pPlayer = nullptr;
 CMap* CGameManager::m_pMap = nullptr;
 CObjectGauge2D* CGameManager::m_pObjectGauge2D = nullptr;
+CObject2D* CGameManager::m_pObject2D[2] = { nullptr , nullptr};
+CEnemyManager* CGameManager::m_pEnemyManager = nullptr;
 
 //************************************************************
 //	親クラス [CGameManager] のメンバ関数
@@ -32,7 +37,7 @@ CObjectGauge2D* CGameManager::m_pObjectGauge2D = nullptr;
 //============================================================
 CGameManager::CGameManager()
 {
-
+	m_curtainInterbal = 0;
 }
 
 //============================================================
@@ -56,11 +61,30 @@ HRESULT CGameManager::Init(void)
 	}
 
 	//プレイヤーの生成
-	CEnemy::Create(D3DXVECTOR3(640.0f, 100.0f, 0.0f), D3DXVECTOR3(100.0f, 10.0f, 0.0f), VEC3_ZERO, XCOL_WHITE, CEnemy::TYPE_STICK);
+	//CEnemy::Create(D3DXVECTOR3(640.0f, 100.0f, 0.0f), D3DXVECTOR3(100.0f, 10.0f, 0.0f), VEC3_ZERO, XCOL_WHITE, CEnemy::TYPE_STICK_SLIDE);
 	m_pPlayer = CPlayer::Create(m_pMap->GetHeightMin(), D3DXVECTOR3(100.0f, 100.0f, 0.0f));
 	m_pObjectGauge2D = CObjectGauge2D::Create(CObject::LABEL_GAUGE, 10, 5, D3DXVECTOR3(640.0f, 700.0f, 0.0f), D3DXVECTOR3(320.0f, 50.0f, 0.0f));
 	m_pObjectGauge2D->SetNum(0);
 
+<<<<<<< .mine
+	//エネミーマネージャの生成
+	if (m_pEnemyManager == nullptr)
+	{
+		m_pEnemyManager = new CEnemyManager;
+		m_pEnemyManager->Init();
+	}
+
+
+=======
+	m_pObject2D[0] = CObject2D::Create(D3DXVECTOR3(320.0f, 360.0f, 0.0f), D3DXVECTOR3(640.0f, 720.0f, 0.0f));
+	m_pObject2D[1] = CObject2D::Create(D3DXVECTOR3(960.0f, 360.0f, 0.0f), D3DXVECTOR3(640.0f, 720.0f, 0.0f));
+
+	m_pObject2D[0]->BindTexture(CManager::GetTexture()->Regist("data\\TEXTURE\\fade003.jpg"));
+	m_pObject2D[1]->BindTexture(CManager::GetTexture()->Regist("data\\TEXTURE\\fade003.jpg"));
+
+	m_state = STATE_START;
+
+>>>>>>> .theirs
 	// 成功を返す
 	return S_OK;
 }
@@ -70,11 +94,20 @@ HRESULT CGameManager::Init(void)
 //============================================================
 void CGameManager::Uninit(void)
 {
+	//世界の破壊
 	if (m_pMap != nullptr)
 	{
 		m_pMap->Uninit();
 		delete m_pMap;
 		m_pMap = nullptr;
+	}
+
+	//エネミーマネージャの終了
+	if (m_pEnemyManager != nullptr)
+	{
+		m_pEnemyManager->Uninit();
+		delete m_pEnemyManager;
+		m_pEnemyManager = nullptr;
 	}
 }
 
@@ -83,22 +116,76 @@ void CGameManager::Uninit(void)
 //============================================================
 void CGameManager::Update(void)
 {
-	if (m_pMap != nullptr)
+	if (m_state == STATE_START)
 	{
-		m_pMap->Update();
+		m_curtainInterbal++;
+
+		if (m_curtainInterbal > 60)
+		{
+			D3DXVECTOR3 scale;
+			D3DXVECTOR3 pos;
+
+			pos = m_pObject2D[0]->GetPosition();
+			scale = m_pObject2D[0]->GetScaling();
+			pos.x -= 1.5f;
+			scale.x -= 3.0f;
+			m_pObject2D[0]->SetPosition(pos);
+			m_pObject2D[0]->SetScaling(scale);
+
+			pos = m_pObject2D[1]->GetPosition();
+			scale = m_pObject2D[1]->GetScaling();
+			pos.x += 1.5f;
+			scale.x -= 3.0f;
+			m_pObject2D[1]->SetPosition(pos);
+			m_pObject2D[1]->SetScaling(scale);
+
+			if (m_pObject2D[0]->GetPosition().x < 0.0f)
+			{
+				CSceneGame::GetTimerManager()->Start();	// 計測を開始
+				m_state = STATE_NORMAL;
+				m_pObject2D[0]->Uninit();
+				m_pObject2D[1]->Uninit();
+			}
+		}
+	}
+	else
+	{
+		if (m_pMap != nullptr)
+		{
+			m_pMap->Update();
+		}
+
+<<<<<<< .mine
+	//エネミーマネージャの更新
+	if (m_pEnemyManager != nullptr)
+	{
+		m_pEnemyManager->Update();
 	}
 
-	if (CSceneGame::GetTimerManager()->GetState() == CTimerManager::STATE_END)
-	{ // タイマーの計測が終了済みの場合
+	if (CSceneGame::GetGameManager()->GetPlayer()->GetMiss()
+	||  CSceneGame::GetTimerManager()->GetState() == CTimerManager::STATE_END)
+	{ // プレイヤーが死亡した、またはタイマーの計測が終了済みの場合
+=======
+		if (CSceneGame::GetGameManager()->GetPlayer()->GetMiss()
+			|| CSceneGame::GetTimerManager()->GetState() == CTimerManager::STATE_END)
+		{ // プレイヤーが死亡した、またはタイマーの計測が終了済みの場合
 
-		// リザルトに遷移する
-		TransitionResult(CRetentionManager::RESULT_CLEAR);
-	}
-	else if (CSceneGame::GetGameManager()->GetPlayer()->GetMiss())
-	{ // プレイヤーが死亡した場合
 
-		// リザルトに遷移する
-		TransitionResult(CRetentionManager::RESULT_FAILED);
+
+
+
+
+>>>>>>> .theirs
+
+			// リザルトに遷移
+			CManager::SetScene(CScene::MODE_RESULT, 30);
+		}
+		else if (CSceneGame::GetGameManager()->GetPlayer()->GetMiss())
+		{ // プレイヤーが死亡した場合
+
+		  // リザルトに遷移する
+			TransitionResult(CRetentionManager::RESULT_FAILED);
+		}
 	}
 }
 

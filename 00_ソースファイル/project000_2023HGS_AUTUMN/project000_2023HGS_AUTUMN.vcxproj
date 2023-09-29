@@ -163,6 +163,7 @@
     <ClCompile Include="debugproc.cpp" />
     <ClCompile Include="effect2D.cpp" />
     <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="enemygroup.cpp" />
     <ClCompile Include="enemymanager.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="gameManager.cpp" />
@@ -213,6 +214,7 @@
     <ClInclude Include="debugproc.h" />
     <ClInclude Include="effect2D.h" />
     <ClInclude Include="enemy.h" />
+    <ClInclude Include="enemygroup.h" />
     <ClInclude Include="enemymanager.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="gameManager.h" />
