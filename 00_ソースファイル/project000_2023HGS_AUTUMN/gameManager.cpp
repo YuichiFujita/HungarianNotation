@@ -13,6 +13,7 @@
 #include "player.h"
 #include "map.h"
 #include "enemy.h"
+#include "score.h"
 #include "timerManager.h"
 #include "objectGauge2D.h"
 #include "score.h"

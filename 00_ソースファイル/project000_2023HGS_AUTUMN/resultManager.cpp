@@ -34,14 +34,16 @@
 #define SET_RESULT_SCALE	(15.0f)	// リザルト表示の初期拡大率
 #define SUB_RESULT_SCALE	(0.65f)	// リザルト表示拡大率の減算量
 
-#define SCORE_WAIT_CNT	(10)	// スコア表示状態への変更待機フレーム数
-#define POS_SCORE_LOGO	(D3DXVECTOR3(250.0f, 400.0f, 0.0f))		// スコアロゴ位置
-#define SIZE_SCORE_LOGO	(D3DXVECTOR3(487.5f, 154.7f, 0.0f))		// スコアロゴ大きさ
-#define POS_SCORE		(D3DXVECTOR3(490.0f, 400.0f, 0.0f))		// スコア位置
-#define SIZE_SCORE		(D3DXVECTOR3(94.0f, 112.0f, 0.0f))		// スコア大きさ
-#define SPACE_SCORE		(D3DXVECTOR3(SIZE_SCORE.x, 0.0f, 0.0f))	// スコア空白
-#define SET_SCORE_SCALE	(8.0f)	// スコア表示の初期拡大率
-#define SUB_SCORE_SCALE	(0.4f)	// スコア表示拡大率の減算量
+#define SCORE_WAIT_CNT		(10)	// スコア表示状態への変更待機フレーム数
+#define POS_SCORE_LOGO		(D3DXVECTOR3(250.0f, 400.0f, 0.0f))	// スコアロゴ位置
+#define SIZE_SCORE_LOGO		(D3DXVECTOR3(487.5f, 154.7f, 0.0f))	// スコアロゴ大きさ
+#define POS_SCORE			(D3DXVECTOR3(490.0f, 400.0f, 0.0f))	// スコア位置
+#define SIZE_SCORE_VALUE	(D3DXVECTOR3(94.0f, 112.0f, 0.0f))	// スコア大きさ
+#define SIZE_SCORE_UNIT		(D3DXVECTOR3(94.0f, 112.0f, 0.0f))	// スコア大きさ
+#define SPACE_SCORE_VALUE	(D3DXVECTOR3(SIZE_SCORE_VALUE.x, 0.0f, 0.0f))	// スコア空白
+#define SPACE_SCORE_UNIT	(D3DXVECTOR3(600.0f, 0.0f, 0.0f))				// スコア空白
+#define SET_SCORE_SCALE		(8.0f)	// スコア表示の初期拡大率
+#define SUB_SCORE_SCALE		(0.4f)	// スコア表示拡大率の減算量
 
 #define TIME_WAIT_CNT	(3)	// タイム表示状態への変更待機フレーム数
 #define POS_TIME_LOGO	(D3DXVECTOR3(250.0f, 560.0f, 0.0f))			// タイムロゴ位置
@@ -200,10 +202,13 @@ HRESULT CResultManager::Init(void)
 	// スコアオブジェクトの生成
 	m_pScore = CScore::Create
 	( // 引数
-		POS_SCORE,						// 位置
-		SIZE_SCORE * SET_SCORE_SCALE,	// 大きさ
-		SPACE_SCORE						// 空白
+		POS_SCORE,							// 位置
+		SIZE_SCORE_VALUE * SET_SCORE_SCALE,	// 大きさ
+		SIZE_SCORE_UNIT * SET_SCORE_SCALE,	// 大きさ
+		SPACE_SCORE_VALUE,					// 空白
+		SPACE_SCORE_UNIT					// 空白
 	);
+
 	if (m_pScore == NULL)
 	{ // 非使用中の場合
 
@@ -486,7 +491,8 @@ void CResultManager::UpdateScore(void)
 
 		// スコア表示の大きさを設定
 		m_pScoreLogo->SetScaling(SIZE_SCORE_LOGO * m_fScale);
-		m_pScore->SetScaling(SIZE_SCORE * m_fScale);
+		m_pScore->SetScalingValue(SIZE_SCORE_VALUE * m_fScale);
+		m_pScore->SetScalingUnit(SIZE_SCORE_UNIT * m_fScale);
 	}
 	else
 	{ // 拡大率が最小値以下の場合
@@ -496,7 +502,8 @@ void CResultManager::UpdateScore(void)
 
 		// スコア表示の大きさを設定
 		m_pScoreLogo->SetScaling(SIZE_SCORE_LOGO);
-		m_pScore->SetScaling(SIZE_SCORE);
+		m_pScore->SetScalingValue(SIZE_SCORE_VALUE);
+		m_pScore->SetScalingUnit(SIZE_SCORE_UNIT);
 
 		// 状態を変更
 		m_state = STATE_WAIT;	// タイム表示待機状態
@@ -570,7 +577,8 @@ void CResultManager::SkipStaging(void)
 
 	// スコア表示の大きさを設定
 	m_pScoreLogo->SetScaling(SIZE_SCORE_LOGO);
-	m_pScore->SetScaling(SIZE_SCORE);
+	m_pScore->SetScalingValue(SIZE_SCORE_VALUE);
+	m_pScore->SetScalingUnit(SIZE_SCORE_UNIT);
 
 	// フェードの透明度を設定
 	m_pFade->SetColor(SETCOL_FADE);
