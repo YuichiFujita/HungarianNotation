@@ -236,6 +236,9 @@ void CTutorialManager::UpdateStep(void)
 	if (CManager::GetKeyboard()->GetTrigger(DIK_RETURN))
 	{
 		m_nCounterExplain++;		//次のステップへ
+
+		// サウンドの再生
+		CManager::GetSound()->Play(CSound::LABEL_SE_DECISION_000);	// 決定音00
 	}
 
 	if (m_nCounterExplain >= EXPLAIN_MAX)

@@ -38,6 +38,9 @@ const CSound::SOUNDINFO CSound::mc_aSoundInfo[LABEL_MAX] =	// サウンド情報
 	{ "data\\SE\\stomp000.wav",  0 },		// 植物踏みつけ音
 	{ "data\\SE\\warning000.wav",  0 },		// 警告音
 	{ "data\\SE\\levelup000.wav",  0 },		// レベルアップ音
+	{ "data\\SE\\move000.wav",  0 },		// 移動音
+	{ "data\\SE\\curtain.wav",  0 },		// カーテン音
+	{ "data\\SE\\damage000.wav",  0 },		// ダメージ音
 };
 
 //************************************************************

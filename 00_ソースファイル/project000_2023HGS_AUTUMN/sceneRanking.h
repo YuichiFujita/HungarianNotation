@@ -20,6 +20,7 @@
 //	前方宣言
 //************************************************************
 class CRankingManager;	// ランキングマネージャークラス
+class CBg;				// 背景クラス
 
 //************************************************************
 //	クラス定義
@@ -42,10 +43,12 @@ public:
 
 	// 静的メンバ関数
 	static CRankingManager *GetRankingManager(void);	// ランキングマネージャー取得
+	static CBg *GetBg(void);	// 背景取得
 
 private:
 	// 静的メンバ変数
 	static CRankingManager *m_pRankingManager;	// ランキングマネージャー
+	static CBg *m_pBg;	// 背景オブジェクト
 };
 
 #endif	// _SCENE_RESULT_H_

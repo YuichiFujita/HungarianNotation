@@ -66,7 +66,6 @@ private:
 	//静的メンバ変数
 	static CPlayer* m_pPlayer; //プレイヤーのポインタ
 	static CMap* m_pMap; //世界のポインタ
-	static CObjectGauge2D* m_pObjectGauge2D; //ゲージのポインタ
 	static CObject2D* m_pObject2D[2]; //ゲージのポインタ
 	static STATE m_state; //状態
 

@@ -24,7 +24,8 @@
 //==========================================
 CPlayer* CGameManager::m_pPlayer = nullptr;
 CMap* CGameManager::m_pMap = nullptr;
-CObject2D* CGameManager::m_pObject2D[2] = { nullptr , nullptr};
+CObject2D* CGameManager::m_pObject2D[2] = { nullptr , nullptr };
+
 CGameManager::STATE CGameManager::m_state = STATE_START;
 
 //************************************************************
@@ -61,6 +62,7 @@ HRESULT CGameManager::Init(void)
 	//ƒvƒŒƒCƒ„[‚Ì¶¬
 	//CEnemy::Create(D3DXVECTOR3(640.0f, 100.0f, 0.0f), D3DXVECTOR3(100.0f, 10.0f, 0.0f), VEC3_ZERO, XCOL_WHITE, CEnemy::TYPE_STICK_SLIDE);
 	m_pPlayer = CPlayer::Create(m_pMap->GetHeightMin(), D3DXVECTOR3(100.0f, 100.0f, 0.0f));
+
 	m_pObject2D[0] = CObject2D::Create(D3DXVECTOR3(320.0f, 360.0f, 0.0f), D3DXVECTOR3(640.0f, 720.0f, 0.0f));
 	m_pObject2D[1] = CObject2D::Create(D3DXVECTOR3(960.0f, 360.0f, 0.0f), D3DXVECTOR3(640.0f, 720.0f, 0.0f));
 
