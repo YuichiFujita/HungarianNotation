@@ -12,12 +12,14 @@
 #include "player.h"
 #include "map.h"
 #include "enemy.h"
+#include "objectGauge2D.h"
 
 //==========================================
 //  静的メンバ関数宣言
 //==========================================
 CPlayer* CGameManager::m_pPlayer = nullptr;
 CMap* CGameManager::m_pMap = nullptr;
+CObjectGauge2D* CGameManager::m_pObjectGauge2D = nullptr;
 
 //************************************************************
 //	親クラス [CGameManager] のメンバ関数
@@ -51,8 +53,10 @@ HRESULT CGameManager::Init(void)
 	}
 
 	//プレイヤーの生成
-	m_pPlayer = CPlayer::Create(m_pMap->GetHeightMin(), D3DXVECTOR3(100.0f, 100.0f, 0.0f));
 	CEnemy::Create(D3DXVECTOR3(640.0f, 100.0f, 0.0f), D3DXVECTOR3(100.0f, 10.0f, 0.0f), VEC3_ZERO, XCOL_WHITE, CEnemy::TYPE_STICK);
+	m_pPlayer = CPlayer::Create(m_pMap->GetHeightMin(), D3DXVECTOR3(100.0f, 100.0f, 0.0f));
+	m_pObjectGauge2D = CObjectGauge2D::Create(CObject::LABEL_GAUGE, 10, 5, D3DXVECTOR3(640.0f, 700.0f, 0.0f), D3DXVECTOR3(320.0f, 50.0f, 0.0f));
+	m_pObjectGauge2D->SetNum(0);
 
 	// 成功を返す
 	return S_OK;
