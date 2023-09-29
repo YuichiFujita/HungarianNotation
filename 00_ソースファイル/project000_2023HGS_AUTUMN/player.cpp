@@ -64,7 +64,7 @@ void CPlayer::Uninit(void)
 void CPlayer::Update(void)
 {
 #ifdef _DEBUG
-	if (CManager::GetKeyboard()->GetPress(DIK_F) && CManager::GetKeyboard()->GetPress(DIK_J) && CManager::GetKeyboard()->GetTrigger(DIK_T))
+	if (CManager::GetKeyboard()->GetTrigger(DIK_F6))
 	{
 		SwitchMuteki();
 	}
@@ -91,13 +91,13 @@ void CPlayer::Update(void)
 	Rotation();
 	
 	//F‚ª•Ï‚í‚é
-	if (m_bMuteki)
-	{
-		SetColor(D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
-	}
 	if (m_bMiss)
 	{
 		SetColor(D3DXCOLOR(0.1f, 0.1f, 0.1f, 1.0f));
+	}
+	else if (m_bMuteki)
+	{
+		SetColor(D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
 	}
 	else
 	{
@@ -204,9 +204,6 @@ void CPlayer::Move(D3DXVECTOR3 pos)
 
 		//ŽŸ‚Ì’n“_‚ðŽæ“¾
 		m_posNext = CGameManager::GetMap()->GetHeightNext();
-
-		//¢ŠE‚ð‰Á‘¬
-		CGameManager::GetMap()->SetAddMove(m_vecMove.y);
 	}
 }
 
