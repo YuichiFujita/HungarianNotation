@@ -15,7 +15,6 @@
 //************************************************************
 #include "main.h"
 #include "scene.h"
-#include "camera.h"
 
 //************************************************************
 //	前方宣言
@@ -66,7 +65,6 @@ private:
 	static CScore			*m_pScore;			// スコアオブジェクト
 	static CWarningSpawn	*m_pWarningSpawn;	// 出現警告表示オブジェクト
 
-	static bool m_bControlCamera;	// カメラの操作状況
 	static bool m_bDrawUI;			// UIの描画状況
 	static bool m_bDrawPause;		// ポーズの描画状況
 };

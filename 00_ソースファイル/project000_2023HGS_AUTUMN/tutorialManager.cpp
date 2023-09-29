@@ -11,7 +11,6 @@
 #include "manager.h"
 #include "input.h"
 #include "sound.h"
-#include "camera.h"
 #include "texture.h"
 #include "object2D.h"
 

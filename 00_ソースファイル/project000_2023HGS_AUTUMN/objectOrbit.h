@@ -33,9 +33,7 @@ public:
 	// オフセット列挙
 	enum OFFSET
 	{
-		OFFSET_NORMAL = 0,	// 通常オフセット
-		OFFSET_ROD,			// 杖オフセット
-		OFFSET_WIND,		// 風オフセット
+		OFFSET_PLAYER = 0,	// プレイヤーオフセット
 		OFFSET_MAX			// この列挙型の総数
 	};
 

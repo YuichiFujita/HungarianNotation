@@ -19,8 +19,6 @@
 //	前方宣言
 //************************************************************
 class CStage;	// ステージクラス
-class CPlayer;	// プレイヤークラス
-class CField;	// 地面クラス
 
 //************************************************************
 //	クラス定義
@@ -57,9 +55,7 @@ public:
 	static CScene *Create(MODE mode);			// 生成
 	static HRESULT Release(CScene *&prScene);	// 破棄
 
-	static CStage *GetStage(void);		// ステージ取得
-	static CPlayer *GetPlayer(void);	// プレイヤー取得
-	static CField *GetField(void);		// 地面取得
+	static CStage *GetStage(void);	// ステージ取得
 
 	// メンバ関数
 	void SetMode(const MODE mode);	// モード設定
@@ -68,8 +64,6 @@ public:
 private:
 	// 静的メンバ変数
 	static CStage *m_pStage;	// ステージ
-	static CPlayer *m_pPlayer;	// プレイヤーオブジェクト
-	static CField *m_pField;	// 地面オブジェクト
 
 	// メンバ変数
 	MODE m_mode;	// モード

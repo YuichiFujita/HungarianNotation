@@ -11,17 +11,11 @@
 #include "manager.h"
 #include "sound.h"
 #include "input.h"
-
 #include "gameManager.h"
 #include "timerManager.h"
 #include "stage.h"
 #include "pause.h"
 #include "score.h"
-
-#include "wall.h"
-#include "scenery.h"
-#include "sky.h"
-#include "player.h"
 
 //************************************************************
 //	マクロ定義
@@ -47,9 +41,8 @@ CWarningSpawn	*CSceneGame::m_pWarningSpawn = NULL;	// 出現警告表示オブジェクト
 CPause	*CSceneGame::m_pPause	= NULL;					// ポーズ
 CScore	*CSceneGame::m_pScore	= NULL;					// スコアオブジェクト
 
-bool CSceneGame::m_bControlCamera = false;	// カメラの操作状況
-bool CSceneGame::m_bDrawUI = true;			// UIの描画状況
-bool CSceneGame::m_bDrawPause = true;		// ポーズの描画状況
+bool CSceneGame::m_bDrawUI = true;		// UIの描画状況
+bool CSceneGame::m_bDrawPause = true;	// ポーズの描画状況
 
 //************************************************************
 //	子クラス [CSceneGame] のメンバ関数
@@ -130,31 +123,9 @@ HRESULT CSceneGame::Init(void)
 		return E_FAIL;
 	}
 
-#if 0	// TODO：壁
-
-	// 壁オブジェクトの生成
-	CWall::Create(CWall::TEXTURE_NORMAL, D3DXVECTOR3( 0.0f,    0.0f, -3000.0f), D3DXToRadian(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),   D3DXVECTOR2(6000.0f, 400.0f), XCOL_WHITE, POSGRID2(18, 1));
-	CWall::Create(CWall::TEXTURE_NORMAL, D3DXVECTOR3(-3000.0f, 0.0f,  0.0f),    D3DXToRadian(D3DXVECTOR3(0.0f, 90.0f, 0.0f)),  D3DXVECTOR2(6000.0f, 400.0f), XCOL_WHITE, POSGRID2(18, 1));
-	CWall::Create(CWall::TEXTURE_NORMAL, D3DXVECTOR3( 0.0f,    0.0f,  3000.0f), D3DXToRadian(D3DXVECTOR3(0.0f, 180.0f, 0.0f)), D3DXVECTOR2(6000.0f, 400.0f), XCOL_WHITE, POSGRID2(18, 1));
-	CWall::Create(CWall::TEXTURE_NORMAL, D3DXVECTOR3( 3000.0f, 0.0f,  0.0f),    D3DXToRadian(D3DXVECTOR3(0.0f, 270.0f, 0.0f)), D3DXVECTOR2(6000.0f, 400.0f), XCOL_WHITE, POSGRID2(18, 1));
-
-#endif
-
-	// 景色オブジェクトの生成
-	CScenery::Create(CScenery::TEXTURE_NORMAL, VEC3_ZERO, VEC3_ZERO,                                    XCOL_WHITE,                        POSGRID2(32, 1), 12000.0f, 1000.0f, D3DCULL_CW, false);
-	CScenery::Create(CScenery::TEXTURE_NORMAL, VEC3_ZERO, D3DXToRadian(D3DXVECTOR3(0.0f, 85.0f, 0.0f)), D3DXCOLOR(0.7f, 1.0f, 1.0f, 1.0f), POSGRID2(32, 1), 14000.0f, 1600.0f, D3DCULL_CW, false);
-	CScenery::Create(CScenery::TEXTURE_NORMAL, VEC3_ZERO, D3DXToRadian(D3DXVECTOR3(0.0f, 35.0f, 0.0f)), D3DXCOLOR(0.4f, 1.0f, 0.7f, 1.0f), POSGRID2(32, 1), 16000.0f, 2200.0f, D3DCULL_CW, false);
-
-	// 空オブジェクトの生成
-	CSky::Create(CSky::TEXTURE_NORMAL, VEC3_ZERO, VEC3_ZERO, XCOL_WHITE, POSGRID2(32, 6), 18000.0f, D3DCULL_CW, false);
-
 	//--------------------------------------------------------
 	//	初期設定
 	//--------------------------------------------------------
-	// カメラを設定
-	CManager::GetCamera()->SetState(CCamera::STATE_FOLLOW);	// カメラを追従状態に設定
-	CManager::GetCamera()->SetDestFollow();	// 目標位置を設定
-
 	// タイムを計測開始
 	m_pTimerManager->Start();	// 計測を開始
 
@@ -232,11 +203,6 @@ void CSceneGame::Update(void)
 	}
 	else if (CManager::GetKeyboard()->GetTrigger(DIK_F4))
 	{
-		// カメラの操作状況を反転
-		SetEnableControlCamera((!m_bControlCamera) ? true : false);
-	}
-	else if (CManager::GetKeyboard()->GetTrigger(DIK_F5))
-	{
 		// リザルトに遷移
 		CManager::SetScene(CScene::MODE_RESULT);	// リザルト画面
 	}
@@ -244,8 +210,7 @@ void CSceneGame::Update(void)
 	// デバッグ表示
 	CManager::GetDebugProc()->Print("[F2]：UI描画のON/OFF\n");
 	CManager::GetDebugProc()->Print("[F3]：ポーズ描画のON/OFF\n");
-	CManager::GetDebugProc()->Print("[F4]：カメラ操作のON/OFF\n");
-	CManager::GetDebugProc()->Print("[F5]：リザルト遷移\n");
+	CManager::GetDebugProc()->Print("[F4]：リザルト遷移\n");
 
 #endif
 
@@ -279,21 +244,6 @@ void CSceneGame::Update(void)
 		// シーンの更新
 		CScene::Update();
 	}
-
-#if _DEBUG
-
-	else
-	{ // ポーズ中の場合
-
-		if (CManager::GetCamera()->GetState() == CCamera::STATE_CONTROL)
-		{ // カメラが操作状態の場合
-
-			// カメラの更新
-			CManager::GetCamera()->Update();
-		}
-	}
-
-#endif
 }
 
 //============================================================
@@ -347,29 +297,6 @@ CWarningSpawn *CSceneGame::GetWarningSpawn(void)
 {
 	// 出現警告表示のポインタを返す
 	return m_pWarningSpawn;
-}
-
-//============================================================
-//	カメラの操作状況の設定処理
-//============================================================
-void CSceneGame::SetEnableControlCamera(const bool bControl)
-{
-	// 引数のカメラ操作状況を設定
-	m_bControlCamera = bControl;
-
-	// カメラの操作状況を設定
-	if (bControl)
-	{ // 操作する状況の場合
-
-		// 操作状態に変更
-		CManager::GetCamera()->SetState(CCamera::STATE_CONTROL);
-	}
-	else
-	{ // 操作しない状況の場合
-
-		// 追従状態に変更
-		CManager::GetCamera()->SetState(CCamera::STATE_FOLLOW);
-	}
 }
 
 //============================================================

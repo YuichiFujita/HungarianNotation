@@ -10,29 +10,16 @@
 #include "scene.h"
 #include "manager.h"
 #include "renderer.h"
-#include "light.h"
-#include "camera.h"
 #include "sceneTitle.h"
 #include "sceneTutorial.h"
 #include "sceneGame.h"
 #include "sceneResult.h"
-
 #include "stage.h"
-#include "player.h"
-#include "field.h"
-
-//************************************************************
-//	マクロ定義
-//************************************************************
-#define FIELD_SIZE	(D3DXVECTOR2(6000.0f, 6000.0f))	// 地面の大きさ
-#define FIELD_PART	(POSGRID2(120, 120))			// 地面の分割数
 
 //************************************************************
 //	静的メンバ変数宣言
 //************************************************************
 CStage *CScene::m_pStage = NULL;	// ステージ
-CPlayer	*CScene::m_pPlayer = NULL;	// プレイヤーオブジェクト
-CField *CScene::m_pField = NULL;	// 地面オブジェクト
 
 //************************************************************
 //	親クラス [CScene] のメンバ関数
@@ -69,19 +56,6 @@ HRESULT CScene::Init(void)
 		return E_FAIL;
 	}
 
-	// 地面オブジェクトの生成
-	m_pField = CField::Create(CField::TEXTURE_FIELD, VEC3_ZERO, VEC3_ZERO, FIELD_SIZE, XCOL_WHITE, FIELD_PART);
-	if (m_pField == NULL)
-	{ // 非使用中の場合
-
-		// 失敗を返す
-		assert(false);
-		return E_FAIL;
-	}
-
-	// プレイヤーオブジェクトの生成
-	m_pPlayer = CPlayer::Create(VEC3_ZERO, VEC3_ZERO);
-
 	// 成功を返す
 	return S_OK;
 }
@@ -100,10 +74,6 @@ HRESULT CScene::Uninit(void)
 		return E_FAIL;
 	}
 
-	// 終了済みのオブジェクトポインタをNULLにする
-	m_pPlayer = NULL;	// プレイヤーオブジェクト
-	m_pField = NULL;	// 地面オブジェクト
-
 	// 成功を返す
 	return S_OK;
 }
@@ -118,22 +88,6 @@ void CScene::Update(void)
 
 		// ステージの更新
 		m_pStage->Update();
-	}
-	else { assert(false); }	// 非使用中
-
-	if (CManager::GetLight() != NULL)
-	{ // 使用中の場合
-
-		// ライトの更新
-		CManager::GetLight()->Update();
-	}
-	else { assert(false); }	// 非使用中
-
-	if (CManager::GetCamera() != NULL)
-	{ // 使用中の場合
-
-		// カメラの更新
-		CManager::GetCamera()->Update();
 	}
 	else { assert(false); }	// 非使用中
 
@@ -264,24 +218,6 @@ CStage *CScene::GetStage(void)
 {
 	// ステージのポインタを返す
 	return m_pStage;
-}
-
-//============================================================
-//	プレイヤー取得処理
-//============================================================
-CPlayer *CScene::GetPlayer(void)
-{
-	// プレイヤーのポインタを返す
-	return m_pPlayer;
-}
-
-//============================================================
-//	地面取得処理
-//============================================================
-CField *CScene::GetField(void)
-{
-	// 地面のポインタを返す
-	return m_pField;
 }
 
 //============================================================
