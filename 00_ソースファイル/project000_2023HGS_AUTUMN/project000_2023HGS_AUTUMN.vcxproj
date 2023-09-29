@@ -197,41 +197,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="anim2D.h" />
-    <ClInclude Include="camera.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="debugproc.h" />
     <ClInclude Include="effect2D.h" />
-    <ClInclude Include="effect3D.h" />
     <ClInclude Include="fade.h" />
-    <ClInclude Include="field.h" />
     <ClInclude Include="gameManager.h" />
     <ClInclude Include="input.h" />
-    <ClInclude Include="light.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="manager.h" />
-    <ClInclude Include="model.h" />
-    <ClInclude Include="modelUI.h" />
-    <ClInclude Include="motion.h" />
-    <ClInclude Include="multiModel.h" />
     <ClInclude Include="multiValue.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="object2D.h" />
-    <ClInclude Include="object3D.h" />
-    <ClInclude Include="objectBillboard.h" />
-    <ClInclude Include="objectChara.h" />
     <ClInclude Include="objectGauge2D.h" />
-    <ClInclude Include="objectGauge3D.h" />
-    <ClInclude Include="objectMeshCube.h" />
-    <ClInclude Include="objectMeshCylinder.h" />
-    <ClInclude Include="objectMeshDome.h" />
-    <ClInclude Include="objectMeshField.h" />
-    <ClInclude Include="objectMeshWall.h" />
-    <ClInclude Include="objectModel.h" />
     <ClInclude Include="objectOrbit.h" />
-    <ClInclude Include="objectTornado.h" />
     <ClInclude Include="particle2D.h" />
-    <ClInclude Include="particle3D.h" />
     <ClInclude Include="pause.h" />
     <ClInclude Include="precompile.h" />
     <ClInclude Include="renderer.h" />
@@ -241,16 +221,10 @@
     <ClInclude Include="scene.h" />
     <ClInclude Include="sceneGame.h" />
     <ClInclude Include="sceneResult.h" />
-    <ClInclude Include="scenery.h" />
     <ClInclude Include="sceneTitle.h" />
     <ClInclude Include="sceneTutorial.h" />
     <ClInclude Include="score.h" />
     <ClInclude Include="scroll2D.h" />
-    <ClInclude Include="scrollMeshField.h" />
-    <ClInclude Include="shadow.h" />
-    <ClInclude Include="shop.h" />
-    <ClInclude Include="shopManager.h" />
-    <ClInclude Include="sky.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="stage.h" />
     <ClInclude Include="texture.h" />
@@ -260,7 +234,6 @@
     <ClInclude Include="useful.h" />
     <ClInclude Include="value.h" />
     <ClInclude Include="valueUI.h" />
-    <ClInclude Include="wall.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
