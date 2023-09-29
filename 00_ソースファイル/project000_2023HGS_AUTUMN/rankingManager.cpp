@@ -38,8 +38,11 @@
 #define POS_SCORE_LOGO	(D3DXVECTOR3(250.0f, 400.0f, 0.0f))		// スコアロゴ位置
 #define SIZE_SCORE_LOGO	(D3DXVECTOR3(487.5f, 154.7f, 0.0f))		// スコアロゴ大きさ
 #define POS_SCORE		(D3DXVECTOR3(490.0f, 400.0f, 0.0f))		// スコア位置
-#define SIZE_SCORE		(D3DXVECTOR3(94.0f, 112.0f, 0.0f))		// スコア大きさ
-#define SPACE_SCORE		(D3DXVECTOR3(SIZE_SCORE.x, 0.0f, 0.0f))	// スコア空白
+
+#define SIZE_SCORE_VALUE	(D3DXVECTOR3(94.0f, 112.0f, 0.0f))				// スコア大きさ
+#define SIZE_SCORE_UNIT		(D3DXVECTOR3(94.0f, 112.0f, 0.0f))				// スコア大きさ
+#define SPACE_SCORE_VALUE	(D3DXVECTOR3(SIZE_SCORE_VALUE.x, 0.0f, 0.0f))	// スコア空白
+#define SPACE_SCORE_UNIT	(D3DXVECTOR3(800.0f, 0.0f, 0.0f))				// スコア空白
 #define SET_SCORE_SCALE	(8.0f)	// スコア表示の初期拡大率
 #define SUB_SCORE_SCALE	(0.4f)	// スコア表示拡大率の減算量
 
@@ -198,8 +201,10 @@ HRESULT CRankingManager::Init(void)
 		m_pScore[nCntScore] = CScore::Create
 		( // 引数
 			D3DXVECTOR3(SCREEN_WIDTH * 0.25f, SCREEN_HEIGHT * 0.25f + (nCntScore * SCORE_INTER), 0.0f),						// 位置
-			SIZE_SCORE * SET_SCORE_SCALE,	// 大きさ
-			SPACE_SCORE						// 空白
+			SIZE_SCORE_VALUE * SET_SCORE_SCALE,	// 大きさ
+			SIZE_SCORE_UNIT * SET_SCORE_SCALE,	// 大きさ
+			SPACE_SCORE_VALUE,					// 空白
+			SPACE_SCORE_UNIT					// 空白
 		);
 		if (m_pScore[nCntScore] == NULL)
 		{ // 非使用中の場合
@@ -477,7 +482,8 @@ void CRankingManager::UpdateScore(void)
 
 		for (int nCntScore = 0; nCntScore < MAX_RANKKING; nCntScore++)
 		{
-			m_pScore[nCntScore]->SetScaling(SIZE_SCORE * m_fScale);
+			m_pScore[nCntScore]->SetScalingValue(SIZE_SCORE_VALUE * m_fScale);
+			m_pScore[nCntScore]->SetScalingUnit(SIZE_SCORE_UNIT * m_fScale);
 		}
 	}
 	else
@@ -491,7 +497,8 @@ void CRankingManager::UpdateScore(void)
 
 		for (int nCntScore = 0; nCntScore < MAX_RANKKING; nCntScore++)
 		{
-			m_pScore[nCntScore]->SetScaling(SIZE_SCORE);
+			m_pScore[nCntScore]->SetScalingValue(SIZE_SCORE_VALUE);
+			m_pScore[nCntScore]->SetScalingUnit(SIZE_SCORE_UNIT);
 		}
 
 		// 状態を変更
@@ -600,7 +607,8 @@ void CRankingManager::SkipStaging(void)
 
 	for (int nCntScore = 0; nCntScore < MAX_RANKKING; nCntScore++)
 	{
-		m_pScore[nCntScore]->SetScaling(SIZE_SCORE);
+		m_pScore[nCntScore]->SetScalingValue(SIZE_SCORE_VALUE);
+		m_pScore[nCntScore]->SetScalingUnit(SIZE_SCORE_UNIT);
 	}
 
 	// フェードの透明度を設定

@@ -374,6 +374,8 @@ void CScore::SetEnableDraw(const bool bDraw)
 		}
 	}
 	else { assert(false); }	// ”ñŽg—p’†
+
+	m_pUnit->SetEnableDraw(bDraw);
 }
 
 //============================================================

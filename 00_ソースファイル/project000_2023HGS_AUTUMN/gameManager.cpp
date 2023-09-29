@@ -66,7 +66,6 @@ HRESULT CGameManager::Init(void)
 	m_pObjectGauge2D = CObjectGauge2D::Create(CObject::LABEL_GAUGE, 10, 5, D3DXVECTOR3(640.0f, 700.0f, 0.0f), D3DXVECTOR3(320.0f, 50.0f, 0.0f));
 	m_pObjectGauge2D->SetNum(0);
 
-<<<<<<< .mine
 	//エネミーマネージャの生成
 	if (m_pEnemyManager == nullptr)
 	{
@@ -74,8 +73,6 @@ HRESULT CGameManager::Init(void)
 		m_pEnemyManager->Init();
 	}
 
-
-=======
 	m_pObject2D[0] = CObject2D::Create(D3DXVECTOR3(320.0f, 360.0f, 0.0f), D3DXVECTOR3(640.0f, 720.0f, 0.0f));
 	m_pObject2D[1] = CObject2D::Create(D3DXVECTOR3(960.0f, 360.0f, 0.0f), D3DXVECTOR3(640.0f, 720.0f, 0.0f));
 
@@ -84,7 +81,6 @@ HRESULT CGameManager::Init(void)
 
 	m_state = STATE_START;
 
->>>>>>> .theirs
 	// 成功を返す
 	return S_OK;
 }
@@ -155,35 +151,23 @@ void CGameManager::Update(void)
 			m_pMap->Update();
 		}
 
-<<<<<<< .mine
 	//エネミーマネージャの更新
 	if (m_pEnemyManager != nullptr)
 	{
 		m_pEnemyManager->Update();
 	}
 
-	if (CSceneGame::GetGameManager()->GetPlayer()->GetMiss()
-	||  CSceneGame::GetTimerManager()->GetState() == CTimerManager::STATE_END)
-	{ // プレイヤーが死亡した、またはタイマーの計測が終了済みの場合
-=======
-		if (CSceneGame::GetGameManager()->GetPlayer()->GetMiss()
-			|| CSceneGame::GetTimerManager()->GetState() == CTimerManager::STATE_END)
-		{ // プレイヤーが死亡した、またはタイマーの計測が終了済みの場合
 
-
-
-
-
-
->>>>>>> .theirs
+		if (CSceneGame::GetTimerManager()->GetState() == CTimerManager::STATE_END)
+		{ // タイマーの計測が終了済みの場合
 
 			// リザルトに遷移
-			CManager::SetScene(CScene::MODE_RESULT, 30);
+			TransitionResult(CRetentionManager::RESULT_CLEAR);
 		}
 		else if (CSceneGame::GetGameManager()->GetPlayer()->GetMiss())
 		{ // プレイヤーが死亡した場合
 
-		  // リザルトに遷移する
+			// リザルトに遷移する
 			TransitionResult(CRetentionManager::RESULT_FAILED);
 		}
 	}
