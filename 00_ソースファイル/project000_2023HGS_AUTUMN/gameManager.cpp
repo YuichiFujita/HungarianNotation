@@ -26,7 +26,6 @@ CPlayer* CGameManager::m_pPlayer = nullptr;
 CMap* CGameManager::m_pMap = nullptr;
 CObjectGauge2D* CGameManager::m_pObjectGauge2D = nullptr;
 CObject2D* CGameManager::m_pObject2D[2] = { nullptr , nullptr};
-CEnemyManager* CGameManager::m_pEnemyManager = nullptr;
 
 //************************************************************
 //	親クラス [CGameManager] のメンバ関数
@@ -65,16 +64,6 @@ HRESULT CGameManager::Init(void)
 	m_pObjectGauge2D = CObjectGauge2D::Create(CObject::LABEL_GAUGE, 10, 5, D3DXVECTOR3(640.0f, 700.0f, 0.0f), D3DXVECTOR3(320.0f, 50.0f, 0.0f));
 	m_pObjectGauge2D->SetNum(0);
 
-<<<<<<< .mine
-	//エネミーマネージャの生成
-	if (m_pEnemyManager == nullptr)
-	{
-		m_pEnemyManager = new CEnemyManager;
-		m_pEnemyManager->Init();
-	}
-
-
-=======
 	m_pObject2D[0] = CObject2D::Create(D3DXVECTOR3(320.0f, 360.0f, 0.0f), D3DXVECTOR3(640.0f, 720.0f, 0.0f));
 	m_pObject2D[1] = CObject2D::Create(D3DXVECTOR3(960.0f, 360.0f, 0.0f), D3DXVECTOR3(640.0f, 720.0f, 0.0f));
 
@@ -83,7 +72,6 @@ HRESULT CGameManager::Init(void)
 
 	m_state = STATE_START;
 
->>>>>>> .theirs
 	// 成功を返す
 	return S_OK;
 }
@@ -99,14 +87,6 @@ void CGameManager::Uninit(void)
 		m_pMap->Uninit();
 		delete m_pMap;
 		m_pMap = nullptr;
-	}
-
-	//エネミーマネージャの終了
-	if (m_pEnemyManager != nullptr)
-	{
-		m_pEnemyManager->Uninit();
-		delete m_pEnemyManager;
-		m_pEnemyManager = nullptr;
 	}
 }
 
@@ -154,28 +134,9 @@ void CGameManager::Update(void)
 			m_pMap->Update();
 		}
 
-<<<<<<< .mine
-	//エネミーマネージャの更新
-	if (m_pEnemyManager != nullptr)
-	{
-		m_pEnemyManager->Update();
-	}
-
-	if (CSceneGame::GetGameManager()->GetPlayer()->GetMiss()
-	||  CSceneGame::GetTimerManager()->GetState() == CTimerManager::STATE_END)
-	{ // プレイヤーが死亡した、またはタイマーの計測が終了済みの場合
-=======
 		if (CSceneGame::GetGameManager()->GetPlayer()->GetMiss()
 			|| CSceneGame::GetTimerManager()->GetState() == CTimerManager::STATE_END)
 		{ // プレイヤーが死亡した、またはタイマーの計測が終了済みの場合
-
-
-
-
-
-
->>>>>>> .theirs
-
 			// リザルトに遷移
 			CManager::SetScene(CScene::MODE_RESULT, 30);
 		}

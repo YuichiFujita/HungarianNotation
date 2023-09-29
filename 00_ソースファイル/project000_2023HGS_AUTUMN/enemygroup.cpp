@@ -47,7 +47,11 @@ HRESULT CEnemyGroup::Init(void)
 			0.0f
 		);
 
-		m_pEnemy[nCnt] = CEnemy::Create(pos);
+		m_pEnemy[nCnt] = CEnemy::Create(pos,
+			D3DXVECTOR3(SCREEN_WIDTH * 0.05f, SCREEN_HEIGHT * 0.05f, 0.0f),
+			D3DXVECTOR3(0.0f, 0.0f, 0.0f),
+			D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f),
+			CEnemy::TYPE_STICK_SLIDE);
 	}
 
 	return S_OK;
@@ -58,7 +62,7 @@ HRESULT CEnemyGroup::Init(void)
 ///=========================================
 void CEnemyGroup::Uninit(void)
 {
-
+	this->Release();
 }
 
 //==========================================
@@ -66,7 +70,7 @@ void CEnemyGroup::Uninit(void)
 //==========================================
 void CEnemyGroup::Update(void)
 {
-	m_rot.z += 0.01f;
+	m_rot.z += 0.02f;
 
 	if (m_rot.y > D3DX_PI)
 	{
@@ -118,5 +122,5 @@ CEnemyGroup* CEnemyGroup::Create(D3DXVECTOR3 pos, float fLength)
 		}
 	}
 
-	return nullptr;
+	return pGroup;
 }
