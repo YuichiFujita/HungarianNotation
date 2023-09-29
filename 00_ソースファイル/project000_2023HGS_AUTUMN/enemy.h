@@ -21,7 +21,6 @@ public:
 		TYPE_NONE = 0,		// ‚È‚µ
 		TYPE_STICK,			// ‰ñ“]–_
 		TYPE_STICK_SLIDE,	// ‰¡ˆÚ“®–_
-		TYPE_CIRCLE,		// ŒŠ‚ ‚«‰~
 		TYPE_MAX			// ‚±‚Ì—ñ‹“Œ^‚Ì‘”
 	}TYPE;
 
