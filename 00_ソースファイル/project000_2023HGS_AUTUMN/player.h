@@ -36,6 +36,10 @@ public:
 
 private:
 
+	//メンバ関数
+	void Move(D3DXVECTOR3 pos); //移動
+	void Rotation(void); //回転
+
 	//メンバ変数
 	CObjectOrbit *m_pOrbit;	// オブジェクト軌跡クラス
 	D3DXVECTOR3 m_posNext;	// 次座標
