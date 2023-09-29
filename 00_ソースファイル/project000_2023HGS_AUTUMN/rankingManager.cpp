@@ -58,8 +58,7 @@
 #define FILE_RANK		"data\\TEXT\\ranking.txt"		//ランキングファイル
 #define SCORE_WIDTH		(50.0f * 0.5f)		//一桁の横の長さ
 #define SCORE_HEIGHT	(100.0f * 0.5f)		//一桁の縦の長さ
-#define SCORE_INTER_U	(50.0f)				//スコアの間隔(横)
-#define SCORE_INTER_V	(100.0f)			//スコアの間隔(縦)
+#define SCORE_INTER		(110.0f)				//スコアの間隔(横)
 #define NUM_TEX			(10)				//テクスチャの数字の数
 #define TRANS_TIME		(60 * 10)			//遷移するまでの時間
 
@@ -182,32 +181,6 @@ HRESULT CRankingManager::Init(void)
 	//SetTexRanking();
 
 	//--------------------------------------------------------
-	//	スコアロゴ表示の生成・設定
-	//--------------------------------------------------------
-	// スコアロゴ表示の生成
-	//m_pScoreLogo = CObject2D::Create
-	//( // 引数
-	//	POS_SCORE_LOGO,						// 位置
-	//	SIZE_SCORE_LOGO * SET_SCORE_SCALE	// 大きさ
-	//);
-	//if (m_pScoreLogo == NULL)
-	//{ // 生成に失敗した場合
-
-	//	// 失敗を返す
-	//	assert(false);
-	//	return E_FAIL;
-	//}
-
-	//// テクスチャを登録・割当
-	//m_pScoreLogo->BindTexture(pTexture->Regist(mc_apTextureFile[TEXTURE_SCORE]));
-
-	//// 優先順位を設定
-	//m_pScoreLogo->SetPriority(RESULT_PRIO);
-
-	//// 描画をしない設定にする
-	//m_pScoreLogo->SetEnableDraw(false);
-
-	//--------------------------------------------------------
 	//	スコア表示の生成・設定
 	//--------------------------------------------------------
 	for (int nCntScore = 0; nCntScore < MAX_RANKKING; nCntScore++)
@@ -215,7 +188,7 @@ HRESULT CRankingManager::Init(void)
 		// スコアオブジェクトの生成
 		m_pScore[nCntScore] = CScore::Create
 		( // 引数
-			POS_SCORE,						// 位置
+			D3DXVECTOR3(SCREEN_WIDTH * 0.25f, SCREEN_HEIGHT * 0.25f + (nCntScore * SCORE_INTER), 0.0f),						// 位置
 			SIZE_SCORE * SET_SCORE_SCALE,	// 大きさ
 			SPACE_SCORE						// 空白
 		);
