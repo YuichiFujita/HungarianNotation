@@ -14,6 +14,7 @@
 #include "objectOrbit.h"
 #include "map.h"
 #include "score.h"
+#include "sound.h"
 
 //==========================================
 //  コンストラクタ
@@ -199,6 +200,9 @@ void CPlayer::Move(D3DXVECTOR3 pos)
 
 		//スコアの加算
 		CSceneGame::GetScore()->Add((int)-m_vecMove.y);
+
+		// サウンドの再生
+		CManager::GetSound()->Play(CSound::LABEL_SE_MOVE);	// 決定音00
 	}
 }
 
