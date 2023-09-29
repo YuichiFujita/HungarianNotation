@@ -47,6 +47,9 @@ HRESULT CPlayer::Init(void)
 	//次の地点を取得
 	m_posNext = CGameManager::GetMap()->GetHeightNext();
 
+	// サウンドの再生
+	CManager::GetSound()->Play(CSound::LABEL_SE_CURTAIN);	// 決定音00
+
 	//初期化
 	return CObject2D::Init();
 }

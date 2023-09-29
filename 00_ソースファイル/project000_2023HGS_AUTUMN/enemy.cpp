@@ -84,7 +84,7 @@ void CEnemy::Update(void)
 	}
 #endif
 
-	if (CManager::GetKeyboard()->GetTrigger(DIK_SPACE) || CManager::GetPad()->GetTrigger(CInputPad::KEY_A) || CManager::GetMouse()->GetTrigger(CInputMouse::KEY_LEFT))
+	if ((CManager::GetKeyboard()->GetTrigger(DIK_SPACE) || CManager::GetPad()->GetTrigger(CInputPad::KEY_A) || CManager::GetMouse()->GetTrigger(CInputMouse::KEY_LEFT)) && CGameManager::GetState() == CGameManager::STATE_NORMAL)
 	{
 		Collision(GetPosition(), GetScaling(), GetRotation());
 	}
@@ -247,13 +247,13 @@ void CEnemy::Collision(D3DXVECTOR3 rPos, D3DXVECTOR3 rSize, D3DXVECTOR3 rRot)
 		fOutRate = (vecToPos.x * vecMove.y) - (vecToPos.y * vecMove.x);
 		fRate = fOutRate / fOutUnit;
 
-		//側面衝突判定
-		if (fOutToPos * fOutToPosOld < 0.0f && fRate < 1.0f && fRate > 0.0f)
-		{//移動ベクトルと棒のベクトルに交点がある時
-			CGameManager::GetPlayer()->SetMiss();
-		}
-		else
-		{//ない時は端っこと移動ベクトルの距離を求める
+			//側面衝突判定
+			if (fOutToPos * fOutToPosOld < 0.0f && fRate < 0.9f && fRate > 0.1f)
+			{//移動ベクトルと棒のベクトルに交点がある時
+				CGameManager::GetPlayer()->SetMiss();
+			}
+			else
+			{//ない時は端っこと移動ベクトルの距離を求める
 
 			float rot[2], answer[2];
 			D3DXVECTOR3 vec[2] = {};
@@ -302,10 +302,8 @@ void CEnemy::Collision(D3DXVECTOR3 rPos, D3DXVECTOR3 rSize, D3DXVECTOR3 rRot)
 
 				if ((answer[0] < ENEMY_GLAZE && answer[0] > -ENEMY_GLAZE) || (answer[1] < ENEMY_GLAZE && answer[1] > -ENEMY_GLAZE))
 				{
-					
+
 				}
 			}
 		}
 	}
-	
-}
