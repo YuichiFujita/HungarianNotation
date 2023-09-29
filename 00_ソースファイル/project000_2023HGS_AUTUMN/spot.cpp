@@ -7,13 +7,14 @@
 #include "spot.h"
 #include "manager.h"
 #include "debugproc.h"
+#include "enemygroup.h"
 
 //==========================================
 //  コンストラクタ
 //==========================================
 CSpot::CSpot() : CObject2D(LABEL_NONE)
 {
-
+	m_pGroup = NULL;
 }
 
 //==========================================
@@ -45,6 +46,11 @@ void CSpot::Uninit(void)
 //==========================================
 void CSpot::Update(void)
 {
+	if (m_pGroup != nullptr)
+	{
+		m_pGroup->SetPos(GetPosition());
+	}
+
 	CObject2D::Update();
 	
 	//デバッグ表示
@@ -81,6 +87,8 @@ CSpot* CSpot::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 			pSpot->SetPosition(pos);
 			pSpot->SetScaling(size);
 			pSpot->SetColor(D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f));
+
+			//pSpot->m_pGroup = CEnemyGroup::Create(pSpot->GetPosition(), (float)(rand() % 100 + 50));
 		}
 	}
 

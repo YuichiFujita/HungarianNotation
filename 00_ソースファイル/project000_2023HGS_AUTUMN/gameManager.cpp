@@ -15,6 +15,7 @@
 #include "enemy.h"
 #include "timerManager.h"
 #include "objectGauge2D.h"
+#include "enemymanager.h"
 
 //==========================================
 //  静的メンバ関数宣言
@@ -22,6 +23,7 @@
 CPlayer* CGameManager::m_pPlayer = nullptr;
 CMap* CGameManager::m_pMap = nullptr;
 CObjectGauge2D* CGameManager::m_pObjectGauge2D = nullptr;
+CEnemyManager* CGameManager::m_pEnemyManager = nullptr;
 
 //************************************************************
 //	親クラス [CGameManager] のメンバ関数
@@ -60,6 +62,13 @@ HRESULT CGameManager::Init(void)
 	m_pObjectGauge2D = CObjectGauge2D::Create(CObject::LABEL_GAUGE, 10, 5, D3DXVECTOR3(640.0f, 700.0f, 0.0f), D3DXVECTOR3(320.0f, 50.0f, 0.0f));
 	m_pObjectGauge2D->SetNum(0);
 
+	//エネミーマネージャの生成
+	if (m_pEnemyManager == nullptr)
+	{
+		m_pEnemyManager = new CEnemyManager;
+		m_pEnemyManager->Init();
+	}
+
 	// 成功を返す
 	return S_OK;
 }
@@ -69,11 +78,20 @@ HRESULT CGameManager::Init(void)
 //============================================================
 void CGameManager::Uninit(void)
 {
+	//世界の破壊
 	if (m_pMap != nullptr)
 	{
 		m_pMap->Uninit();
 		delete m_pMap;
 		m_pMap = nullptr;
+	}
+
+	//エネミーマネージャの終了
+	if (m_pEnemyManager != nullptr)
+	{
+		m_pEnemyManager->Uninit();
+		delete m_pEnemyManager;
+		m_pEnemyManager = nullptr;
 	}
 }
 
@@ -85,6 +103,12 @@ void CGameManager::Update(void)
 	if (m_pMap != nullptr)
 	{
 		m_pMap->Update();
+	}
+
+	//エネミーマネージャの更新
+	if (m_pEnemyManager != nullptr)
+	{
+		m_pEnemyManager->Update();
 	}
 
 	if (CSceneGame::GetGameManager()->GetPlayer()->GetMiss()
