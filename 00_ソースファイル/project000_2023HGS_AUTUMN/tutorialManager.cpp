@@ -28,7 +28,7 @@ const char *CTutorialManager::mc_apTextureFile[] =	// テクスチャ定数
 {
 	"data\\TEXTURE\\player000.png",		// ボタンテクスチャ
 	"data\\TEXTURE\\tutorial000.png",	// 説明テクスチャ1
-	"data\\TEXTURE\\sky000.png",	// 説明テクスチャ1
+	"data\\TEXTURE\\tutorial001.png",	// 説明テクスチャ1
 };
 
 //************************************************************

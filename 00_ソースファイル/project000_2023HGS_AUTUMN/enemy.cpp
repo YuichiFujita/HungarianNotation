@@ -300,13 +300,11 @@ void CEnemy::Collision(D3DXVECTOR3 rPos, D3DXVECTOR3 rSize, D3DXVECTOR3 rRot)
 				(rot[1] < 1.57f && rot[1] > -1.57f))
 			{//‰sŠp‚ÌŽž
 
-					if ((answer[0] < ENEMY_GLAZE && answer[0] > -ENEMY_GLAZE) || (answer[1] < ENEMY_GLAZE && answer[1] > -ENEMY_GLAZE))
-					{
-						
-					}
+				if ((answer[0] < ENEMY_GLAZE && answer[0] > -ENEMY_GLAZE) || (answer[1] < ENEMY_GLAZE && answer[1] > -ENEMY_GLAZE))
+				{
+
 				}
 			}
 		}
 	}
-	
 }
