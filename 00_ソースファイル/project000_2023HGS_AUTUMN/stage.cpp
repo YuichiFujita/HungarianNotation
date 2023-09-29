@@ -12,8 +12,6 @@
 #include "texture.h"
 #include "scene.h"
 #include "sceneGame.h"
-#include "player.h"
-#include "field.h"
 #include "collision.h"
 
 //************************************************************

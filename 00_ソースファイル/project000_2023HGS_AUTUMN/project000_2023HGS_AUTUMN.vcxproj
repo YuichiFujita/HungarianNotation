@@ -155,43 +155,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="anim2D.cpp" />
-    <ClCompile Include="camera.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="debugproc.cpp" />
     <ClCompile Include="effect2D.cpp" />
-    <ClCompile Include="effect3D.cpp" />
     <ClCompile Include="fade.cpp" />
-    <ClCompile Include="field.cpp" />
     <ClCompile Include="gameManager.cpp" />
     <ClCompile Include="input.cpp" />
-    <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="manager.cpp" />
-    <ClCompile Include="model.cpp" />
-    <ClCompile Include="modelUI.cpp" />
-    <ClCompile Include="motion.cpp" />
-    <ClCompile Include="multiModel.cpp" />
     <ClCompile Include="multiValue.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="object2D.cpp" />
-    <ClCompile Include="object3D.cpp" />
-    <ClCompile Include="objectBillboard.cpp" />
-    <ClCompile Include="objectChara.cpp" />
     <ClCompile Include="objectGauge2D.cpp" />
-    <ClCompile Include="objectGauge3D.cpp" />
-    <ClCompile Include="objectMeshCube.cpp" />
-    <ClCompile Include="objectMeshCylinder.cpp" />
-    <ClCompile Include="objectMeshDome.cpp" />
-    <ClCompile Include="objectMeshField.cpp" />
-    <ClCompile Include="objectMeshWall.cpp" />
-    <ClCompile Include="objectModel.cpp" />
     <ClCompile Include="objectOrbit.cpp" />
-    <ClCompile Include="objectTornado.cpp" />
     <ClCompile Include="particle2D.cpp" />
-    <ClCompile Include="particle3D.cpp" />
     <ClCompile Include="pause.cpp" />
-    <ClCompile Include="player.cpp" />
     <ClCompile Include="precompile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -202,14 +181,10 @@
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="sceneGame.cpp" />
     <ClCompile Include="sceneResult.cpp" />
-    <ClCompile Include="scenery.cpp" />
     <ClCompile Include="sceneTitle.cpp" />
     <ClCompile Include="sceneTutorial.cpp" />
     <ClCompile Include="score.cpp" />
     <ClCompile Include="scroll2D.cpp" />
-    <ClCompile Include="scrollMeshField.cpp" />
-    <ClCompile Include="shadow.cpp" />
-    <ClCompile Include="sky.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="stage.cpp" />
     <ClCompile Include="texture.cpp" />
@@ -219,7 +194,6 @@
     <ClCompile Include="useful.cpp" />
     <ClCompile Include="value.cpp" />
     <ClCompile Include="valueUI.cpp" />
-    <ClCompile Include="wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="anim2D.h" />
@@ -259,7 +233,6 @@
     <ClInclude Include="particle2D.h" />
     <ClInclude Include="particle3D.h" />
     <ClInclude Include="pause.h" />
-    <ClInclude Include="player.h" />
     <ClInclude Include="precompile.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="resource.h" />

@@ -11,11 +11,8 @@
 #include "renderer.h"
 #include "input.h"
 #include "sound.h"
-#include "camera.h"
-#include "light.h"
 #include "fade.h"
 #include "texture.h"
-#include "model.h"
 #include "retentionManager.h"
 #include "object.h"
 
@@ -33,10 +30,7 @@ CInputKeyboard		*CManager::m_pKeyboard			= NULL;		// キーボードオブジェクト
 CInputMouse			*CManager::m_pMouse				= NULL;		// マウスオブジェクト
 CInputPad			*CManager::m_pPad				= NULL;		// パッドオブジェクト
 CSound				*CManager::m_pSound				= NULL;		// サウンドオブジェクト
-CCamera				*CManager::m_pCamera			= NULL;		// カメラオブジェクト
-CLight				*CManager::m_pLight				= NULL;		// ライトオブジェクト
 CTexture			*CManager::m_pTexture			= NULL;		// テクスチャオブジェクト
-CModel				*CManager::m_pModel				= NULL;		// モデルオブジェクト
 CFade				*CManager::m_pFade				= NULL;		// フェードオブジェクト
 CScene				*CManager::m_pScene				= NULL;		// シーンオブジェクト
 CRetentionManager	*CManager::m_pRetentionManager	= NULL;		// データ保存マネージャー
@@ -125,26 +119,6 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 		return E_FAIL;
 	}
 
-	// カメラの生成
-	m_pCamera = CCamera::Create();
-	if (m_pCamera == NULL)
-	{ // 非使用中の場合
-
-		// 失敗を返す
-		assert(false);
-		return E_FAIL;
-	}
-
-	// ライトの生成
-	m_pLight = CLight::Create();
-	if (m_pLight == NULL)
-	{ // 非使用中の場合
-
-		// 失敗を返す
-		assert(false);
-		return E_FAIL;
-	}
-
 	// データ保存マネージャーの生成
 	m_pRetentionManager = CRetentionManager::Create();
 	if (m_pRetentionManager == NULL)
@@ -161,16 +135,6 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	// テクスチャの生成・読込
 	m_pTexture = CTexture::Create();
 	if (m_pTexture == NULL)
-	{ // 非使用中の場合
-
-		// 失敗を返す
-		assert(false);
-		return E_FAIL;
-	}
-
-	// モデルの生成・読込
-	m_pModel = CModel::Create();
-	if (m_pModel == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -261,15 +225,6 @@ HRESULT CManager::Uninit(void)
 		return E_FAIL;
 	}
 
-	// モデルの破棄
-	if (FAILED(CModel::Release(m_pModel)))
-	{ // 破棄に失敗した場合
-
-		// 失敗を返す
-		assert(false);
-		return E_FAIL;
-	}
-
 	//--------------------------------------------------------
 	//	システムの破棄
 	//--------------------------------------------------------
@@ -293,24 +248,6 @@ HRESULT CManager::Uninit(void)
 
 	// フェードの破棄
 	if (FAILED(CFade::Release(m_pFade)))
-	{ // 破棄に失敗した場合
-
-		// 失敗を返す
-		assert(false);
-		return E_FAIL;
-	}
-
-	// ライトの破棄
-	if (FAILED(CLight::Release(m_pLight)))
-	{ // 破棄に失敗した場合
-
-		// 失敗を返す
-		assert(false);
-		return E_FAIL;
-	}
-
-	// カメラの破棄
-	if (FAILED(CCamera::Release(m_pCamera)))
 	{ // 破棄に失敗した場合
 
 		// 失敗を返す
@@ -644,39 +581,12 @@ CSound *CManager::GetSound(void)
 }
 
 //============================================================
-//	カメラ取得処理
-//============================================================
-CCamera *CManager::GetCamera(void)
-{
-	// カメラのポインタを返す
-	return m_pCamera;
-}
-
-//============================================================
-//	ライト取得処理
-//============================================================
-CLight *CManager::GetLight(void)
-{
-	// ライトのポインタを返す
-	return m_pLight;
-}
-
-//============================================================
 //	テクスチャ取得処理
 //============================================================
 CTexture *CManager::GetTexture(void)
 {
 	// テクスチャのポインタを返す
 	return m_pTexture;
-}
-
-//============================================================
-//	モデル取得処理
-//============================================================
-CModel *CManager::GetModel(void)
-{
-	// モデルのポインタを返す
-	return m_pModel;
 }
 
 //============================================================

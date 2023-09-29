@@ -10,7 +10,6 @@
 #include "renderer.h"
 #include "object.h"
 #include "manager.h"
-#include "camera.h"
 
 //************************************************************
 //	親クラス [CRenderer] のメンバ関数
@@ -147,8 +146,7 @@ void CRenderer::Update(void)
 void CRenderer::Draw(void)
 {
 	// 変数を宣言
-	HRESULT			hr;				// 異常終了の確認用
-	D3DVIEWPORT9	viewportDef;	// カメラのビューポート保存用
+	HRESULT hr;	// 異常終了の確認用
 
 	// バックバッファとZバッファのクリア
 	hr = m_pD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(0, 0, 0, 0), 1.0f, 0);
@@ -158,20 +156,11 @@ void CRenderer::Draw(void)
 	if (SUCCEEDED(m_pD3DDevice->BeginScene()))
 	{ // 描画開始が成功した場合
 
-		// 現在のビューポートを取得
-		m_pD3DDevice->GetViewport(&viewportDef);
-
-		// カメラの設定
-		CManager::GetCamera()->SetCamera(CCamera::TYPE_MAIN);
-
 		// オブジェクトの全描画
 		CObject::DrawAll();
 
 		// デバッグ表示の描画
 		CManager::GetDebugProc()->Draw();
-
-		// ビューポートを元に戻す
-		m_pD3DDevice->SetViewport(&viewportDef);
 
 		// 描画終了
 		hr = m_pD3DDevice->EndScene();

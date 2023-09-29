@@ -11,10 +11,8 @@
 #include "manager.h"
 #include "input.h"
 #include "sound.h"
-#include "camera.h"
 #include "fade.h"
 #include "texture.h"
-#include "model.h"
 #include "object2D.h"
 
 //************************************************************
@@ -447,9 +445,6 @@ void CTitleManager::UpdateMove(void)
 		// 状態を変更
 		m_state = STATE_WAIT;	// 遷移待機状態
 
-		// カメラの更新を再開
-		CManager::GetCamera()->SetEnableUpdate(true);
-
 		// サウンドの再生
 		CManager::GetSound()->Play(CSound::LABEL_SE_DECISION_001);	// 決定音01
 	}
@@ -589,9 +584,6 @@ void CTitleManager::SkipStaging(void)
 
 	// 選択背景を描画する設定にする
 	m_pSelectBG->SetEnableDraw(true);
-
-	// カメラの更新を再開
-	CManager::GetCamera()->SetEnableUpdate(true);
 
 	// 状態を変更
 	m_state = STATE_WAIT;	// 遷移待機状態
