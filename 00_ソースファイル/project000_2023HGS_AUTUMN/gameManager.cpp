@@ -11,6 +11,7 @@
 #include "manager.h"
 #include "player.h"
 #include "map.h"
+#include "enemy.h"
 
 //==========================================
 //  静的メンバ関数宣言
@@ -50,7 +51,8 @@ HRESULT CGameManager::Init(void)
 	}
 
 	//プレイヤーの生成
-	m_pPlayer = CPlayer::Create(SCREEN_CENT, D3DXVECTOR3(100.0f, 100.0f, 0.0f));
+	m_pPlayer = CPlayer::Create(m_pMap->GetHeightMin(), D3DXVECTOR3(100.0f, 100.0f, 0.0f));
+	CEnemy::Create(D3DXVECTOR3(640.0f, 100.0f, 0.0f), D3DXVECTOR3(100.0f, 10.0f, 0.0f), VEC3_ZERO, XCOL_WHITE, CEnemy::TYPE_STICK);
 
 	// 成功を返す
 	return S_OK;
