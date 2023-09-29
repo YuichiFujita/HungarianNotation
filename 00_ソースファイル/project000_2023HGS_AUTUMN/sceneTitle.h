@@ -20,6 +20,7 @@
 //	前方宣言
 //************************************************************
 class CTitleManager;	// タイトルマネージャークラス
+class CBg;				// 背景クラス
 
 //************************************************************
 //	クラス定義
@@ -42,10 +43,12 @@ public:
 
 	// 静的メンバ関数
 	static CTitleManager *GetTitleManager(void);	// タイトルマネージャー取得
+	static CBg *GetBg(void);	// 背景取得
 
 private:
 	// 静的メンバ変数
 	static CTitleManager *m_pTitleManager;	// タイトルマネージャー
+	static CBg *m_pBg;	// 背景オブジェクト
 };
 
 #endif	// _SCENE_TITLE_H_

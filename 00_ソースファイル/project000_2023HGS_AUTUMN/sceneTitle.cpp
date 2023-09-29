@@ -14,11 +14,13 @@
 #include "sound.h"
 #include "titleManager.h"
 #include "stage.h"
+#include "bg.h"
 
 //************************************************************
 //	静的メンバ変数宣言
 //************************************************************
 CTitleManager *CSceneTitle::m_pTitleManager = NULL;	// タイトルマネージャー
+CBg *CSceneTitle::m_pBg = NULL;	// 背景オブジェクト
 
 //************************************************************
 //	子クラス [CSceneTitle] のメンバ関数
@@ -60,6 +62,16 @@ HRESULT CSceneTitle::Init(void)
 		return E_FAIL;
 	}
 
+	// 背景の生成
+	m_pBg = CBg::Create(CBg::TEXTURE_BG, SCREEN_CENT, SCREEN_SIZE);
+	if (m_pBg == NULL)
+	{ // 非使用中の場合
+
+		// 失敗を返す
+		assert(false);
+		return E_FAIL;
+	}
+
 	// シーンの初期化
 	CScene::Init();
 
@@ -86,6 +98,9 @@ HRESULT CSceneTitle::Uninit(void)
 		assert(false);
 		return E_FAIL;
 	}
+
+	// 終了済みのオブジェクトポインタをNULLにする
+	m_pBg = NULL;	// 背景オブジェクト
 
 	// シーンの終了
 	CScene::Uninit();
@@ -126,4 +141,13 @@ CTitleManager *CSceneTitle::GetTitleManager(void)
 {
 	// タイトルマネージャーを返す
 	return m_pTitleManager;
+}
+
+//============================================================
+//	背景取得処理
+//============================================================
+CBg *CSceneTitle::GetBg(void)
+{
+	// 背景のポインタを返す
+	return m_pBg;
 }
