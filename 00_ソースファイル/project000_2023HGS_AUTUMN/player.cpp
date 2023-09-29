@@ -5,11 +5,14 @@
 //
 //==========================================
 #include "player.h"
+#include "manager.h"
+#include "debugproc.h"
+#include "input.h"
 
 //==========================================
 //  コンストラクタ
 //==========================================
-CPlayer::CPlayer()
+CPlayer::CPlayer() : CObject2D(LABEL_PLAYER)
 {
 	m_posNext = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_vecMove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -46,8 +49,44 @@ void CPlayer::Uninit(void)
 //==========================================
 void CPlayer::Update(void)
 {
+	//現在の座標を取得
+	D3DXVECTOR3 pos = GetPosition();
+
+	//移動
+	if(CManager::GetKeyboard()->GetTrigger(DIK_SPACE) || CManager::GetPad()->GetTrigger(CInputPad::KEY_A) || CManager::GetMouse()->GetTrigger(CInputMouse::KEY_LEFT))
+	{
+
+	}
+
+#ifdef _DEBUG
+	if (CManager::GetKeyboard()->GetTrigger(DIK_W))
+	{
+		m_posNext = pos + D3DXVECTOR3(0.0f, -200.0f, 0.0f);
+		SetPosition(m_posNext);
+	}
+	if (CManager::GetKeyboard()->GetTrigger(DIK_S))
+	{
+		m_posNext = pos + D3DXVECTOR3(0.0f, 200.0f, 0.0f);
+		SetPosition(m_posNext);
+	}
+	if (CManager::GetKeyboard()->GetTrigger(DIK_A))
+	{
+		m_posNext = pos + D3DXVECTOR3(-200.0f, 0.0f, 0.0f);
+		SetPosition(m_posNext);
+	}
+	if (CManager::GetKeyboard()->GetTrigger(DIK_D))
+	{
+		m_posNext = pos + D3DXVECTOR3(200.0f, 0.0f, 0.0f);
+		SetPosition(m_posNext);
+	}
+#endif
+
 	//更新
 	CObject2D::Update();
+
+	//デバッグ表示
+	CManager::GetDebugProc()->Print("プレイヤーいるよ\n");
+	CManager::GetDebugProc()->Print("プレイヤー座標 : ( %f, %f )\n", pos.x, pos.y);
 }
 
 //==========================================
