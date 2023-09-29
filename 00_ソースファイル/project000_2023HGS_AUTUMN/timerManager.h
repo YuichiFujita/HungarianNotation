@@ -77,6 +77,7 @@ public:
 	void Start(void);	// 計測開始
 	void End(void);		// 計測終了
 	void EnableStop(const bool bStop);	// 計測停止設定
+	STATE GetState(void);		// 計測状態取得
 	bool AddMSec(long nMSec);	// ミリ秒加算
 	bool AddSec(long nSec);		// 秒加算
 	bool AddMin(long nMin);		// 分加算

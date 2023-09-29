@@ -9,9 +9,11 @@
 //************************************************************
 #include "gameManager.h"
 #include "manager.h"
+#include "sceneGame.h"
 #include "player.h"
 #include "map.h"
 #include "enemy.h"
+#include "timerManager.h"
 
 //==========================================
 //  静的メンバ関数宣言
@@ -79,6 +81,14 @@ void CGameManager::Update(void)
 	if (m_pMap != nullptr)
 	{
 		m_pMap->Update();
+	}
+
+	if (CSceneGame::GetGameManager()->GetPlayer()->GetMiss()
+	||  CSceneGame::GetTimerManager()->GetState() == CTimerManager::STATE_END)
+	{ // プレイヤーが死亡した、またはタイマーの計測が終了済みの場合
+
+		// リザルトに遷移
+		CManager::SetScene(CScene::MODE_RESULT, 30);
 	}
 }
 
