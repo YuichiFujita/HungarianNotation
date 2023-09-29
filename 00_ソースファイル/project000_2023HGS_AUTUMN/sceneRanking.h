@@ -1,14 +1,14 @@
 //============================================================
 //
-//	タイトル画面ヘッダー [sceneTitle.h]
-//	Author：藤田勇一
+//	ランキング画面ヘッダー [sceneRanking.h]
+//	Author：佐藤根詩音
 //
 //============================================================
 //************************************************************
 //	二重インクルード防止
 //************************************************************
-#ifndef _SCENE_TITLE_H_
-#define _SCENE_TITLE_H_
+#ifndef _SCENE_RANKING_H_
+#define _SCENE_RANKING_H_
 
 //************************************************************
 //	インクルードファイル
@@ -19,21 +19,20 @@
 //************************************************************
 //	前方宣言
 //************************************************************
-class CTitleManager;	// タイトルマネージャークラス
-class CBg;				// 背景クラス
+class CRankingManager;	// ランキングマネージャークラス
 
 //************************************************************
 //	クラス定義
 //************************************************************
-// タイトル画面クラス
-class CSceneTitle : public CScene
+// ランキング画面クラス
+class CSceneRanking : public CScene
 {
 public:
 	// コンストラクタ
-	CSceneTitle(const MODE mode);
+	CSceneRanking(const MODE mode);
 
 	// デストラクタ
-	~CSceneTitle();
+	~CSceneRanking();
 
 	// オーバーライド関数
 	HRESULT Init(void) override;	// 初期化
@@ -42,13 +41,11 @@ public:
 	void Draw(void) override;		// 描画
 
 	// 静的メンバ関数
-	static CTitleManager *GetTitleManager(void);	// タイトルマネージャー取得
-	static CBg *GetBg(void);	// 背景取得
+	static CRankingManager *GetRankingManager(void);	// ランキングマネージャー取得
 
 private:
 	// 静的メンバ変数
-	static CTitleManager *m_pTitleManager;	// タイトルマネージャー
-	static CBg *m_pBg;	// 背景オブジェクト
+	static CRankingManager *m_pRankingManager;	// ランキングマネージャー
 };
 
-#endif	// _SCENE_TITLE_H_
+#endif	// _SCENE_RESULT_H_

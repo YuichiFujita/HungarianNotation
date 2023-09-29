@@ -23,7 +23,7 @@ class CGameManager;		// ゲームマネージャークラス
 class CTimerManager;	// タイマーマネージャークラス
 class CPause;			// ポーズクラス
 class CScore;			// スコアクラス
-class CWarningSpawn;	// 出現警告表示クラス
+class CBg;				// 背景クラス
 
 //************************************************************
 //	クラス定義
@@ -49,9 +49,8 @@ public:
 	static CTimerManager	*GetTimerManager(void);		// タイマーマネージャー取得
 	static CPause			*GetPause(void);			// ポーズ取得
 	static CScore			*GetScore(void);			// スコア取得
-	static CWarningSpawn	*GetWarningSpawn(void);		// 出現警告表示取得
+	static CBg				*GetBg(void);				// 背景取得
 
-	static void SetEnableControlCamera(const bool bControl);	// カメラの操作状況設定
 	static void SetEnableDrawUI(const bool bDraw);				// UIの描画状況設定
 	static void SetEnableDrawPause(const bool bDraw);			// ポーズの描画状況設定
 	static bool IsDrawUI(void);									// UIの描画状況取得
@@ -63,7 +62,7 @@ private:
 	static CTimerManager	*m_pTimerManager;	// タイマーマネージャー
 	static CPause			*m_pPause;			// ポーズ
 	static CScore			*m_pScore;			// スコアオブジェクト
-	static CWarningSpawn	*m_pWarningSpawn;	// 出現警告表示オブジェクト
+	static CBg				*m_pBg;				// 背景オブジェクト
 
 	static bool m_bDrawUI;			// UIの描画状況
 	static bool m_bDrawPause;		// ポーズの描画状況

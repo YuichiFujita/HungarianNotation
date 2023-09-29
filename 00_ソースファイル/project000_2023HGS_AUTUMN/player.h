@@ -30,6 +30,7 @@ public:
 	void Draw(void) override;
 
 	void GetVecInfo(D3DXVECTOR3* posCurrent, D3DXVECTOR3* posNext, D3DXVECTOR3* vecMove); //ˆÚ“®î•ñ‚Ìæ“¾
+	float GetMove(void) { return m_vecMove.y; } //Y•ûŒü‚ÌˆÚ“®‚ğæ“¾
 
 	//Ã“Iƒƒ“ƒoŠÖ”
 	static CPlayer* Create(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize = VEC3_ONE, const D3DXVECTOR3& rRot = VEC3_ZERO, const D3DXCOLOR& rCol = XCOL_WHITE);

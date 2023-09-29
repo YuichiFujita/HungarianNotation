@@ -1,34 +1,32 @@
 //============================================================
 //
-//	タイトル画面処理 [sceneTitle.cpp]
-//	Author：藤田勇一
+//	ランキング画面ヘッダー [sceneRanking.h]
+//	Author：佐藤根詩音
 //
 //============================================================
 //************************************************************
 //	インクルードファイル
 //************************************************************
-#include "sceneTitle.h"
+#include "sceneRanking.h"
 #include "manager.h"
 #include "texture.h"
 #include "input.h"
 #include "sound.h"
-#include "titleManager.h"
+#include "rankingManager.h"
 #include "stage.h"
-#include "bg.h"
 
 //************************************************************
 //	静的メンバ変数宣言
 //************************************************************
-CTitleManager *CSceneTitle::m_pTitleManager = NULL;	// タイトルマネージャー
-CBg *CSceneTitle::m_pBg = NULL;	// 背景オブジェクト
+CRankingManager *CSceneRanking::m_pRankingManager = NULL;	// ランキングマネージャー
 
 //************************************************************
-//	子クラス [CSceneTitle] のメンバ関数
+//	子クラス [CSceneRanking] のメンバ関数
 //************************************************************
 //============================================================
 //	コンストラクタ
 //============================================================
-CSceneTitle::CSceneTitle(const MODE mode) : CScene(mode)
+CSceneRanking::CSceneRanking(const MODE mode) : CScene(mode)
 {
 
 }
@@ -36,7 +34,7 @@ CSceneTitle::CSceneTitle(const MODE mode) : CScene(mode)
 //============================================================
 //	デストラクタ
 //============================================================
-CSceneTitle::~CSceneTitle()
+CSceneRanking::~CSceneRanking()
 {
 
 }
@@ -44,27 +42,18 @@ CSceneTitle::~CSceneTitle()
 //============================================================
 //	初期化処理
 //============================================================
-HRESULT CSceneTitle::Init(void)
+HRESULT CSceneRanking::Init(void)
 {
 	// ポインタを宣言
 	CTexture *pTexture = CManager::GetTexture();	// テクスチャへのポインタ
 
 	//--------------------------------------------------------
-	//	タイトルの初期化
+	//	ランキングの初期化
 	//--------------------------------------------------------
-	// タイトルマネージャーの生成
-	m_pTitleManager = CTitleManager::Create();
-	if (m_pTitleManager == NULL)
-	{ // 非使用中の場合
+	// ランキングマネージャーの生成
+	m_pRankingManager = CRankingManager::Create();
 
-		// 失敗を返す
-		assert(false);
-		return E_FAIL;
-	}
-
-	// 背景の生成
-	m_pBg = CBg::Create(CBg::TEXTURE_BG, SCREEN_CENT, SCREEN_SIZE);
-	if (m_pBg == NULL)
+	if (m_pRankingManager == NULL)
 	{ // 非使用中の場合
 
 		// 失敗を返す
@@ -88,19 +77,16 @@ HRESULT CSceneTitle::Init(void)
 //============================================================
 //	終了処理
 //============================================================
-HRESULT CSceneTitle::Uninit(void)
+HRESULT CSceneRanking::Uninit(void)
 {
-	// タイトルマネージャーの破棄
-	if (FAILED(CTitleManager::Release(m_pTitleManager)))
+	// ランキングマネージャーの破棄
+	if (FAILED(CRankingManager::Release(m_pRankingManager)))
 	{ // 破棄に失敗した場合
 
 		// 失敗を返す
 		assert(false);
 		return E_FAIL;
 	}
-
-	// 終了済みのオブジェクトポインタをNULLにする
-	m_pBg = NULL;	// 背景オブジェクト
 
 	// シーンの終了
 	CScene::Uninit();
@@ -112,42 +98,33 @@ HRESULT CSceneTitle::Uninit(void)
 //============================================================
 //	更新処理
 //============================================================
-void CSceneTitle::Update(void)
+void CSceneRanking::Update(void)
 {
-	if (m_pTitleManager != NULL)
+	if (m_pRankingManager != NULL)
 	{ // 使用中の場合
 
-		// タイトルマネージャーの更新
-		m_pTitleManager->Update();
+		// ランキングマネージャーの更新
+		m_pRankingManager->Update();
 	}
 	else { assert(false); }	// 非使用中
 
-	// シーンの更新
+							// シーンの更新
 	CScene::Update();
 }
 
 //============================================================
 //	描画処理
 //============================================================
-void CSceneTitle::Draw(void)
+void CSceneRanking::Draw(void)
 {
 
 }
 
 //============================================================
-//	タイトルマネージャー取得処理
+//	ランキングマネージャー取得処理
 //============================================================
-CTitleManager *CSceneTitle::GetTitleManager(void)
+CRankingManager *CSceneRanking::GetRankingManager(void)
 {
-	// タイトルマネージャーを返す
-	return m_pTitleManager;
-}
-
-//============================================================
-//	背景取得処理
-//============================================================
-CBg *CSceneTitle::GetBg(void)
-{
-	// 背景のポインタを返す
-	return m_pBg;
+	// ランキングマネージャーを返す
+	return m_pRankingManager;
 }

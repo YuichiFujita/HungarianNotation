@@ -16,6 +16,7 @@
 #include "stage.h"
 #include "pause.h"
 #include "score.h"
+#include "bg.h"
 
 //************************************************************
 //	マクロ定義
@@ -37,9 +38,9 @@
 //************************************************************
 CGameManager	*CSceneGame::m_pGameManager  = NULL;	// ゲームマネージャー
 CTimerManager	*CSceneGame::m_pTimerManager = NULL;	// タイマーマネージャー
-CWarningSpawn	*CSceneGame::m_pWarningSpawn = NULL;	// 出現警告表示オブジェクト
 CPause	*CSceneGame::m_pPause	= NULL;					// ポーズ
 CScore	*CSceneGame::m_pScore	= NULL;					// スコアオブジェクト
+CBg		*CSceneGame::m_pBg		= NULL;					// 背景オブジェクト
 
 bool CSceneGame::m_bDrawUI = true;		// UIの描画状況
 bool CSceneGame::m_bDrawPause = true;	// ポーズの描画状況
@@ -123,6 +124,16 @@ HRESULT CSceneGame::Init(void)
 		return E_FAIL;
 	}
 
+	// 背景の生成
+	m_pBg = CBg::Create(CBg::TEXTURE_BG, SCREEN_CENT, SCREEN_SIZE);
+	if (m_pBg == NULL)
+	{ // 非使用中の場合
+
+		// 失敗を返す
+		assert(false);
+		return E_FAIL;
+	}
+
 	//--------------------------------------------------------
 	//	初期設定
 	//--------------------------------------------------------
@@ -176,6 +187,7 @@ HRESULT CSceneGame::Uninit(void)
 
 	// 終了済みのオブジェクトポインタをNULLにする
 	m_pScore = NULL;	// スコアオブジェクト
+	m_pBg = NULL;		// 背景オブジェクト
 
 	// シーンの終了
 	CScene::Uninit();
@@ -291,12 +303,12 @@ CScore *CSceneGame::GetScore(void)
 }
 
 //============================================================
-//	出現警告表示取得処理
+//	背景取得処理
 //============================================================
-CWarningSpawn *CSceneGame::GetWarningSpawn(void)
+CBg *CSceneGame::GetBg(void)
 {
-	// 出現警告表示のポインタを返す
-	return m_pWarningSpawn;
+	// 背景のポインタを返す
+	return m_pBg;
 }
 
 //============================================================

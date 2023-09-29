@@ -14,6 +14,7 @@
 #include "sceneTutorial.h"
 #include "sceneGame.h"
 #include "sceneResult.h"
+#include "sceneRanking.h"
 #include "stage.h"
 
 //************************************************************
@@ -139,6 +140,13 @@ CScene *CScene::Create(MODE mode)
 
 			// リザルト画面を生成
 			pScene = new CSceneResult(mode);
+
+			break;
+
+		case MODE_RANKING:
+
+			// リザルト画面を生成
+			pScene = new CSceneRanking(mode);
 
 			break;
 
