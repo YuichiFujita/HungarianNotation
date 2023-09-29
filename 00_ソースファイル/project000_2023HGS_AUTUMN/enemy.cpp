@@ -306,7 +306,6 @@ void CEnemy::Collision(D3DXVECTOR3 rPos, D3DXVECTOR3 rSize, D3DXVECTOR3 rRot)
 					}
 				}
 			}
-		}
 	}
 	
 }
