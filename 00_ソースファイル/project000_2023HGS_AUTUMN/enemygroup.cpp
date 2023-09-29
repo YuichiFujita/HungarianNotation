@@ -70,7 +70,7 @@ void CEnemyGroup::Uninit(void)
 //==========================================
 void CEnemyGroup::Update(void)
 {
-	m_rot.z += 0.02f;
+	m_rot.z += 0.015f;
 
 	if (m_rot.y > D3DX_PI)
 	{
@@ -91,6 +91,11 @@ void CEnemyGroup::Update(void)
 		);
 
 		m_pEnemy[nCnt]->SetPosition(pos);
+	}
+
+	if (m_pos.y >= SCREEN_HEIGHT)
+	{
+		Uninit();
 	}
 }
 
