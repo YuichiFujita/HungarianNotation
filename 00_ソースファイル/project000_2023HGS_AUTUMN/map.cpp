@@ -13,7 +13,7 @@
 //  静的メンバ変数宣言
 //==========================================
 const CMap::DIFF CMap::m_Diff = { 100, 200, 100, SCREEN_WIDTH - 300 };
-float CMap::m_vecMove = 0.5f;
+float CMap::m_vecMove = 1.0f;
 
 //==========================================
 //  コンストラクタ
@@ -65,13 +65,13 @@ void CMap::Uninit(void)
 void CMap::Update(void)
 {
 	//世界の加速
-	if (CGameManager::GetPlayer()->GetMuteki() && GetHeightMin().y <= 600.0f)
+	if (CGameManager::GetPlayer()->GetMuteki() && GetHeightNext().y <= 600.0f)
 	{
 		m_fSpeed = m_vecMove * 100.0f;
 	}
-	else if (GetHeightNext().y <= 150.0f || GetHeightMin().y <= 400.0f)
+	else if (GetHeightMin().y <= SCREEN_CENT.y)
 	{
-		m_fSpeed = m_vecMove * 30.0f;
+		m_fSpeed = m_vecMove * 20.0f;
 	}
 	else
 	{
