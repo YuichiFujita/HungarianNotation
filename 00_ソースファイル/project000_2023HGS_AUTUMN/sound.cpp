@@ -14,9 +14,11 @@
 //************************************************************
 const CSound::SOUNDINFO CSound::mc_aSoundInfo[LABEL_MAX] =	// サウンド情報
 {
-	{ "data\\BGM\\bgm_title_result.wav", -1 },	// BGM (タイトル・リザルト)
-	{ "data\\BGM\\bgm_tutorial.wav", -1 },		// BGM (チュートリアル)
-	{ "data\\BGM\\bgm_game.wav", -1 },			// BGM (ゲーム)
+	{ "data\\BGM\\bgm_title.wav", -1 },			// BGM (タイトル)
+	{ "data\\BGM\\bgm_tutorial00.wav", -1 },		// BGM (チュートリアル)
+	{ "data\\BGM\\bgm_game00.wav", -1 },		// BGM (ゲーム)
+	{ "data\\BGM\\bgm_result.wav", -1 },		// BGM (リザルト)
+	{ "data\\BGM\\bgm_ranking.wav", -1 },		// BGM (ランキング)
 
 	{ "data\\SE\\select000.wav",  0 },		// 選択操作音00
 	{ "data\\SE\\select001.wav",  0 },		// 選択操作音01

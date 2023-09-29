@@ -14,6 +14,7 @@
 //	インクルードファイル
 //************************************************************
 #include "main.h"
+#include "retentionManager.h"
 
 //==========================================
 //  前方宣言
@@ -47,6 +48,7 @@ public:
 	HRESULT Init(void);	// 初期化
 	void Uninit(void);	// 終了
 	void Update(void);	// 更新
+	void TransitionResult(const CRetentionManager::RESULT result);	// リザルト遷移
 
 	// 静的メンバ関数
 	static CGameManager *Create(void);	// 生成

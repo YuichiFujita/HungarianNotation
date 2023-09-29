@@ -34,6 +34,8 @@ public:
 		LABEL_BGM_TITLE_RESULT = 0,	// BGM (タイトル・リザルト)
 		LABEL_BGM_TUTORIAL,			// BGM (チュートリアル)
 		LABEL_BGM_GAME,				// BGM (ゲーム)
+		LABEL_BGM_RESULT,			// BGM (リザルト)
+		LABEL_BGM_RANKING,			// BGM (ランキング)
 
 		LABEL_SE_SELECT_000,	// 選択操作音00
 		LABEL_SE_SELECT_001,	// 選択操作音01

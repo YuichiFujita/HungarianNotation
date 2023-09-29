@@ -103,6 +103,30 @@ void CGameManager::Update(void)
 			CManager::SetScene(CScene::MODE_RESULT, 30);
 		}
 	}
+	else if (CSceneGame::GetGameManager()->GetPlayer()->GetMiss())
+	{ // プレイヤーが死亡した場合
+
+		// リザルトに遷移する
+		TransitionResult(CRetentionManager::RESULT_FAILED);
+	}
+}
+
+//============================================================
+//	リザルト遷移処理
+//============================================================
+void CGameManager::TransitionResult(const CRetentionManager::RESULT result)
+{
+	// ポインタを宣言
+	CRetentionManager *pRetention = CManager::GetRetentionManager();	// データ保存情報
+
+	// クリア状況を設定
+	pRetention->SetResult(result);
+
+	// 獲得スコアを設定
+	pRetention->SetScore(CSceneGame::GetScore()->Get());
+
+	// リザルトに遷移
+	CManager::SetScene(CScene::MODE_RESULT, 30);
 }
 
 //============================================================
