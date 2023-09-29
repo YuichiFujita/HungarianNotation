@@ -11,6 +11,9 @@
 #include "manager.h"
 #include "renderer.h"
 #include "texture.h"
+#include "sceneGame.h"
+#include "gameManager.h"
+#include "map.h"
 
 //************************************************************
 //	マクロ定義
@@ -75,6 +78,13 @@ void CBg::Uninit(void)
 //============================================================
 void CBg::Update(void)
 {
+	if (CManager::GetScene()->GetMode() == CScene::MODE_GAME)
+	{ // モードがゲームの場合
+
+		// 縦座標の移動量設定
+		SetMoveV(-(CSceneGame::GetGameManager()->GetMap()->GetWorldMove() * 0.005f));
+	}
+
 	// スクロール2Dの更新
 	CScroll2D::Update();
 }
