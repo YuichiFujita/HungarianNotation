@@ -164,6 +164,7 @@
     <ClCompile Include="input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="manager.cpp" />
+    <ClCompile Include="map.cpp" />
     <ClCompile Include="multiValue.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="object2D.cpp" />
@@ -187,6 +188,7 @@
     <ClCompile Include="score.cpp" />
     <ClCompile Include="scroll2D.cpp" />
     <ClCompile Include="sound.cpp" />
+    <ClCompile Include="spot.cpp" />
     <ClCompile Include="stage.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="timerManager.cpp" />
@@ -207,6 +209,7 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="manager.h" />
+    <ClInclude Include="map.h" />
     <ClInclude Include="multiValue.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="object2D.h" />
@@ -228,6 +231,7 @@
     <ClInclude Include="score.h" />
     <ClInclude Include="scroll2D.h" />
     <ClInclude Include="sound.h" />
+    <ClInclude Include="spot.h" />
     <ClInclude Include="stage.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="timerManager.h" />
