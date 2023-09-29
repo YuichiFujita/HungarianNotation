@@ -14,13 +14,13 @@
 #include "objectOrbit.h"
 #include "map.h"
 #include "score.h"
+#include "sound.h"
 
 //==========================================
 //  コンストラクタ
 //==========================================
 CPlayer::CPlayer() : CObject2D(LABEL_PLAYER)
 {
-	m_bMuteki = false;
 	m_bMiss = false;
 	m_pOrbit = NULL;
 	m_posNext = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -66,11 +66,6 @@ void CPlayer::Uninit(void)
 void CPlayer::Update(void)
 {
 #ifdef _DEBUG
-	if (CManager::GetKeyboard()->GetTrigger(DIK_F6))
-	{
-		SwitchMuteki();
-	}
-
 	if (CManager::GetKeyboard()->GetTrigger(DIK_F5))
 	{
 		m_bMiss = !m_bMiss;
@@ -96,10 +91,6 @@ void CPlayer::Update(void)
 	if (m_bMiss)
 	{
 		SetColor(D3DXCOLOR(0.1f, 0.1f, 0.1f, 1.0f));
-	}
-	else if (m_bMuteki)
-	{
-		SetColor(D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
 	}
 	else
 	{
@@ -196,7 +187,7 @@ void CPlayer::Move(D3DXVECTOR3 pos)
 	m_vecMove = m_posNext - pos;
 
 	//移動
-	if (CManager::GetKeyboard()->GetTrigger(DIK_SPACE) || CManager::GetPad()->GetTrigger(CInputPad::KEY_A) || CManager::GetMouse()->GetTrigger(CInputMouse::KEY_LEFT))
+	if ((CManager::GetKeyboard()->GetTrigger(DIK_SPACE) || CManager::GetPad()->GetTrigger(CInputPad::KEY_A) || CManager::GetMouse()->GetTrigger(CInputMouse::KEY_LEFT)) && CGameManager::GetState() == CGameManager::STATE_NORMAL)
 	{
 		//移動先を設定
 		SetPosition(m_posNext);
@@ -209,6 +200,9 @@ void CPlayer::Move(D3DXVECTOR3 pos)
 
 		//スコアの加算
 		CSceneGame::GetScore()->Add((int)-m_vecMove.y);
+
+		// サウンドの再生
+		CManager::GetSound()->Play(CSound::LABEL_SE_MOVE);	// 決定音00
 	}
 }
 
