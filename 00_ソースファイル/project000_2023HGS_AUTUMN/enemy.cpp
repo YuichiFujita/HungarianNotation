@@ -84,7 +84,7 @@ void CEnemy::Update(void)
 	}
 #endif
 
-	if (CManager::GetKeyboard()->GetTrigger(DIK_SPACE) || CManager::GetPad()->GetTrigger(CInputPad::KEY_A) || CManager::GetMouse()->GetTrigger(CInputMouse::KEY_LEFT))
+	if ((CManager::GetKeyboard()->GetTrigger(DIK_SPACE) || CManager::GetPad()->GetTrigger(CInputPad::KEY_A) || CManager::GetMouse()->GetTrigger(CInputMouse::KEY_LEFT)) && CGameManager::GetState() == CGameManager::STATE_NORMAL)
 	{
 		Collision(GetPosition(), GetScaling(), GetRotation());
 	}
@@ -250,7 +250,7 @@ void CEnemy::Collision(D3DXVECTOR3 rPos, D3DXVECTOR3 rSize, D3DXVECTOR3 rRot)
 			fRate = fOutRate / fOutUnit;
 
 			//側面衝突判定
-			if (fOutToPos * fOutToPosOld < 0.0f && fRate < 1.0f && fRate > 0.0f)
+			if (fOutToPos * fOutToPosOld < 0.0f && fRate < 0.9f && fRate > 0.1f)
 			{//移動ベクトルと棒のベクトルに交点がある時
 				CGameManager::GetPlayer()->SetMiss();
 			}
