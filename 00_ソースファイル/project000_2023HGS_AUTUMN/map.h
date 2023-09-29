@@ -28,7 +28,10 @@ public:
 	void Update(void);
 	void Draw(void);
 
-	float GetWorldMove(void) { return m_vecMove; }
+	float GetWorldMove(void) { return m_vecMove; } //世界移動量の取得
+	D3DXVECTOR3 GetHeightMin(void); //一番低い地点の取得
+	D3DXVECTOR3 GetHeightNext(void); //二番目に低い地点の取得
+	void DeleteMin(void); //一番低い奴を削除
 
 private:
 
@@ -43,10 +46,10 @@ private:
 
 	//定数
 	const static DIFF m_Diff;
+	static float m_vecMove; //世界の移動量
 #define NUM (10) //データ数
 
 	//メンバ変数
-	float m_vecMove; //世界の移動量
 	CSpot* m_pSpot[NUM]; //移動地点
 
 	//メンバ関数

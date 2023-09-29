@@ -10,14 +10,14 @@
 //==========================================
 //  静的メンバ変数宣言
 //==========================================
-const CMap::DIFF CMap::m_Diff = { 100, 500, 50, SCREEN_WIDTH - 50 };
+const CMap::DIFF CMap::m_Diff = { 100, 300, 50, SCREEN_WIDTH - 50 };
+float CMap::m_vecMove = 2.0f;
 
 //==========================================
 //  コンストラクタ
 //==========================================
 CMap::CMap()
 {
-	m_vecMove = 0.0f;
 	for (int nCnt = 0; nCnt < NUM; nCnt++)
 	{
 		m_pSpot[nCnt] = nullptr;
@@ -51,6 +51,7 @@ void CMap::Uninit(void)
 	for (int nCnt = 0; nCnt < NUM; nCnt++)
 	{
 		m_pSpot[nCnt]->Uninit();
+		m_pSpot[nCnt] = nullptr;
 	}
 }
 
@@ -59,8 +60,17 @@ void CMap::Uninit(void)
 //==========================================
 void CMap::Update(void)
 {
-	//座標を生成
-	SetSpot();
+	//位置を更新
+	for (int nCnt = 0; nCnt < NUM; nCnt++)
+	{
+		if (m_pSpot[nCnt] != nullptr)
+		{
+			D3DXVECTOR3 pos = m_pSpot[nCnt]->GetPosition();
+			pos.y += m_vecMove;
+			m_pSpot[nCnt]->SetPosition(pos);
+			m_pSpot[nCnt]->Update();
+		}
+	}
 }
 
 //==========================================
@@ -68,7 +78,134 @@ void CMap::Update(void)
 //==========================================
 void CMap::Draw(void)
 {
+	//位置を描画
+	for (int nCnt = 0; nCnt < NUM; nCnt++)
+	{
+		m_pSpot[nCnt]->Draw();
+	}
+}
 
+//==========================================
+//  一番低い地点の取得
+//==========================================
+D3DXVECTOR3 CMap::GetHeightMin(void)
+{
+	//返り値のための変数
+	D3DXVECTOR3 pos;
+
+	//データを保管
+	float* pPos = new float[NUM];
+	for (int nCnt = 0; nCnt < NUM; nCnt++)
+	{
+		if (m_pSpot[nCnt] != nullptr)
+		{
+			pPos[nCnt] = m_pSpot[nCnt]->GetPosHeight();
+		}
+		else
+		{
+			pPos[nCnt] = -10000000.0f;
+		}
+	}
+
+	//ソート処理
+	useful::SortNum(pPos, NUM);
+
+	for (int nCnt = 0; nCnt < NUM; nCnt++)
+	{
+		if (m_pSpot[nCnt] != nullptr)
+		{
+			if (m_pSpot[nCnt]->GetPosHeight() == pPos[0])
+			{
+				pos = m_pSpot[nCnt]->GetPosition();
+			}
+		}
+	}
+
+	delete[] pPos;
+
+	return pos;
+}
+
+//==========================================
+//  二番目に低い地点の取得
+//==========================================
+D3DXVECTOR3 CMap::GetHeightNext(void)
+{
+	//返り値のための変数
+	D3DXVECTOR3 pos;
+
+	//データを保管
+	float *pPos = new float[NUM];
+	for (int nCnt = 0; nCnt < NUM; nCnt++)
+	{
+		if (m_pSpot[nCnt] != nullptr)
+		{
+			pPos[nCnt] = m_pSpot[nCnt]->GetPosHeight();
+		}
+		else
+		{
+			pPos[nCnt] = -10000000.0f;
+		}
+	}
+
+	//ソート処理
+	useful::SortNum(pPos, NUM);
+
+	for (int nCnt = 0; nCnt < NUM; nCnt++)
+	{
+		if (m_pSpot[nCnt] != nullptr)
+		{
+			if (m_pSpot[nCnt]->GetPosHeight() == pPos[1])
+			{
+				pos = m_pSpot[nCnt]->GetPosition();
+			}
+		}
+	}
+
+	delete[] pPos;
+
+	return pos;
+}
+
+//==========================================
+//  一番雑魚を殺す
+//==========================================
+void CMap::DeleteMin(void)
+{
+	//データを保管
+	float* pPos = new float[NUM];
+	for (int nCnt = 0; nCnt < NUM; nCnt++)
+	{
+		if (m_pSpot[nCnt] != nullptr)
+		{
+			pPos[nCnt] = m_pSpot[nCnt]->GetPosHeight();
+		}
+		else
+		{
+			pPos[nCnt] = -10000000.0f;
+		}
+	}
+
+	//ソート処理
+	useful::SortNum(pPos, NUM);
+
+	for (int nCnt = 0; nCnt < NUM; nCnt++)
+	{
+		if (m_pSpot[nCnt] != nullptr)
+		{
+			if (m_pSpot[nCnt]->GetPosHeight() == pPos[0])
+			{
+				m_pSpot[nCnt]->Uninit();
+				m_pSpot[nCnt] = nullptr;
+				delete[] pPos;
+
+				//座標を生成
+				SetSpot();
+
+				return;
+			}
+		}
+	}
 }
 
 //==========================================
@@ -76,32 +213,48 @@ void CMap::Draw(void)
 //==========================================
 void CMap::SetSpot(void)
 {
-	for (int nCnt = 0; nCnt < NUM; nCnt++)
+	for (int nCntSpot = 0; nCntSpot < NUM; nCntSpot++)
 	{
-		if (m_pSpot[nCnt] == nullptr)
+		if (m_pSpot[nCntSpot] == nullptr)
 		{
 			//基準座標Yの取得
 			float fHeight = (float)SCREEN_HEIGHT;
-			if (nCnt != 0 && m_pSpot[nCnt - 1] != nullptr) //最初のアドレスでない かつ ひとつ前がnullじゃない
+
+			//データを保管
+			float* pPos = new float[NUM];
+			for (int nCnt = 0; nCnt < NUM; nCnt++)
 			{
-				fHeight = m_pSpot[nCnt - 1]->GetPosHight(); //1つ前の座標を取得
-			}
-			else if (nCnt == 0) //最初のアドレス
-			{
-				if (m_pSpot[NUM - 1] != nullptr) //一番最後がnullじゃない
+				if (m_pSpot[nCnt] != nullptr)
 				{
-					fHeight = m_pSpot[NUM - 1]->GetPosHight(); //一番最後の座標を取得
+					pPos[nCnt] = m_pSpot[nCnt]->GetPosHeight();
+				}
+				else
+				{
+					pPos[nCnt] = (float)SCREEN_HEIGHT;
 				}
 			}
 
+			//ソート処理
+			useful::SortNum(pPos, NUM);
+
+			fHeight = pPos[NUM - 1];
+			delete[] pPos;
+
 			//基準座標Yに乱数を加算
-			fHeight -= (float)((rand() % (m_Diff.nMaxY + m_Diff.nMinY)) + m_Diff.nMinY);
+			if (fHeight >= SCREEN_HEIGHT)
+			{
+				fHeight = SCREEN_HEIGHT - 100.0f;
+			}
+			else
+			{
+				fHeight -= (float)((rand() % (m_Diff.nMaxY + m_Diff.nMinY)) + m_Diff.nMinY);
+			}
 
 			//座標Xの乱数を生成
 			float fWidth = (float)((rand() % (m_Diff.nMaxX + m_Diff.nMinX)) + m_Diff.nMinX);
 
 			//座標を生成
-			m_pSpot[nCnt] = CSpot::Create(D3DXVECTOR3(fWidth, fHeight, 0.0f), D3DXVECTOR3(30.0f, 30.0f, 0.0f));
+			m_pSpot[nCntSpot] = CSpot::Create(D3DXVECTOR3(fWidth, fHeight, 0.0f), D3DXVECTOR3(30.0f, 30.0f, 0.0f));
 		}
 	}
 }

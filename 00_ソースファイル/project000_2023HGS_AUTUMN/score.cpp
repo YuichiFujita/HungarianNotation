@@ -230,6 +230,18 @@ void CScore::SetScaling(const D3DXVECTOR3& rSize)
 }
 
 //============================================================
+//	F‚Ìİ’èˆ—
+//============================================================
+void CScore::SetColor(const D3DXCOLOR& rCol)
+{
+	for (int nCntScore = 0; nCntScore < MAX_SCORE; nCntScore++)
+	{
+		m_apValue[nCntScore]->SetColor(rCol);
+	}
+
+}
+
+//============================================================
 //	‹ó”’‚Ìİ’èˆ—
 //============================================================
 void CScore::SetSpace(const D3DXVECTOR3& rSpace)

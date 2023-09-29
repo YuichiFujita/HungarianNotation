@@ -24,7 +24,7 @@ public:
 	void Update(void) override;
 	void Draw(void) override;
 
-	float GetPosHight(void) { return GetPosition().y; } //‚‚³‚Ìæ“¾
+	float GetPosHeight(void) { return GetPosition().y; } //‚‚³‚Ìæ“¾
 
 	//Ã“Iƒƒ“ƒoŠÖ”
 	static CSpot* Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);

@@ -6,6 +6,7 @@
 //==========================================
 #include "spot.h"
 #include "manager.h"
+#include "debugproc.h"
 
 //==========================================
 //  コンストラクタ
@@ -45,6 +46,10 @@ void CSpot::Uninit(void)
 void CSpot::Update(void)
 {
 	CObject2D::Update();
+	
+	//デバッグ表示
+	D3DXVECTOR3 pos = GetPosition();
+	CManager::GetDebugProc()->Print("世界の位置 : ( %f, %f )\n", pos.x, pos.y);
 }
 
 //==========================================
