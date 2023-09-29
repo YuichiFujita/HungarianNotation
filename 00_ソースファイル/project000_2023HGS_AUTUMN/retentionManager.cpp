@@ -21,7 +21,6 @@ CRetentionManager::CRetentionManager()
 	// メンバ変数をクリア
 	m_result = RESULT_NONE;	// クリア状況
 	m_nScore = 0;			// 獲得スコア
-	m_nTime  = 0;			// 経過タイム
 }
 
 //============================================================
@@ -40,7 +39,6 @@ HRESULT CRetentionManager::Init(void)
 	// メンバ変数を初期化
 	m_result = RESULT_NONE;	// クリア状況
 	m_nScore = 0;			// 獲得スコア
-	m_nTime  = 0;			// 経過タイム
 
 	// 成功を返す
 	return S_OK;
@@ -144,15 +142,6 @@ void CRetentionManager::SetScore(const int nScore)
 }
 
 //============================================================
-//	経過タイムの設定処理
-//============================================================
-void CRetentionManager::SetTime(const long nTime)
-{
-	// 引数の経過タイムを設定
-	m_nTime = nTime;
-}
-
-//============================================================
 //	クリア状況取得処理
 //============================================================
 CRetentionManager::RESULT CRetentionManager::GetResult(void) const
@@ -168,13 +157,4 @@ int CRetentionManager::GetScore(void) const
 {
 	// 獲得スコアを返す
 	return m_nScore;
-}
-
-//============================================================
-//	経過タイム取得処理
-//============================================================
-long CRetentionManager::GetTime(void) const
-{
-	// 経過タイムを返す
-	return m_nTime;
 }

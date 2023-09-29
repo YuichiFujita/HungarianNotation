@@ -54,9 +54,11 @@
 #define SET_TIME_SCALE	(8.0f)	// タイム表示の初期拡大率
 #define SUB_TIME_SCALE	(0.4f)	// タイム表示拡大率の減算量
 
-
+#define RANKING_POS		(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, 65.0f, 0.0f))		//距離テクスチャの位置
+#define RANKING_SIZE	(D3DXVECTOR3(280.0f, 120.0f, 0.0f))					//距離テクスチャのサイズ
+#define RANKING_DEF_SIZE	(D3DXVECTOR3(10.0f, 50.0f, 0.0f))					//距離テクスチャのサイズ
 #define FILE_RANK		"data\\TXT\\ranking.txt"		//ランキングファイル
-#define SCORE_INTER		(110.0f)			//スコアの間隔(横)
+#define SCORE_INTER		(115.0f)			//スコアの間隔(横)
 #define ALPHA_TIME		(40)				//透明度変更時間
 
 //************************************************************
@@ -64,7 +66,7 @@
 //************************************************************
 const char *CRankingManager::mc_apTextureFile[] =	// テクスチャ定数
 {
-	NULL,	// 背景テクスチャ
+	"data\\TEXTURE\\length000.png",	// 距離テクスチャ
 	"data\\TEXTURE\\result003.png",	// スコア表示テクスチャ
 };
 
@@ -81,7 +83,7 @@ CRankingManager::CRankingManager()
 	memset(&m_pScore[0], 0, sizeof(m_pScore));	// スコア表示の情報
 	memset(&m_nScore[0], 0, sizeof(m_nScore));	// スコア表示の情報
 
-	//m_pRanking		= NULL;			//ランキング背景の情報
+	m_pRanking		= NULL;			//ランキング背景の情報
 	//m_pScoreLogo	= NULL;			// スコアロゴの情報
 	//m_pTimeLogo		= NULL;			// タイムロゴの情報
 	m_pFade			= NULL;			// フェードの情報
@@ -121,7 +123,7 @@ HRESULT CRankingManager::Init(void)
 	//memset(&m_apRanking[0], 0, sizeof(m_apRanking));	// ランキング表示の情報
 	memset(&m_pScore[0], 0, sizeof(m_pScore));	// スコア表示の情報
 
-	//m_pRanking = NULL;			//ランキング背景の情報
+	m_pRanking = NULL;			//ランキング背景の情報
 	//m_pScoreLogo = NULL;			// スコアロゴの情報
 	//m_pTimeLogo		= NULL;			// タイムロゴの情報
 	m_pFade = NULL;			// フェードの情報
@@ -157,28 +159,28 @@ HRESULT CRankingManager::Init(void)
 	//	ランキング表示の生成・設定
 	//--------------------------------------------------------
 
-	//	// ランキング表示の生成
-	//m_pRanking = CObject2D::Create
-	//( // 引数
-	//	POS_RESULT_MISSION,			// 位置
-	//	SIZE_RESULT * SET_RESULT_SCALE	// 大きさ
-	//);
-	//if (m_pRanking == NULL)
-	//{ // 生成に失敗した場合
+	// ランキング表示の生成
+	m_pRanking = CObject2D::Create
+	( // 引数
+		RANKING_POS,			// 位置
+		RANKING_DEF_SIZE	// 大きさ
+	);
+	if (m_pRanking == NULL)
+	{ // 生成に失敗した場合
 
-	//	// 失敗を返す
-	//	assert(false);
-	//	return E_FAIL;
-	//}
+		// 失敗を返す
+		assert(false);
+		return E_FAIL;
+	}
 
-	//// 優先順位を設定
-	//m_pRanking->SetPriority(RESULT_PRIO);
+	// 優先順位を設定
+	m_pRanking->SetPriority(RESULT_PRIO);
 
-	//// 描画をしない設定にする
-	//m_pRanking->SetEnableDraw(false);
+	// 描画をしない設定にする
+	m_pRanking->SetEnableDraw(false);
 
-	//// ランキング表示のテクスチャを設定
-	//SetTexRanking();
+	// ランキング表示のテクスチャを設定
+	SetTexRanking();
 
 	//--------------------------------------------------------
 	//	スコア表示の生成・設定
@@ -227,7 +229,7 @@ HRESULT CRankingManager::Init(void)
 HRESULT CRankingManager::Uninit(void)
 {
 	// ランキング背景の終了
-	//m_pRanking->Uninit();
+	m_pRanking->Uninit();
 
 	// スコアロゴ表示の終了
 	//m_pScoreLogo->Uninit();
@@ -268,12 +270,12 @@ void CRankingManager::Update(void)
 
 		break;
 
-	//case STATE_RANKING:	// ランキング表示状態
+	case STATE_RANKING:	// ランキング表示状態
 
-	//	// ランキング表示の更新
-	//	UpdateRanking();
+		// ランキング表示の更新
+		UpdateRanking();
 
-	//	break;
+		break;
 
 	case STATE_SCORE_WAIT:	// スコア表示待機状態
 
@@ -317,7 +319,7 @@ void CRankingManager::Update(void)
 	}
 
 	// ランキング表示の更新
-	//m_pRanking->Update();
+	m_pRanking->Update();
 
 	// スコアロゴ表示の更新
 	//m_pScoreLogo->Update();
@@ -418,13 +420,13 @@ void CRankingManager::UpdateFade(void)
 		colFade.a = SETCOL_FADE.a;
 
 		// ランキング表示の描画開始
-		//m_pRanking->SetEnableDraw(true);
+		m_pRanking->SetEnableDraw(true);
 
 		// ランキング表示の拡大率を設定
 		m_fScale = SET_RESULT_SCALE;
 
 		// 状態を変更
-		m_state = STATE_SCORE_WAIT;	// ランキング表示状態
+		m_state = STATE_RANKING;	// ランキング表示状態
 	}
 
 	// 透明度を反映
@@ -443,13 +445,13 @@ void CRankingManager::UpdateRanking(void)
 		m_fScale -= SUB_RESULT_SCALE;
 
 		// ランキング表示の大きさを設定
-		//m_pRanking->SetScaling(SIZE_RESULT * m_fScale);
+		m_pRanking->SetScaling(RANKING_SIZE * m_fScale);
 	}
 	else
 	{ // 拡大率が最小値以下の場合
 
 		// ランキング表示の大きさを設定
-		//m_pRanking->SetScaling(SIZE_RESULT);
+		m_pRanking->SetScaling(RANKING_SIZE);
 
 		// 状態を変更
 		m_state = STATE_SCORE_WAIT;	// スコア表示待機状態
@@ -575,15 +577,15 @@ void CRankingManager::ChangeAlpha(void)
 void CRankingManager::SkipStaging(void)
 {
 	// ランキング表示の描画をONにし、大きさを設定
-	//for (int nCntRanking = 0; nCntRanking < NUM_RANKING; nCntRanking++)
-	//{ // ランキング表示の総数分繰り返す
+	for (int nCntRanking = 0; nCntRanking < NUM_RANKING; nCntRanking++)
+	{ // ランキング表示の総数分繰り返す
 
-	//	// ランキング表示の描画開始
-	//	m_pRanking->SetEnableDraw(true);
+		// ランキング表示の描画開始
+		m_pRanking->SetEnableDraw(true);
 
-	//	// ランキング表示の大きさを設定
-	//	m_pRanking->SetScaling(SIZE_RESULT);
-	//}
+		// ランキング表示の大きさを設定
+		m_pRanking->SetScaling(RANKING_SIZE);
+	}
 
 	// スコア表示をONにする
 	//m_pScoreLogo->SetEnableDraw(true);
@@ -617,7 +619,7 @@ void CRankingManager::SetTexRanking(void)
 	CTexture *pTexture = CManager::GetTexture();	// テクスチャへのポインタ
 
 	// 背景テクスチャを登録・割当
-	//m_pRanking->BindTexture(pTexture->Regist(mc_apTextureFile[TEXTURE_BACK]));
+	m_pRanking->BindTexture(pTexture->Regist(mc_apTextureFile[TEXTURE_LENGTH]));
 }
 
 //============================================================
