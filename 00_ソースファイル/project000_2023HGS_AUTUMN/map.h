@@ -32,7 +32,7 @@ public:
 	D3DXVECTOR3 GetHeightMin(void); //一番低い地点の取得
 	D3DXVECTOR3 GetHeightNext(void); //二番目に低い地点の取得
 	void DeleteMin(void); //一番低い奴を削除
-	void SetAddMove(float fSpeed); //世界を加速する
+	float GetWorldSpeed(void) { return m_fSpeed; }
 
 private:
 
