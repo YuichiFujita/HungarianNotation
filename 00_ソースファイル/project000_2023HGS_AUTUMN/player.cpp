@@ -197,7 +197,7 @@ void CPlayer::Move(D3DXVECTOR3 pos)
 	m_vecMove = m_posNext - pos;
 
 	//ˆÚ“®
-	if (CManager::GetKeyboard()->GetTrigger(DIK_SPACE) || CManager::GetPad()->GetTrigger(CInputPad::KEY_A) || CManager::GetMouse()->GetTrigger(CInputMouse::KEY_LEFT))
+	if ((CManager::GetKeyboard()->GetTrigger(DIK_SPACE) || CManager::GetPad()->GetTrigger(CInputPad::KEY_A) || CManager::GetMouse()->GetTrigger(CInputMouse::KEY_LEFT)) && CGameManager::GetState() == CGameManager::STATE_NORMAL)
 	{
 		//ˆÚ“®æ‚ğİ’è
 		SetPosition(m_posNext);

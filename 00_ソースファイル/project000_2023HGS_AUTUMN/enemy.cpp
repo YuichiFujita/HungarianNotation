@@ -304,13 +304,7 @@ void CEnemy::Collision(D3DXVECTOR3 rPos, D3DXVECTOR3 rSize, D3DXVECTOR3 rRot)
 
 					if ((answer[0] < ENEMY_GLAZE && answer[0] > -ENEMY_GLAZE) || (answer[1] < ENEMY_GLAZE && answer[1] > -ENEMY_GLAZE))
 					{
-						CGameManager::GetObjectGauge2D()->AddNum(1);
-
-						if (CGameManager::GetObjectGauge2D()->GetNum() == 10)
-						{
-							CGameManager::GetObjectGauge2D()->SetNum(0);
-							CGameManager::GetPlayer()->SwitchMuteki();
-						}
+						
 					}
 				}
 			}
