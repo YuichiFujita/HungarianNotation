@@ -6,18 +6,22 @@
 //==========================================
 #include "map.h"
 #include "spot.h"
+#include "player.h"
+#include "gameManager.h"
 
 //==========================================
 //  静的メンバ変数宣言
 //==========================================
-const CMap::DIFF CMap::m_Diff = { 100, 300, 50, SCREEN_WIDTH - 50 };
-float CMap::m_vecMove = 2.0f;
+const CMap::DIFF CMap::m_Diff = { 100, 200, 100, SCREEN_WIDTH - 300 };
+float CMap::m_vecMove = 1.0f;
 
 //==========================================
 //  コンストラクタ
 //==========================================
 CMap::CMap()
 {
+	m_nCntAdd = 0;
+	m_fSpeed = m_vecMove;
 	for (int nCnt = 0; nCnt < NUM; nCnt++)
 	{
 		m_pSpot[nCnt] = nullptr;
@@ -60,13 +64,27 @@ void CMap::Uninit(void)
 //==========================================
 void CMap::Update(void)
 {
+	//世界の加速
+	if (CGameManager::GetPlayer()->GetMuteki() && GetHeightNext().y <= 600.0f)
+	{
+		m_fSpeed = m_vecMove * 100.0f;
+	}
+	else if (GetHeightMin().y <= SCREEN_CENT.y)
+	{
+		m_fSpeed = m_vecMove * 20.0f;
+	}
+	else
+	{
+		m_fSpeed = m_vecMove;
+	}
+
 	//位置を更新
 	for (int nCnt = 0; nCnt < NUM; nCnt++)
 	{
 		if (m_pSpot[nCnt] != nullptr)
 		{
 			D3DXVECTOR3 pos = m_pSpot[nCnt]->GetPosition();
-			pos.y += m_vecMove;
+			pos.y += m_fSpeed;
 			m_pSpot[nCnt]->SetPosition(pos);
 			m_pSpot[nCnt]->Update();
 		}

@@ -32,6 +32,7 @@ public:
 	D3DXVECTOR3 GetHeightMin(void); //一番低い地点の取得
 	D3DXVECTOR3 GetHeightNext(void); //二番目に低い地点の取得
 	void DeleteMin(void); //一番低い奴を削除
+	float GetWorldSpeed(void) { return m_fSpeed; }
 
 private:
 
@@ -51,6 +52,8 @@ private:
 
 	//メンバ変数
 	CSpot* m_pSpot[NUM]; //移動地点
+	int m_nCntAdd;
+	float m_fSpeed;
 
 	//メンバ関数
 	void SetSpot(void);

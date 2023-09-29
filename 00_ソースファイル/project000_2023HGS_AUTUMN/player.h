@@ -31,6 +31,11 @@ public:
 
 	void GetVecInfo(D3DXVECTOR3* posCurrent, D3DXVECTOR3* posNext, D3DXVECTOR3* vecMove); //移動情報の取得
 	float GetMove(void) { return m_vecMove.y; } //Y方向の移動を取得
+	bool GetMuteki(void) { return m_bMuteki; } //無敵の取得
+	bool GetMiss(void) { return m_bMiss; }
+	void SetMiss(void) { m_bMiss = true; }
+
+	void SwitchMuteki(void) { m_bMuteki = !m_bMuteki; } //無敵の切り替え
 
 	//静的メンバ関数
 	static CPlayer* Create(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize = VEC3_ONE, const D3DXVECTOR3& rRot = VEC3_ZERO, const D3DXCOLOR& rCol = XCOL_WHITE);
@@ -45,6 +50,9 @@ private:
 	CObjectOrbit *m_pOrbit;	// オブジェクト軌跡クラス
 	D3DXVECTOR3 m_posNext;	// 次座標
 	D3DXVECTOR3 m_vecMove;	// 移動ベクトル
+	bool m_bMuteki; //無敵
+	bool m_bMiss; //失敗
+
 };
 
 #endif
