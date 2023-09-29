@@ -31,6 +31,10 @@ public:
 
 private:
 
+	//ƒƒ“ƒoŠÖ”
+	void Move(D3DXVECTOR3 pos); //ˆÚ“®
+	void Rotation(void); //‰ñ“]
+
 	//ƒƒ“ƒo•Ï”
 	D3DXVECTOR3 m_posNext;
 	D3DXVECTOR3 m_vecMove;
