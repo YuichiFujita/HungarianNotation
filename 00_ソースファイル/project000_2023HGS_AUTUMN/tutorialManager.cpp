@@ -233,7 +233,7 @@ HRESULT CTutorialManager::Release(CTutorialManager *&prTutorialManager)
 //============================================================
 void CTutorialManager::UpdateStep(void)
 {
-	if (CManager::GetKeyboard()->GetTrigger(DIK_RETURN) && CManager::GetPad()->GetTrigger(CInputPad::KEY_A))
+	if (CManager::GetKeyboard()->GetTrigger(DIK_RETURN) || CManager::GetPad()->GetTrigger(CInputPad::KEY_A))
 	{
 		m_nCounterExplain++;		//次のステップへ
 
