@@ -28,11 +28,11 @@
 #define TIME_VAL_SPACE	(D3DXVECTOR3(TIME_VAL_SIZE.x, 0.0f, 0.0f))	// タイマー数字空白
 #define TIME_PART_SPACE	(D3DXVECTOR3(TIME_PART_SIZE.x, 0.0f, 0.0f))	// タイマー区切り空白
 
-#define SCO_POS			(D3DXVECTOR3(625.0f, 50.0f, 0.0f))			// スコア位置
+#define SCO_POS			(D3DXVECTOR3(745.0f, 50.0f, 0.0f))			// スコア位置
 #define SCO_SIZE_VALUE	(D3DXVECTOR3(60.0f, 80.0f, 0.0f))			// 数字のスコア大きさ
 #define SCO_SIZE_UNIT	(D3DXVECTOR3(80.0f, 80.0f, 0.0f))			// 単位のスコア大きさ
 #define SCO_SPACE_VALUE	(D3DXVECTOR3(SCO_SIZE_VALUE.x, 0.0f, 0.0f))	// 数字のスコア空白
-#define SCO_SPACE_UNIT	(D3DXVECTOR3(500.0f, 0.0f, 0.0f))			// 単位のスコア空白
+#define SCO_SPACE_UNIT	(D3DXVECTOR3(485.0f, 0.0f, 0.0f))			// 単位のスコア空白
 
 #define WARNING_SIZE	(D3DXVECTOR3(1000.0f, 500.0f, 0.0f))	// 警告大きさ
 
