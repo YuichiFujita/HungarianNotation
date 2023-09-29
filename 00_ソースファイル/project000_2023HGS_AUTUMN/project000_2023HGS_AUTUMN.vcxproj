@@ -171,6 +171,7 @@
     <ClCompile Include="objectOrbit.cpp" />
     <ClCompile Include="particle2D.cpp" />
     <ClCompile Include="pause.cpp" />
+    <ClCompile Include="player.cpp" />
     <ClCompile Include="precompile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -213,6 +214,7 @@
     <ClInclude Include="objectOrbit.h" />
     <ClInclude Include="particle2D.h" />
     <ClInclude Include="pause.h" />
+    <ClInclude Include="player.h" />
     <ClInclude Include="precompile.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="resource.h" />
