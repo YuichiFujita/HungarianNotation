@@ -21,7 +21,6 @@
 //==========================================
 CPlayer::CPlayer() : CObject2D(LABEL_PLAYER)
 {
-	m_bMuteki = false;
 	m_bMiss = false;
 	m_pOrbit = NULL;
 	m_posNext = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -67,11 +66,6 @@ void CPlayer::Uninit(void)
 void CPlayer::Update(void)
 {
 #ifdef _DEBUG
-	if (CManager::GetKeyboard()->GetTrigger(DIK_F6))
-	{
-		SwitchMuteki();
-	}
-
 	if (CManager::GetKeyboard()->GetTrigger(DIK_F5))
 	{
 		m_bMiss = !m_bMiss;
@@ -97,10 +91,6 @@ void CPlayer::Update(void)
 	if (m_bMiss)
 	{
 		SetColor(D3DXCOLOR(0.1f, 0.1f, 0.1f, 1.0f));
-	}
-	else if (m_bMuteki)
-	{
-		SetColor(D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
 	}
 	else
 	{

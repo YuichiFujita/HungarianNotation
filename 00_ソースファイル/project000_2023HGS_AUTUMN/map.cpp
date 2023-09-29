@@ -64,12 +64,7 @@ void CMap::Uninit(void)
 //==========================================
 void CMap::Update(void)
 {
-	//¢ŠE‚Ì‰Á‘¬
-	if (CGameManager::GetPlayer()->GetMuteki() && GetHeightNext().y <= 600.0f)
-	{
-		m_fSpeed = m_vecMove * 100.0f;
-	}
-	else if (GetHeightMin().y <= SCREEN_CENT.y)
+	if (GetHeightMin().y <= SCREEN_CENT.y)
 	{
 		m_fSpeed = m_vecMove * 20.0f;
 	}

@@ -14,11 +14,13 @@
 #include "sound.h"
 #include "rankingManager.h"
 #include "stage.h"
+#include "bg.h" 
 
 //************************************************************
 //	静的メンバ変数宣言
 //************************************************************
 CRankingManager *CSceneRanking::m_pRankingManager = NULL;	// ランキングマネージャー
+CBg *CSceneRanking::m_pBg = NULL;	// 背景オブジェクト
 
 //************************************************************
 //	子クラス [CSceneRanking] のメンバ関数
@@ -61,6 +63,16 @@ HRESULT CSceneRanking::Init(void)
 		return E_FAIL;
 	}
 
+	// 背景の生成
+	m_pBg = CBg::Create(CBg::TEXTURE_BG, SCREEN_CENT, SCREEN_SIZE);
+	if (m_pBg == NULL)
+	{ // 非使用中の場合
+
+		// 失敗を返す
+		assert(false);
+		return E_FAIL;
+	}
+
 	// シーンの初期化
 	CScene::Init();
 
@@ -90,6 +102,9 @@ HRESULT CSceneRanking::Uninit(void)
 
 	// シーンの終了
 	CScene::Uninit();
+
+	// 終了済みのオブジェクトポインタをNULLにする
+	m_pBg = NULL;		// 背景オブジェクト
 
 	// 成功を返す
 	return S_OK;
