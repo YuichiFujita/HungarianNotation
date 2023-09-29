@@ -18,11 +18,9 @@
 //************************************************************
 //	静的メンバ変数宣言
 //************************************************************
-const D3DXVECTOR3 CObjectOrbit::mc_aOffset[][MAX_OFFSET]	// オフセットの位置加減量
+const float CObjectOrbit::mc_aOffset[][MAX_OFFSET]	// オフセットの位置加減量
 {
-	{ D3DXVECTOR3(0.0f, -50.0f, 0.0f),	D3DXVECTOR3(0.0f, 50.0f, 0.0f) },	// 通常オフセット
-	{ D3DXVECTOR3(0.0f, 0.0f, -15.0f),	D3DXVECTOR3(0.0f, 0.0f, 15.0f) },	// 杖オフセット
-	{ D3DXVECTOR3(0.0f, 0.0f, -20.0f),	D3DXVECTOR3(0.0f, 0.0f, 20.0f) },	// 風オフセット
+	{ 10.0f, -10.0f },	// プレイヤーオフセット
 };
 
 //************************************************************
@@ -70,27 +68,29 @@ CObjectOrbit::~CObjectOrbit()
 HRESULT CObjectOrbit::Init(void)
 {
 	// メンバ変数を初期化
-	m_pVtxBuff = NULL;			// 頂点バッファ
-	m_state = STATE_NORMAL;		// 状態
-	m_nCounterState = 0;		// 状態管理カウンター
-	m_nNumVtx = 0;				// 必要頂点数
-	m_nTextureID = NONE_IDX;	// テクスチャインデックス
+	m_pVtxBuff		= NULL;			// 頂点バッファ
+	m_state			= STATE_NORMAL;	// 状態
+	m_nCounterState	= 0;			// 状態管理カウンター
+	m_nNumVtx		= 0;			// 必要頂点数
+	m_nTextureID	= NONE_IDX;		// テクスチャインデックス
 
 	// 軌跡の情報を初期化
-	memset(&m_orbit.mtxVanish, 0, sizeof(m_orbit.mtxVanish));	// 消失開始時の親のマトリックス
-	m_orbit.pMtxParent = NULL;	// 親のマトリックス
-	m_orbit.pPosPoint = NULL;	// 各頂点座標
-	m_orbit.pColPoint = NULL;	// 各頂点カラー
-	m_orbit.nPart = 1;			// 分割数
-	m_orbit.nTexPart = 1;		// テクスチャ分割数
-	m_orbit.bAlpha = false;		// 透明化状況
-	m_orbit.bInit = false;		// 初期化状況
+	m_orbit.pPosPoint	= NULL;			// 各頂点座標
+	m_orbit.pColPoint	= NULL;			// 各頂点カラー
+	m_orbit.pParent		= NULL;			// 親オブジェクト
+	m_orbit.posVanish	= VEC3_ZERO;	// 消失開始時の親の位置
+	m_orbit.rotVanish	= VEC3_ZERO;	// 消失開始時の親の向き
+	m_orbit.nPart		= 1;			// 分割数
+	m_orbit.nTexPart	= 1;			// テクスチャ分割数
+	m_orbit.bAlpha		= false;		// 透明化状況
+	m_orbit.bInit		= false;		// 初期化状況
 
 	for (int nCntOff = 0; nCntOff < MAX_OFFSET; nCntOff++)
 	{ // オフセットの数分繰り返す
 
-		m_orbit.aOffset[nCntOff] = VEC3_ZERO;	// 両端のオフセット
-		m_orbit.aCol[nCntOff] = XCOL_WHITE;		// 両端の基準色
+		m_orbit.aPos[nCntOff] = VEC3_ZERO;	// 両端の基準位置
+		m_orbit.aCol[nCntOff] = XCOL_WHITE;	// 両端の基準色
+		m_orbit.aOffset[nCntOff] = 0.0f;	// 両端のオフセット
 	}
 
 	// 長さを設定
@@ -155,12 +155,9 @@ void CObjectOrbit::Update(void)
 void CObjectOrbit::Draw(void)
 {
 	// 変数を宣言
-	D3DXMATRIX mtxIdent;	// 単位マトリックス設定用
-	D3DXMATRIX mtxParent;	// 親のマトリックス
+	D3DXVECTOR3 posParent = VEC3_ZERO;	// 親の位置
+	D3DXVECTOR3 rotParent = VEC3_ZERO;	// 親の向き
 	bool bUpdate = true;	// 更新状況
-
-	// 単位マトリックスの初期化
-	D3DXMatrixIdentity(&mtxIdent);
 
 	// ポインタを宣言
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();	// デバイスのポインタ
@@ -180,15 +177,6 @@ void CObjectOrbit::Draw(void)
 	if (m_state != STATE_NONE)
 	{ // 何もしない状態ではない場合
 
-		//----------------------------------------------------
-		//	レンダーステートを変更
-		//----------------------------------------------------
-		// ライティングを無効にする
-		pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
-
-		// ポリゴンの両面を表示状態にする
-		pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
 		if (bUpdate)
 		{ // 更新する状況の場合
 
@@ -199,15 +187,21 @@ void CObjectOrbit::Draw(void)
 			{ // 状態ごとの処理
 			case STATE_NORMAL:	// 通常状態
 
-				// 親マトリックスを設定
-				mtxParent = *m_orbit.pMtxParent;
+				// 親の位置を設定
+				posParent = m_orbit.pParent->GetPosition();
+
+				// 親の向きを設定
+				rotParent = m_orbit.pParent->GetRotation();
 
 				break;
 
 			case STATE_VANISH:	// 消失状態
 
-				// 親マトリックスを設定
-				mtxParent = m_orbit.mtxVanish;
+				// 親の消失位置を設定
+				posParent = m_orbit.posVanish;
+
+				// 親の消失向きを設定
+				rotParent = m_orbit.rotVanish;
 
 				// カウンターを加算
 				if (m_nCounterState < (m_nNumVtx / MAX_OFFSET) + 1)
@@ -239,14 +233,10 @@ void CObjectOrbit::Draw(void)
 			for (int nCntOff = 0; nCntOff < MAX_OFFSET; nCntOff++)
 			{ // オフセットの数分繰り返す
 
-				// ワールドマトリックスの初期化
-				D3DXMatrixIdentity(&m_orbit.aMtxWorldPoint[nCntOff]);
-
-				// 位置を反映
-				D3DXMatrixTranslation(&m_orbit.aMtxWorldPoint[nCntOff], m_orbit.aOffset[nCntOff].x, m_orbit.aOffset[nCntOff].y, m_orbit.aOffset[nCntOff].z);
-
-				// 親のマトリックスと掛け合わせる
-				D3DXMatrixMultiply(&m_orbit.aMtxWorldPoint[nCntOff], &m_orbit.aMtxWorldPoint[nCntOff], &mtxParent);
+				// 基準位置を設定
+				m_orbit.aPos[nCntOff].x = posParent.x + sinf(rotParent.z) * m_orbit.aOffset[nCntOff];
+				m_orbit.aPos[nCntOff].y = posParent.y + cosf(rotParent.z) * m_orbit.aOffset[nCntOff];
+				m_orbit.aPos[nCntOff].z = 0.0f;
 			}
 
 			//------------------------------------------------
@@ -267,12 +257,7 @@ void CObjectOrbit::Draw(void)
 			{ // オフセットの数分繰り返す
 
 				// 頂点座標の設定
-				m_orbit.pPosPoint[nCntOff] = D3DXVECTOR3
-				( // 引数
-					m_orbit.aMtxWorldPoint[nCntOff]._41,	// x
-					m_orbit.aMtxWorldPoint[nCntOff]._42,	// y
-					m_orbit.aMtxWorldPoint[nCntOff]._43		// z
-				);
+				m_orbit.pPosPoint[nCntOff] = m_orbit.aPos[nCntOff];
 
 				// 頂点カラーの設定
 				m_orbit.pColPoint[nCntOff] = m_orbit.aCol[nCntOff];
@@ -289,12 +274,7 @@ void CObjectOrbit::Draw(void)
 			{ // 維持する頂点の最大数分繰り返す
 
 				// 頂点座標の設定
-				m_orbit.pPosPoint[nCntVtx] = D3DXVECTOR3
-				( // 引数
-					m_orbit.aMtxWorldPoint[nCntVtx % MAX_OFFSET]._41,	// x
-					m_orbit.aMtxWorldPoint[nCntVtx % MAX_OFFSET]._42,	// y
-					m_orbit.aMtxWorldPoint[nCntVtx % MAX_OFFSET]._43	// z
-				);
+				m_orbit.pPosPoint[nCntVtx] = m_orbit.aPos[nCntVtx % MAX_OFFSET];
 
 				// 頂点カラーの設定
 				m_orbit.pColPoint[nCntVtx] = m_orbit.aCol[nCntVtx % MAX_OFFSET];
@@ -310,29 +290,17 @@ void CObjectOrbit::Draw(void)
 		// 頂点情報の設定
 		SetVtx();
 
-		// 単位マトリックスの設定
-		pDevice->SetTransform(D3DTS_WORLD, &mtxIdent);
-
 		// 頂点バッファをデータストリームに設定
-		pDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_3D));
+		pDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_2D));
 
 		// 頂点フォーマットの設定
-		pDevice->SetFVF(FVF_VERTEX_3D);
+		pDevice->SetFVF(FVF_VERTEX_2D);
 
 		// テクスチャの設定
 		pDevice->SetTexture(0, pTexture->GetTexture(m_nTextureID));
 
 		// ポリゴンの描画
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, m_nNumVtx - 2);
-
-		//----------------------------------------------------
-		//	レンダーステートを元に戻す
-		//----------------------------------------------------
-		// ライティングを有効にする
-		pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
-
-		// ポリゴンの表面のみを表示状態にする
-		pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	}
 }
 
@@ -350,7 +318,7 @@ int CObjectOrbit::GetState(void)
 //============================================================
 CObjectOrbit *CObjectOrbit::Create
 (
-	D3DXMATRIX *pMtxParent,	// 親マトリックス
+	CObject *pParent,		// 親オブジェクト
 	const D3DXCOLOR& rCol,	// 色
 	const OFFSET offset,	// オフセット
 	const int nPart,		// 分割数
@@ -384,8 +352,8 @@ CObjectOrbit *CObjectOrbit::Create
 			return NULL;
 		}
 
-		// 親のマトリックスを設定
-		pObjectOrbit->SetMatrixParent(pMtxParent);
+		// 親のオブジェクトを設定
+		pObjectOrbit->SetParent(pParent);
 
 		// 色を設定
 		pObjectOrbit->SetColor(rCol);
@@ -458,8 +426,11 @@ void CObjectOrbit::SetState(const STATE state)
 
 	case STATE_VANISH:	// 消失状態
 
-		// 現在の親マトリックスを消失するマトリックスに設定
-		m_orbit.mtxVanish = *m_orbit.pMtxParent;
+		// 現在の親の位置を消失する位置に設定
+		m_orbit.posVanish = m_orbit.pParent->GetPosition();
+
+		// 現在の親の向きを消失する向きに設定
+		m_orbit.rotVanish = m_orbit.pParent->GetRotation();
 
 		break;
 
@@ -470,12 +441,12 @@ void CObjectOrbit::SetState(const STATE state)
 }
 
 //============================================================
-//	親のマトリックスの設定処理
+//	親オブジェクトの設定処理
 //============================================================
-void CObjectOrbit::SetMatrixParent(D3DXMATRIX *pMtxParent)
+void CObjectOrbit::SetParent(CObject *pParent)
 {
-	// 引数の親マトリックスを設定
-	m_orbit.pMtxParent = pMtxParent;
+	// 引数の親オブジェクトを設定
+	m_orbit.pParent = pParent;
 }
 
 //============================================================
@@ -622,9 +593,9 @@ HRESULT CObjectOrbit::SetLength(const int nPart)
 		// 頂点バッファの生成
 		if (FAILED(pDevice->CreateVertexBuffer
 		( // 引数
-			sizeof(VERTEX_3D) * m_nNumVtx,	// 必要頂点数
+			sizeof(VERTEX_2D) * m_nNumVtx,	// 必要頂点数
 			D3DUSAGE_WRITEONLY,	// 使用方法
-			FVF_VERTEX_3D,		// 頂点フォーマット
+			FVF_VERTEX_2D,		// 頂点フォーマット
 			D3DPOOL_MANAGED,	// メモリの指定
 			&m_pVtxBuff,		// 頂点バッファへのポインタ
 			NULL
@@ -651,7 +622,7 @@ HRESULT CObjectOrbit::SetLength(const int nPart)
 void CObjectOrbit::SetVtx(void)
 {
 	// ポインタを宣言
-	VERTEX_3D *pVtx;	// 頂点情報へのポインタ
+	VERTEX_2D *pVtx;	// 頂点情報へのポインタ
 
 	if (m_pVtxBuff != NULL)
 	{ // 軌跡の頂点バッファが使用中の場合
@@ -665,8 +636,8 @@ void CObjectOrbit::SetVtx(void)
 			// 頂点座標の設定
 			pVtx[0].pos = m_orbit.pPosPoint[nCntVtx];
 
-			// 法線ベクトルの設定
-			pVtx[0].nor = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+			// rhw の設定
+			pVtx[0].rhw = 1.0f;
 
 			// 頂点カラーの設定
 			if (m_orbit.bAlpha)

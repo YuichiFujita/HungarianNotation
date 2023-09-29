@@ -5,12 +5,18 @@
 //
 //==========================================
 #include "player.h"
+#include "manager.h"
+#include "debugproc.h"
+#include "input.h"
+#include "texture.h"
+#include "objectOrbit.h"
 
 //==========================================
 //  コンストラクタ
 //==========================================
-CPlayer::CPlayer()
+CPlayer::CPlayer() : CObject2D(LABEL_PLAYER)
 {
+	m_pOrbit = NULL;
 	m_posNext = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_vecMove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 }
@@ -28,6 +34,10 @@ CPlayer::~CPlayer()
 //==========================================
 HRESULT CPlayer::Init(void)
 {
+	// 軌跡の生成
+	m_pOrbit = CObjectOrbit::Create(this, XCOL_BLUE, CObjectOrbit::OFFSET_PLAYER, 500);
+	m_pOrbit->SetLabel(LABEL_PLAYER);
+
 	//初期化
 	return CObject2D::Init();
 }
@@ -46,8 +56,21 @@ void CPlayer::Uninit(void)
 //==========================================
 void CPlayer::Update(void)
 {
+	//現在の座標を取得
+	D3DXVECTOR3 pos = GetPosition();
+
+	//移動処理
+	Move(pos);
+
+	//回転処理
+	Rotation();
+
 	//更新
 	CObject2D::Update();
+
+	//デバッグ表示
+	CManager::GetDebugProc()->Print("プレイヤーいるよ\n");
+	CManager::GetDebugProc()->Print("プレイヤー座標 : ( %f, %f )\n", pos.x, pos.y);
 }
 
 //==========================================
@@ -92,8 +115,63 @@ CPlayer* CPlayer::Create(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize, cons
 			pPlayer->SetScaling(rSize);
 			pPlayer->SetRotation(rRot);
 			pPlayer->SetColor(rCol);
+			pPlayer->BindTexture(CManager::GetTexture()->Regist("data\\TEXTURE\\effect005.jpg"));
 		}
 	}
 
 	return pPlayer;
+}
+
+//==========================================
+//  移動
+//==========================================
+void CPlayer::Move(D3DXVECTOR3 pos)
+{
+#ifdef _DEBUG
+	if (CManager::GetKeyboard()->GetTrigger(DIK_W))
+	{
+		m_posNext = pos + D3DXVECTOR3(0.0f, -200.0f, 0.0f);
+	}
+	if (CManager::GetKeyboard()->GetTrigger(DIK_S))
+	{
+		m_posNext = pos + D3DXVECTOR3(0.0f, 200.0f, 0.0f);
+	}
+	if (CManager::GetKeyboard()->GetTrigger(DIK_A))
+	{
+		m_posNext = pos + D3DXVECTOR3(-200.0f, 0.0f, 0.0f);
+	}
+	if (CManager::GetKeyboard()->GetTrigger(DIK_D))
+	{
+		m_posNext = pos + D3DXVECTOR3(200.0f, 0.0f, 0.0f);
+	}
+#endif
+
+	//移動
+	if (CManager::GetKeyboard()->GetTrigger(DIK_SPACE) || CManager::GetPad()->GetTrigger(CInputPad::KEY_A) || CManager::GetMouse()->GetTrigger(CInputMouse::KEY_LEFT))
+	{
+		//移動ベクトルを算出
+		m_vecMove = m_posNext - pos;
+
+		//移動先を設定
+		SetPosition(m_posNext);
+	}
+}
+
+//==========================================
+//  回転
+//==========================================
+void CPlayer::Rotation()
+{
+	//角度を取得
+	D3DXVECTOR3 rot = GetRotation();
+
+	//移動ベクトルの角度を算出
+	float fAngle = atan2f(-m_vecMove.x, -m_vecMove.y);
+	rot.z = fAngle;
+
+	//角度を適用
+	SetRotation(rot);
+
+	//デバッグ表示
+	CManager::GetDebugProc()->Print("プレイヤー向き : %f\n", rot.z);
 }

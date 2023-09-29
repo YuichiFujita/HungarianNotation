@@ -9,6 +9,12 @@
 //************************************************************
 #include "gameManager.h"
 #include "manager.h"
+#include "player.h"
+
+//==========================================
+//  静的メンバ関数宣言
+//==========================================
+CPlayer* CGameManager::m_pPlayer = nullptr;
 
 //************************************************************
 //	親クラス [CGameManager] のメンバ関数
@@ -34,6 +40,9 @@ CGameManager::~CGameManager()
 //============================================================
 HRESULT CGameManager::Init(void)
 {
+	//プレイヤーの生成
+	m_pPlayer = CPlayer::Create(SCREEN_CENT, D3DXVECTOR3(100.0f, 100.0f, 0.0f));
+
 	// 成功を返す
 	return S_OK;
 }

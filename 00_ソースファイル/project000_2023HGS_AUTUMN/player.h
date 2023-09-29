@@ -9,6 +9,11 @@
 #include "object2D.h"
 
 //==========================================
+//	前方宣言
+//==========================================
+class CObjectOrbit;	// オブジェクト軌跡クラス
+
+//==========================================
 //  クラス定義
 //==========================================
 class CPlayer : public CObject2D
@@ -31,10 +36,14 @@ public:
 
 private:
 
-	//メンバ変数
-	D3DXVECTOR3 m_posNext;
-	D3DXVECTOR3 m_vecMove;
+	//メンバ関数
+	void Move(D3DXVECTOR3 pos); //移動
+	void Rotation(void); //回転
 
+	//メンバ変数
+	CObjectOrbit *m_pOrbit;	// オブジェクト軌跡クラス
+	D3DXVECTOR3 m_posNext;	// 次座標
+	D3DXVECTOR3 m_vecMove;	// 移動ベクトル
 };
 
 #endif
