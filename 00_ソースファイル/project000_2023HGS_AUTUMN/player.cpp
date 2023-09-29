@@ -8,12 +8,14 @@
 #include "manager.h"
 #include "debugproc.h"
 #include "input.h"
+#include "objectOrbit.h"
 
 //==========================================
 //  コンストラクタ
 //==========================================
 CPlayer::CPlayer() : CObject2D(LABEL_PLAYER)
 {
+	m_pOrbit = NULL;
 	m_posNext = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_vecMove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 }
@@ -31,6 +33,10 @@ CPlayer::~CPlayer()
 //==========================================
 HRESULT CPlayer::Init(void)
 {
+	// 軌跡の生成
+	m_pOrbit = CObjectOrbit::Create(this, XCOL_BLUE, CObjectOrbit::OFFSET_PLAYER);
+	m_pOrbit->SetLabel(LABEL_PLAYER);
+
 	//初期化
 	return CObject2D::Init();
 }

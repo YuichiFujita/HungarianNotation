@@ -77,8 +77,7 @@ HRESULT CObjectOrbit::Init(void)
 	// 軌跡の情報を初期化
 	m_orbit.pPosPoint	= NULL;			// 各頂点座標
 	m_orbit.pColPoint	= NULL;			// 各頂点カラー
-	m_orbit.pPosParent	= NULL;			// 親の位置
-	m_orbit.pRotParent	= NULL;			// 親の向き
+	m_orbit.pParent		= NULL;			// 親オブジェクト
 	m_orbit.posVanish	= VEC3_ZERO;	// 消失開始時の親の位置
 	m_orbit.rotVanish	= VEC3_ZERO;	// 消失開始時の親の向き
 	m_orbit.nPart		= 1;			// 分割数
@@ -178,15 +177,6 @@ void CObjectOrbit::Draw(void)
 	if (m_state != STATE_NONE)
 	{ // 何もしない状態ではない場合
 
-		//----------------------------------------------------
-		//	レンダーステートを変更
-		//----------------------------------------------------
-		// ライティングを無効にする
-		pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
-
-		// ポリゴンの両面を表示状態にする
-		pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
 		if (bUpdate)
 		{ // 更新する状況の場合
 
@@ -198,10 +188,10 @@ void CObjectOrbit::Draw(void)
 			case STATE_NORMAL:	// 通常状態
 
 				// 親の位置を設定
-				posParent = *m_orbit.pPosParent;
+				posParent = m_orbit.pParent->GetPosition();
 
 				// 親の向きを設定
-				rotParent = *m_orbit.pRotParent;
+				rotParent = m_orbit.pParent->GetRotation();
 
 				break;
 
@@ -311,15 +301,6 @@ void CObjectOrbit::Draw(void)
 
 		// ポリゴンの描画
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, m_nNumVtx - 2);
-
-		//----------------------------------------------------
-		//	レンダーステートを元に戻す
-		//----------------------------------------------------
-		// ライティングを有効にする
-		pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
-
-		// ポリゴンの表面のみを表示状態にする
-		pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	}
 }
 
@@ -337,12 +318,12 @@ int CObjectOrbit::GetState(void)
 //============================================================
 CObjectOrbit *CObjectOrbit::Create
 (
-	D3DXVECTOR3 *pPosParent,	// 親位置
-	const D3DXCOLOR& rCol,		// 色
-	const OFFSET offset,		// オフセット
-	const int nPart,			// 分割数
-	const int nTexPart,			// テクスチャ分割数
-	const bool bAlpha			// 透明化状況
+	CObject *pParent,		// 親オブジェクト
+	const D3DXCOLOR& rCol,	// 色
+	const OFFSET offset,	// オフセット
+	const int nPart,		// 分割数
+	const int nTexPart,		// テクスチャ分割数
+	const bool bAlpha		// 透明化状況
 )
 {
 	// ポインタを宣言
@@ -371,8 +352,8 @@ CObjectOrbit *CObjectOrbit::Create
 			return NULL;
 		}
 
-		// 親のマトリックスを設定
-		pObjectOrbit->SetPositionParent(pPosParent);
+		// 親のオブジェクトを設定
+		pObjectOrbit->SetParent(pParent);
 
 		// 色を設定
 		pObjectOrbit->SetColor(rCol);
@@ -446,10 +427,10 @@ void CObjectOrbit::SetState(const STATE state)
 	case STATE_VANISH:	// 消失状態
 
 		// 現在の親の位置を消失する位置に設定
-		m_orbit.posVanish = *m_orbit.pPosParent;
+		m_orbit.posVanish = m_orbit.pParent->GetPosition();
 
 		// 現在の親の向きを消失する向きに設定
-		m_orbit.rotVanish = *m_orbit.pRotParent;
+		m_orbit.rotVanish = m_orbit.pParent->GetRotation();
 
 		break;
 
@@ -460,12 +441,12 @@ void CObjectOrbit::SetState(const STATE state)
 }
 
 //============================================================
-//	親の位置の設定処理
+//	親オブジェクトの設定処理
 //============================================================
-void CObjectOrbit::SetPositionParent(D3DXVECTOR3 *pPosParent)
+void CObjectOrbit::SetParent(CObject *pParent)
 {
-	// 引数の親マトリックスを設定
-	m_orbit.pPosParent = pPosParent;
+	// 引数の親オブジェクトを設定
+	m_orbit.pParent = pParent;
 }
 
 //============================================================
