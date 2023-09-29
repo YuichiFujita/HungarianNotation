@@ -14,6 +14,7 @@
 #include "map.h"
 #include "enemy.h"
 #include "timerManager.h"
+#include "score.h"
 
 //==========================================
 //  静的メンバ関数宣言
@@ -83,13 +84,36 @@ void CGameManager::Update(void)
 		m_pMap->Update();
 	}
 
-	if (CSceneGame::GetGameManager()->GetPlayer()->GetMiss()
-	||  CSceneGame::GetTimerManager()->GetState() == CTimerManager::STATE_END)
-	{ // プレイヤーが死亡した、またはタイマーの計測が終了済みの場合
+	if (CSceneGame::GetTimerManager()->GetState() == CTimerManager::STATE_END)
+	{ // タイマーの計測が終了済みの場合
 
-		// リザルトに遷移
-		CManager::SetScene(CScene::MODE_RESULT, 30);
+		// リザルトに遷移する
+		TransitionResult(CRetentionManager::RESULT_CLEAR);
 	}
+	else if (CSceneGame::GetGameManager()->GetPlayer()->GetMiss())
+	{ // プレイヤーが死亡した場合
+
+		// リザルトに遷移する
+		TransitionResult(CRetentionManager::RESULT_FAILED);
+	}
+}
+
+//============================================================
+//	リザルト遷移処理
+//============================================================
+void CGameManager::TransitionResult(const CRetentionManager::RESULT result)
+{
+	// ポインタを宣言
+	CRetentionManager *pRetention = CManager::GetRetentionManager();	// データ保存情報
+
+	// クリア状況を設定
+	pRetention->SetResult(result);
+
+	// 獲得スコアを設定
+	pRetention->SetScore(CSceneGame::GetScore()->Get());
+
+	// リザルトに遷移
+	CManager::SetScene(CScene::MODE_RESULT, 30);
 }
 
 //============================================================

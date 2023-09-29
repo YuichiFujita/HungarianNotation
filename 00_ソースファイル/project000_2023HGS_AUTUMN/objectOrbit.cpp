@@ -13,6 +13,8 @@
 #include "texture.h"
 #include "scene.h"
 #include "sceneGame.h"
+#include "gameManager.h"
+#include "map.h"
 #include "pause.h"
 
 //************************************************************

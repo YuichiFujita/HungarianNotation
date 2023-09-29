@@ -49,16 +49,13 @@ public:
 	// メンバ関数
 	void SetResult(const RESULT result);	// クリア状況設定
 	void SetScore(const int nScore);		// 獲得スコア設定
-	void SetTime(const long nTime);			// 経過タイム設定
 	RESULT GetResult(void) const;			// クリア状況取得
 	int GetScore(void) const;				// 獲得スコア取得
-	long GetTime(void) const;				// 経過タイム取得
 
 private:
 	// メンバ変数
 	RESULT m_result;	// クリア状況
 	int m_nScore;		// 獲得スコア
-	long m_nTime;		// 経過タイム
 };
 
 #endif	// _RETENTION_MANAGER_H_
