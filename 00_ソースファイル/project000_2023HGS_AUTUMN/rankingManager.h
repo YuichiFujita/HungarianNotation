@@ -38,7 +38,7 @@ public:
 	// テクスチャ列挙
 	typedef enum
 	{
-		//TEXTURE_BACK = 0,		// 背景テクスチャ
+		TEXTURE_LENGTH = 0,		// 距離テクスチャ
 		TEXTURE_SCORE,			// スコア表示テクスチャ
 		TEXTURE_MAX				// この列挙型の総数
 	}TEXTURE;
@@ -48,7 +48,7 @@ public:
 	{
 		STATE_NONE = 0,		// 何もしない状態
 		STATE_FADEIN,		// フェードイン状態
-		//STATE_RANKING,		// ランキング表示状態
+		STATE_RANKING,		// ランキング表示状態
 		STATE_SCORE_WAIT,	// スコア表示待機状態
 		STATE_SCORE,		// スコア表示状態
 		STATE_WAIT,			// 遷移待機状態
@@ -87,7 +87,7 @@ private:
 	static const char *mc_apTextureFile[];	// テクスチャ定数
 
 	// メンバ変数
-	//CObject2D *m_pRanking;	// ランキング背景の情報
+	CObject2D *m_pRanking;	// ランキング背景の情報
 	//CObject2D *m_pScoreLogo;	// スコアロゴの情報
 	CObject2D *m_pFade;		// フェードの情報
 	CScore *m_pScore[MAX_RANKKING];		// スコアの情報
