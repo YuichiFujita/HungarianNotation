@@ -22,6 +22,7 @@
 CPlayer::CPlayer() : CObject2D(LABEL_PLAYER)
 {
 	m_bMiss = false;
+	m_bMove = false;
 	m_pOrbit = NULL;
 	m_posNext = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_vecMove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -189,10 +190,19 @@ void CPlayer::Move(D3DXVECTOR3 pos)
 	//移動ベクトルを算出
 	m_vecMove = m_posNext - pos;
 
+	if (m_posNext.y >= 0.0f)
+	{
+		m_bMove = true;
+	}
+	else
+	{
+		m_bMove = false;
+	}
+
 	//移動
 	if (!m_bMiss)
 	{
-		if (m_posNext.y >= 0.0f)
+		if (m_bMove)
 		{
 			if ((CManager::GetKeyboard()->GetTrigger(DIK_SPACE) || CManager::GetPad()->GetTrigger(CInputPad::KEY_A) || CManager::GetMouse()->GetTrigger(CInputMouse::KEY_LEFT)) && CGameManager::GetState() == CGameManager::STATE_NORMAL)
 			{

@@ -86,7 +86,10 @@ void CEnemy::Update(void)
 
 	if ((CManager::GetKeyboard()->GetTrigger(DIK_SPACE) || CManager::GetPad()->GetTrigger(CInputPad::KEY_A) || CManager::GetMouse()->GetTrigger(CInputMouse::KEY_LEFT)) && CGameManager::GetState() == CGameManager::STATE_NORMAL)
 	{
-		Collision(GetPosition(), GetScaling(), GetRotation());
+		if (CGameManager::GetPlayer()->IsMove())
+		{
+			Collision(GetPosition(), GetScaling(), GetRotation());
+		}
 	}
 
 	if (m_type == TYPE_STICK_SLIDE)

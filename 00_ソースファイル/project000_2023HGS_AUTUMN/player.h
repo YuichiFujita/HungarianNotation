@@ -33,6 +33,7 @@ public:
 	float GetMove(void) { return m_vecMove.y; } //Y方向の移動を取得
 	bool GetMiss(void) { return m_bMiss; }
 	void SetMiss(void) { m_bMiss = true; }
+	bool IsMove(void) { return m_bMove; }
 
 	//静的メンバ関数
 	static CPlayer* Create(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize = VEC3_ONE, const D3DXVECTOR3& rRot = VEC3_ZERO, const D3DXCOLOR& rCol = XCOL_WHITE);
@@ -48,6 +49,7 @@ private:
 	D3DXVECTOR3 m_posNext;	// 次座標
 	D3DXVECTOR3 m_vecMove;	// 移動ベクトル
 	bool m_bMiss; //失敗
+	bool m_bMove;
 
 };
 
