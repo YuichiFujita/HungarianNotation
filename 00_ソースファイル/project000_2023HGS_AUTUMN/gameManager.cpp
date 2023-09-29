@@ -55,10 +55,12 @@ HRESULT CGameManager::Init(void)
 	}
 
 	//プレイヤーの生成
-	CEnemy::Create(D3DXVECTOR3(640.0f, 100.0f, 0.0f), D3DXVECTOR3(100.0f, 10.0f, 0.0f), VEC3_ZERO, XCOL_WHITE, CEnemy::TYPE_STICK);
+	CEnemy::Create(D3DXVECTOR3(640.0f, 100.0f, 0.0f), D3DXVECTOR3(100.0f, 10.0f, 0.0f), VEC3_ZERO, XCOL_WHITE, CEnemy::TYPE_STICK_SLIDE);
 	m_pPlayer = CPlayer::Create(m_pMap->GetHeightMin(), D3DXVECTOR3(100.0f, 100.0f, 0.0f));
 	m_pObjectGauge2D = CObjectGauge2D::Create(CObject::LABEL_GAUGE, 10, 5, D3DXVECTOR3(640.0f, 700.0f, 0.0f), D3DXVECTOR3(320.0f, 50.0f, 0.0f));
 	m_pObjectGauge2D->SetNum(0);
+
+	m_state = STATE_NORMAL;
 
 	// 成功を返す
 	return S_OK;
@@ -82,17 +84,24 @@ void CGameManager::Uninit(void)
 //============================================================
 void CGameManager::Update(void)
 {
-	if (m_pMap != nullptr)
+	if (m_state == STATE_START)
 	{
-		m_pMap->Update();
+
 	}
+	else
+	{
+		if (m_pMap != nullptr)
+		{
+			m_pMap->Update();
+		}
 
-	if (CSceneGame::GetGameManager()->GetPlayer()->GetMiss()
-	||  CSceneGame::GetTimerManager()->GetState() == CTimerManager::STATE_END)
-	{ // プレイヤーが死亡した、またはタイマーの計測が終了済みの場合
+		if (CSceneGame::GetGameManager()->GetPlayer()->GetMiss()
+			|| CSceneGame::GetTimerManager()->GetState() == CTimerManager::STATE_END)
+		{ // プレイヤーが死亡した、またはタイマーの計測が終了済みの場合
 
-		// リザルトに遷移
-		CManager::SetScene(CScene::MODE_RESULT, 30);
+			// リザルトに遷移
+			CManager::SetScene(CScene::MODE_RESULT, 30);
+		}
 	}
 }
 

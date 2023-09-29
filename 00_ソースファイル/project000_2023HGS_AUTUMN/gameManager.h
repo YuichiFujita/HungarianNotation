@@ -29,6 +29,14 @@ class CObjectGauge2D;
 class CGameManager
 {
 public:
+	// 状態列挙
+	typedef enum
+	{
+		STATE_NORMAL = 0,	// 通常状態
+		STATE_START,		// 開始状態
+		STATE_MAX			// この列挙型の総数
+	}STATE;
+
 	// コンストラクタ
 	CGameManager();
 
@@ -48,6 +56,9 @@ public:
 	static CObjectGauge2D* GetObjectGauge2D(void) { return m_pObjectGauge2D; } //ゲージの取得
 
 private:
+
+	//メンバ変数
+	STATE m_state; //状態
 
 	//静的メンバ変数
 	static CPlayer* m_pPlayer; //プレイヤーのポインタ
