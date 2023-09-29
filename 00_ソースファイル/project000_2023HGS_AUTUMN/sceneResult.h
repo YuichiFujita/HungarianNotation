@@ -20,6 +20,7 @@
 //	前方宣言
 //************************************************************
 class CResultManager;	// リザルトマネージャークラス
+class CBg;				// 背景クラス
 
 //************************************************************
 //	クラス定義
@@ -42,10 +43,12 @@ public:
 
 	// 静的メンバ関数
 	static CResultManager *GetResultManager(void);	// リザルトマネージャー取得
+	static CBg *GetBg(void);	// 背景取得
 
 private:
 	// 静的メンバ変数
 	static CResultManager *m_pResultManager;	// リザルトマネージャー
+	static CBg *m_pBg;	// 背景オブジェクト
 };
 
 #endif	// _SCENE_RESULT_H_

@@ -14,6 +14,8 @@
 #include "value.h"
 #include "object2D.h"
 
+#include "input.h"
+
 //************************************************************
 //	マクロ定義
 //************************************************************
@@ -53,6 +55,7 @@ CTimerManager::CTimerManager()
 	m_dwTempTime		= 0;			// 経過時間の計算用
 	m_state				= STATE_NONE;	// 計測状態
 	m_bStop				= true;			// 計測停止状況
+	m_nLimit			= 0;			// 制限時間
 }
 
 //============================================================
@@ -86,6 +89,7 @@ HRESULT CTimerManager::Init(void)
 	m_dwTempTime		= 0;			// 経過時間の計算用
 	m_state				= STATE_NONE;	// 計測状態
 	m_bStop				= true;			// 計測停止状況
+	m_nLimit			= 0;			// 制限時間
 
 	for (int nCntTimer = 0; nCntTimer < MAX_TIMER; nCntTimer++)
 	{ // タイマーの桁数分繰り返す
@@ -168,8 +172,34 @@ void CTimerManager::Update(void)
 		if (m_bStop == false)
 		{ // 計測中の場合
 
-			// 現在の計測ミリ秒を設定
-			m_dwTime = timeGetTime() - m_dwTempTime;
+			if (m_nLimit <= 0)
+			{ // 制限時間が 0以下の場合
+
+				// 現在の計測ミリ秒を設定
+				m_dwTime = timeGetTime() - m_dwTempTime;
+			}
+			else
+			{ // 制限時間が 0より大きい場合
+
+				// 変数を宣言
+				long nTime = m_nLimit - (timeGetTime() - m_dwTempTime);	// 現在タイム
+
+				if (nTime > 0)
+				{ // タイムが 0より大きい場合
+
+					// 現在の計測ミリ秒を設定
+					m_dwTime = nTime;
+				}
+				else
+				{  // タイムが 0以下の場合
+
+					// 現在の計測ミリ秒を設定
+					m_dwTime = 0;
+
+					// 計測を終了する
+					End();
+				}
+			}
 		}
 		else
 		{ // 計測停止中の場合
@@ -218,6 +248,8 @@ void CTimerManager::Update(void)
 //============================================================
 CTimerManager *CTimerManager::Create
 (
+	const TIME time,				// 設定タイム
+	const long nTime,				// 制限時間
 	const D3DXVECTOR3& rPos,		// 位置
 	const D3DXVECTOR3& rSizeValue,	// 数字の大きさ
 	const D3DXVECTOR3& rSizePart,	// 区切りの大きさ
@@ -250,6 +282,9 @@ CTimerManager *CTimerManager::Create
 			// 失敗を返す
 			return NULL;
 		}
+
+		// 制限時間を設定
+		pTimerManager->SetLimit(time, nTime);
 
 		// 位置を設定
 		pTimerManager->SetPosition(rPos);
@@ -365,6 +400,13 @@ bool CTimerManager::AddMSec(long nMSec)
 			// 加算できない状態にする
 			bAdd = false;
 		}
+
+		if (m_nLimit > 0)
+		{ // 制限時間が 0より大きい場合
+
+			// 加算できない状態にする
+			bAdd = false;
+		}
 	}
 
 	if (bAdd)
@@ -400,6 +442,13 @@ bool CTimerManager::AddSec(long nSec)
 
 		if (m_bStop)
 		{ // 停止中の場合
+
+			// 加算できない状態にする
+			bAdd = false;
+		}
+
+		if (m_nLimit > 0)
+		{ // 制限時間が 0より大きい場合
 
 			// 加算できない状態にする
 			bAdd = false;
@@ -446,6 +495,13 @@ bool CTimerManager::AddMin(long nMin)
 			// 加算できない状態にする
 			bAdd = false;
 		}
+
+		if (m_nLimit > 0)
+		{ // 制限時間が 0より大きい場合
+
+			// 加算できない状態にする
+			bAdd = false;
+		}
 	}
 
 	if (bAdd)
@@ -484,6 +540,13 @@ bool CTimerManager::SetMSec(long nMSec)
 
 		if (m_bStop)
 		{ // 停止中の場合
+
+			// 設定できない状態にする
+			bSet = false;
+		}
+
+		if (m_nLimit > 0)
+		{ // 制限時間が 0より大きい場合
 
 			// 設定できない状態にする
 			bSet = false;
@@ -532,6 +595,13 @@ bool CTimerManager::SetSec(long nSec)
 			// 設定できない状態にする
 			bSet = false;
 		}
+		
+		if (m_nLimit > 0)
+		{ // 制限時間が 0より大きい場合
+
+			// 設定できない状態にする
+			bSet = false;
+		}
 	}
 
 	if (bSet)
@@ -575,6 +645,13 @@ bool CTimerManager::SetMin(long nMin)
 
 		if (m_bStop)
 		{ // 停止中の場合
+
+			// 設定できない状態にする
+			bSet = false;
+		}
+
+		if (m_nLimit > 0)
+		{ // 制限時間が 0より大きい場合
 
 			// 設定できない状態にする
 			bSet = false;
@@ -643,6 +720,45 @@ int CTimerManager::GetMin(void)
 {
 	// 分を返す
 	return m_dwTime / 60000;
+}
+
+//============================================================
+//	制限時間の設定処理
+//============================================================
+void CTimerManager::SetLimit(const TIME time, const long nTime)
+{
+	// 変数を宣言
+	long nMSec = 0;	// ミリ秒変換用
+
+	// 引数の制限時間を設定
+	switch (time)
+	{ // タイムごとの処理
+	case TIME_MSEC:	// ミリ秒
+
+		m_nLimit = nTime;	// 制限時間を設定
+
+		break;
+
+	case TIME_SEC:	// 秒
+
+		// 引数をミリ秒に変換
+		nMSec = nTime * 1000;
+		m_nLimit = nMSec;	// 制限時間を設定
+
+		break;
+
+	case TIME_MIN:	// 分
+
+		// 引数をミリ秒に変換
+		nMSec = nTime * 60000;
+		m_nLimit = nMSec;	// 制限時間を設定
+
+		break;
+
+	default:
+		assert(false);
+		break;
+	}
 }
 
 //============================================================
