@@ -12,7 +12,7 @@
 //==========================================
 //  Ã“Iƒƒ“ƒo•Ï”éŒ¾
 //==========================================
-const CMap::DIFF CMap::m_Diff = { 100, 200, 100, SCREEN_WIDTH - 300 };
+const CMap::DIFF CMap::m_Diff = { 200, 300, 100, SCREEN_WIDTH - 300 };
 float CMap::m_vecMove = 1.0f;
 
 //==========================================
@@ -261,7 +261,7 @@ void CMap::SetSpot(void)
 			//Šî€À•WY‚É—”‚ð‰ÁŽZ
 			if (fHeight >= SCREEN_HEIGHT)
 			{
-				fHeight = SCREEN_HEIGHT - 100.0f;
+				fHeight = SCREEN_HEIGHT - 300.0f;
 			}
 			else
 			{

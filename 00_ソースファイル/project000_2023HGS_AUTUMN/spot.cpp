@@ -88,7 +88,7 @@ CSpot* CSpot::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 			pSpot->SetScaling(size);
 			pSpot->SetColor(D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f));
 
-			//pSpot->m_pGroup = CEnemyGroup::Create(pSpot->GetPosition(), (float)(rand() % 100 + 50));
+			pSpot->m_pGroup = CEnemyGroup::Create(pSpot->GetPosition(), (float)((rand() % 300) + 200));
 		}
 	}
 

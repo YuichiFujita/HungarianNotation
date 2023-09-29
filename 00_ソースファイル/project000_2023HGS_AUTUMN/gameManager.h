@@ -23,7 +23,6 @@ class CPlayer;
 class CMap;
 class CObjectGauge2D;
 class CObject2D;
-class CEnemyManager;
 
 //************************************************************
 //	クラス定義
@@ -58,7 +57,6 @@ public:
 	static CPlayer* GetPlayer(void) { return m_pPlayer; } //プレイヤーの取得
 	static CMap* GetMap(void) { return m_pMap; } //世界の取得
 	static CObjectGauge2D* GetObjectGauge2D(void) { return m_pObjectGauge2D; } //ゲージの取得
-	static CEnemyManager* GetEnemyManager(void) { return m_pEnemyManager; } //ゲージの取得
 
 private:
 
@@ -71,7 +69,6 @@ private:
 	static CMap* m_pMap; //世界のポインタ
 	static CObjectGauge2D* m_pObjectGauge2D; //ゲージのポインタ
 	static CObject2D* m_pObject2D[2]; //ゲージのポインタ
-	static CEnemyManager* m_pEnemyManager; //ゲージのポインタ
 
 };
 
