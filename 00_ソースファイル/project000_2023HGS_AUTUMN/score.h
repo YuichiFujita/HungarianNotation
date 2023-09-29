@@ -59,6 +59,7 @@ public:
 	int  Get(void);				// 取得
 	void SetPosition(const D3DXVECTOR3& rPos);	// 位置設定
 	void SetScaling(const D3DXVECTOR3& rSize);	// 大きさ設定
+	void SetColor(const D3DXCOLOR& rCol);		// 色設定
 	void SetSpace(const D3DXVECTOR3& rSpace);	// 空白設定
 	void SetPriority(const int nPriority);		// 優先順位設定
 	void SetEnableUpdate(const bool bUpdate);	// 更新状況設定

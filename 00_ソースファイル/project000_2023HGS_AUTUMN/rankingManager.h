@@ -76,8 +76,11 @@ private:
 	void UpdateRanking(void);	// ランキング表示
 	void UpdateScore(void);		// スコア表示
 	void UpdateBack(void);		// 遷移決定
+	void ChangeAlpha(void);		// 透明度変更
 	void SkipStaging(void);		// 演出スキップ
 	void SetTexRanking(void);	// ランキング表示のテクスチャ設定
+	void Load(void);			// ランキングの読み込み処理
+	void Set(void);				// ランキングの設定処理
 	bool UpdateDrawWait(const int nWait);	// 表示待機
 
 	// 静的メンバ変数
@@ -90,7 +93,11 @@ private:
 	CScore *m_pScore[MAX_RANKKING];		// スコアの情報
 	STATE m_state;			// 状態
 	int m_nCounterState;	// 状態管理カウンター
+	int m_nCounterAlpha;	// ランキングの透明度変更間隔
+	int m_nScore[MAX_RANKKING];			// ランキング
+	int m_nRankUpdate;		// ランキング更新番号
 	float m_fScale;			// ポリゴン拡大率
+
 };
 
 #endif	// _RESULTMANAGER_H_
