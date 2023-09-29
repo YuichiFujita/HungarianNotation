@@ -10,14 +10,16 @@
 //==========================================
 //  静的メンバ変数宣言
 //==========================================
-const CMap::DIFF CMap::m_Diff = { 100, 300, 50, SCREEN_WIDTH - 50 };
-float CMap::m_vecMove = 2.0f;
+const CMap::DIFF CMap::m_Diff = { 100, 200, 100, SCREEN_WIDTH - 300 };
+float CMap::m_vecMove = 0.5f;
 
 //==========================================
 //  コンストラクタ
 //==========================================
 CMap::CMap()
 {
+	m_nCntAdd = 0;
+	m_fSpeed = 0.0f;
 	for (int nCnt = 0; nCnt < NUM; nCnt++)
 	{
 		m_pSpot[nCnt] = nullptr;
@@ -60,13 +62,22 @@ void CMap::Uninit(void)
 //==========================================
 void CMap::Update(void)
 {
+	//世界の移動量
+	float fWorld = m_vecMove;
+
+	//世界の加速
+	if (GetHeightNext().y <= 150.0f)
+	{
+		fWorld *= 30.0f;
+	}
+
 	//位置を更新
 	for (int nCnt = 0; nCnt < NUM; nCnt++)
 	{
 		if (m_pSpot[nCnt] != nullptr)
 		{
 			D3DXVECTOR3 pos = m_pSpot[nCnt]->GetPosition();
-			pos.y += m_vecMove;
+			pos.y += fWorld;
 			m_pSpot[nCnt]->SetPosition(pos);
 			m_pSpot[nCnt]->Update();
 		}
@@ -206,6 +217,15 @@ void CMap::DeleteMin(void)
 			}
 		}
 	}
+}
+
+//==========================================
+//  世界を加速する
+//==========================================
+void CMap::SetAddMove(float fSpeed)
+{
+	//移動量を加算
+	m_fSpeed = fSpeed * 0.03f;
 }
 
 //==========================================

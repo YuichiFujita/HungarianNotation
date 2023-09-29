@@ -171,6 +171,9 @@ void CPlayer::Move(D3DXVECTOR3 pos)
 
 		//ŽŸ‚Ì’n“_‚ðŽæ“¾
 		m_posNext = CGameManager::GetMap()->GetHeightNext();
+
+		//¢ŠE‚ð‰Á‘¬
+		CGameManager::GetMap()->SetAddMove(m_vecMove.y);
 	}
 }
 
