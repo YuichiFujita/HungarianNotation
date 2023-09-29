@@ -151,7 +151,7 @@ CPlayer* CPlayer::Create(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize, cons
 			pPlayer->SetPosition(rPos);
 			pPlayer->SetScaling(rSize);
 			pPlayer->SetRotation(rRot);
-			pPlayer->SetColor(rCol);
+			pPlayer->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 			pPlayer->BindTexture(CManager::GetTexture()->Regist("data\\TEXTURE\\player000.png"));
 		}
 	}

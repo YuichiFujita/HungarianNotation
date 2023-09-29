@@ -38,6 +38,12 @@ HRESULT CSpot::Init(void)
 //==========================================
 void CSpot::Uninit(void)
 {
+	if (m_pGroup != nullptr)
+	{
+		m_pGroup->Uninit();
+		m_pGroup = nullptr;
+	}
+
 	CObject2D::Uninit();
 }
 
@@ -49,6 +55,7 @@ void CSpot::Update(void)
 	if (m_pGroup != nullptr)
 	{
 		m_pGroup->SetPos(GetPosition());
+		m_pGroup->Update();
 	}
 
 	CObject2D::Update();

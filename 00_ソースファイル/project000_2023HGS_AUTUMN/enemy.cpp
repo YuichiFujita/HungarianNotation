@@ -16,7 +16,7 @@
 //==========================================
 //  コンストラクタ
 //==========================================
-CEnemy::CEnemy() : CObject2D(CObject::LABEL_ENEMY)
+CEnemy::CEnemy() : CObject2D(CObject::LABEL_NONE)
 {
 	m_moveSpeed = 3.0f;
 }

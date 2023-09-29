@@ -10,12 +10,12 @@
 //==========================================
 //  コンストラクタ
 //==========================================
-CEnemyGroup::CEnemyGroup() : CObject(CObject::LABEL_ENEMY)
+CEnemyGroup::CEnemyGroup() : CObject(CObject::LABEL_NONE)
 {
 	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_nNum = 0;
-	for (int nCnt = 0; nCnt < 3;nCnt++)
+	for (int nCnt = 0; nCnt < 2;nCnt++)
 	{
 		m_pEnemy[nCnt] = nullptr;
 	}
@@ -36,9 +36,9 @@ CEnemyGroup::~CEnemyGroup()
 //==========================================
 HRESULT CEnemyGroup::Init(void)
 {
-	m_fAngle = (D3DX_PI * 2.0f) / 3;
+	m_fAngle = (D3DX_PI * 2.0f) / 2;
 
-	for (int nCnt = 0; nCnt < 3; nCnt++)
+	for (int nCnt = 0; nCnt < 2; nCnt++)
 	{
 		D3DXVECTOR3 pos = D3DXVECTOR3
 		(
@@ -51,7 +51,7 @@ HRESULT CEnemyGroup::Init(void)
 			D3DXVECTOR3(SCREEN_WIDTH * 0.05f, SCREEN_HEIGHT * 0.05f, 0.0f),
 			D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 			D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f),
-			CEnemy::TYPE_STICK_SLIDE);
+			CEnemy::TYPE_STICK);
 	}
 
 	return S_OK;
@@ -59,10 +59,16 @@ HRESULT CEnemyGroup::Init(void)
 
 //==========================================
 //  終了処理
-///=========================================
+//=========================================
 void CEnemyGroup::Uninit(void)
 {
-	this->Release();
+	for (int nCnt = 0; nCnt < 2; nCnt++)
+	{
+		m_pEnemy[nCnt]->Uninit();
+		m_pEnemy[nCnt] = nullptr;
+	}
+
+	Release();
 }
 
 //==========================================
@@ -81,7 +87,7 @@ void CEnemyGroup::Update(void)
 		m_rot.y = D3DX_PI;
 	}
 
-	for (int nCnt = 0; nCnt < 3; nCnt++)
+	for (int nCnt = 0; nCnt < 2; nCnt++)
 	{
 		D3DXVECTOR3 pos = D3DXVECTOR3
 		(
@@ -90,12 +96,20 @@ void CEnemyGroup::Update(void)
 			0.0f
 		);
 
-		m_pEnemy[nCnt]->SetPosition(pos);
+		if (m_pEnemy[nCnt] != nullptr)
+		{
+			m_pEnemy[nCnt]->SetPosition(pos);
+		}
 	}
 
 	if (m_pos.y >= SCREEN_HEIGHT)
 	{
 		Uninit();
+	}
+
+	for (int nCnt = 0; nCnt < 2; nCnt++)
+	{
+		m_pEnemy[nCnt]->Update();
 	}
 }
 
