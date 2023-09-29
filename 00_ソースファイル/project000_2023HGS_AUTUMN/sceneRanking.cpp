@@ -68,7 +68,7 @@ HRESULT CSceneRanking::Init(void)
 	//	‰Šúİ’è
 	//--------------------------------------------------------
 	// BGM‚ÌÄ¶
-	CManager::GetSound()->Play(CSound::LABEL_BGM_TITLE_RESULT);
+	CManager::GetSound()->Play(CSound::LABEL_BGM_RANKING);
 
 	// ¬Œ÷‚ğ•Ô‚·
 	return S_OK;
