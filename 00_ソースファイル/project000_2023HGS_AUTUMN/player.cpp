@@ -190,22 +190,28 @@ void CPlayer::Move(D3DXVECTOR3 pos)
 	m_vecMove = m_posNext - pos;
 
 	//移動
-	if ((CManager::GetKeyboard()->GetTrigger(DIK_SPACE) || CManager::GetPad()->GetTrigger(CInputPad::KEY_A) || CManager::GetMouse()->GetTrigger(CInputMouse::KEY_LEFT)) && CGameManager::GetState() == CGameManager::STATE_NORMAL)
+	if (!m_bMiss)
 	{
-		//移動先を設定
-		SetPosition(m_posNext);
+		if (m_posNext.y >= 0.0f)
+		{
+			if ((CManager::GetKeyboard()->GetTrigger(DIK_SPACE) || CManager::GetPad()->GetTrigger(CInputPad::KEY_A) || CManager::GetMouse()->GetTrigger(CInputMouse::KEY_LEFT)) && CGameManager::GetState() == CGameManager::STATE_NORMAL)
+			{
+				//移動先を設定
+				SetPosition(m_posNext);
 
-		//次の地点を取得
-		m_posNext = CGameManager::GetMap()->GetHeightNext();
+				//次の地点を取得
+				m_posNext = CGameManager::GetMap()->GetHeightNext();
 
-		//スコアの加算
-		CSceneGame::GetScore()->Add((int)-m_vecMove.y);
+				//スコアの加算
+				CSceneGame::GetScore()->Add((int)-m_vecMove.y);
 
-		// サウンドの再生
-		CManager::GetSound()->Play(CSound::LABEL_SE_MOVE);	// 決定音00
+				// サウンドの再生
+				CManager::GetSound()->Play(CSound::LABEL_SE_MOVE);	// 決定音00
 
-		//雑魚を殺す
-		CGameManager::GetMap()->DeleteMin();
+				//雑魚を殺す
+				CGameManager::GetMap()->DeleteMin();
+			}
+		}
 	}
 }
 

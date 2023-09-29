@@ -15,7 +15,7 @@ CEnemyGroup::CEnemyGroup() : CObject(CObject::LABEL_NONE)
 	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_nNum = 0;
-	for (int nCnt = 0; nCnt < 2;nCnt++)
+	for (int nCnt = 0; nCnt < NUM;nCnt++)
 	{
 		m_pEnemy[nCnt] = nullptr;
 	}
@@ -36,9 +36,9 @@ CEnemyGroup::~CEnemyGroup()
 //==========================================
 HRESULT CEnemyGroup::Init(void)
 {
-	m_fAngle = (D3DX_PI * 2.0f) / 2;
+	m_fAngle = (D3DX_PI * 2.0f) / NUM;
 
-	for (int nCnt = 0; nCnt < 2; nCnt++)
+	for (int nCnt = 0; nCnt < NUM; nCnt++)
 	{
 		D3DXVECTOR3 pos = D3DXVECTOR3
 		(
@@ -62,7 +62,7 @@ HRESULT CEnemyGroup::Init(void)
 //=========================================
 void CEnemyGroup::Uninit(void)
 {
-	for (int nCnt = 0; nCnt < 2; nCnt++)
+	for (int nCnt = 0; nCnt < NUM; nCnt++)
 	{
 		m_pEnemy[nCnt]->Uninit();
 		m_pEnemy[nCnt] = nullptr;
@@ -87,7 +87,7 @@ void CEnemyGroup::Update(void)
 		m_rot.y = D3DX_PI;
 	}
 
-	for (int nCnt = 0; nCnt < 2; nCnt++)
+	for (int nCnt = 0; nCnt < NUM; nCnt++)
 	{
 		D3DXVECTOR3 pos = D3DXVECTOR3
 		(
@@ -107,7 +107,7 @@ void CEnemyGroup::Update(void)
 		Uninit();
 	}
 
-	for (int nCnt = 0; nCnt < 2; nCnt++)
+	for (int nCnt = 0; nCnt < NUM; nCnt++)
 	{
 		m_pEnemy[nCnt]->Update();
 	}

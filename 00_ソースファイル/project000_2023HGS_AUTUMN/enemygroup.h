@@ -35,11 +35,13 @@ public:
 
 private:
 
+#define NUM (4) //‘”
+
 	//ƒƒ“ƒo•Ï”
 	D3DXVECTOR3 m_pos;
 	D3DXVECTOR3 m_rot;
 	int m_nNum;
-	CEnemy* m_pEnemy[2];
+	CEnemy* m_pEnemy[NUM];
 	float m_fAngle;
 	float m_fLength;
 };
