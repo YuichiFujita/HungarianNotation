@@ -6,10 +6,12 @@
 //==========================================
 #include "player.h"
 #include "manager.h"
+#include "gameManager.h"
 #include "debugproc.h"
 #include "input.h"
 #include "texture.h"
 #include "objectOrbit.h"
+#include "map.h"
 
 //==========================================
 //  コンストラクタ
@@ -38,6 +40,9 @@ HRESULT CPlayer::Init(void)
 	m_pOrbit = CObjectOrbit::Create(this, XCOL_BLUE, CObjectOrbit::OFFSET_PLAYER, 10);
 	m_pOrbit->SetLabel(LABEL_PLAYER);
 
+	//次の地点を取得
+	m_posNext = CGameManager::GetMap()->GetHeightNext();
+
 	//初期化
 	return CObject2D::Init();
 }
@@ -56,6 +61,12 @@ void CPlayer::Uninit(void)
 //==========================================
 void CPlayer::Update(void)
 {
+	//現在の地点を取得
+	SetPosition(CGameManager::GetMap()->GetHeightMin());
+
+	//次の地点を取得
+	m_posNext = CGameManager::GetMap()->GetHeightNext();
+
 	//現在の座標を取得
 	D3DXVECTOR3 pos = GetPosition();
 
@@ -146,14 +157,20 @@ void CPlayer::Move(D3DXVECTOR3 pos)
 	}
 #endif
 
+	//移動ベクトルを算出
+	m_vecMove = m_posNext - pos;
+
 	//移動
 	if (CManager::GetKeyboard()->GetTrigger(DIK_SPACE) || CManager::GetPad()->GetTrigger(CInputPad::KEY_A) || CManager::GetMouse()->GetTrigger(CInputMouse::KEY_LEFT))
 	{
-		//移動ベクトルを算出
-		m_vecMove = m_posNext - pos;
-
 		//移動先を設定
 		SetPosition(m_posNext);
+		
+		//雑魚を殺す
+		CGameManager::GetMap()->DeleteMin();
+
+		//次の地点を取得
+		m_posNext = CGameManager::GetMap()->GetHeightNext();
 	}
 }
 

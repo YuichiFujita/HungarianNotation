@@ -50,7 +50,7 @@ HRESULT CGameManager::Init(void)
 	}
 
 	//ƒvƒŒƒCƒ„[‚Ì¶¬
-	m_pPlayer = CPlayer::Create(SCREEN_CENT, D3DXVECTOR3(100.0f, 100.0f, 0.0f));
+	m_pPlayer = CPlayer::Create(m_pMap->GetHeightMin(), D3DXVECTOR3(100.0f, 100.0f, 0.0f));
 
 	// ¬Œ÷‚ğ•Ô‚·
 	return S_OK;
