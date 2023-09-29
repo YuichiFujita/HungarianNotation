@@ -22,6 +22,7 @@
 class CPlayer;
 class CMap;
 class CObjectGauge2D;
+class CObject2D;
 
 //************************************************************
 //	クラス定義
@@ -61,11 +62,13 @@ private:
 
 	//メンバ変数
 	STATE m_state; //状態
+	int m_curtainInterbal; //状態
 
 	//静的メンバ変数
 	static CPlayer* m_pPlayer; //プレイヤーのポインタ
 	static CMap* m_pMap; //世界のポインタ
 	static CObjectGauge2D* m_pObjectGauge2D; //ゲージのポインタ
+	static CObject2D* m_pObject2D[2]; //ゲージのポインタ
 
 };
 

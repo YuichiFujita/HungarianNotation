@@ -16,6 +16,7 @@
 #include "timerManager.h"
 #include "objectGauge2D.h"
 #include "score.h"
+#include "texture.h"
 
 //==========================================
 //  静的メンバ関数宣言
@@ -23,6 +24,7 @@
 CPlayer* CGameManager::m_pPlayer = nullptr;
 CMap* CGameManager::m_pMap = nullptr;
 CObjectGauge2D* CGameManager::m_pObjectGauge2D = nullptr;
+CObject2D* CGameManager::m_pObject2D[2] = { nullptr , nullptr};
 
 //************************************************************
 //	親クラス [CGameManager] のメンバ関数
@@ -32,7 +34,7 @@ CObjectGauge2D* CGameManager::m_pObjectGauge2D = nullptr;
 //============================================================
 CGameManager::CGameManager()
 {
-
+	m_curtainInterbal = 0;
 }
 
 //============================================================
@@ -56,12 +58,18 @@ HRESULT CGameManager::Init(void)
 	}
 
 	//プレイヤーの生成
-	CEnemy::Create(D3DXVECTOR3(640.0f, 100.0f, 0.0f), D3DXVECTOR3(100.0f, 10.0f, 0.0f), VEC3_ZERO, XCOL_WHITE, CEnemy::TYPE_STICK_SLIDE);
+	//CEnemy::Create(D3DXVECTOR3(640.0f, 100.0f, 0.0f), D3DXVECTOR3(100.0f, 10.0f, 0.0f), VEC3_ZERO, XCOL_WHITE, CEnemy::TYPE_STICK_SLIDE);
 	m_pPlayer = CPlayer::Create(m_pMap->GetHeightMin(), D3DXVECTOR3(100.0f, 100.0f, 0.0f));
 	m_pObjectGauge2D = CObjectGauge2D::Create(CObject::LABEL_GAUGE, 10, 5, D3DXVECTOR3(640.0f, 700.0f, 0.0f), D3DXVECTOR3(320.0f, 50.0f, 0.0f));
 	m_pObjectGauge2D->SetNum(0);
 
-	m_state = STATE_NORMAL;
+	m_pObject2D[0] = CObject2D::Create(D3DXVECTOR3(320.0f, 360.0f, 0.0f), D3DXVECTOR3(640.0f, 720.0f, 0.0f));
+	m_pObject2D[1] = CObject2D::Create(D3DXVECTOR3(960.0f, 360.0f, 0.0f), D3DXVECTOR3(640.0f, 720.0f, 0.0f));
+
+	m_pObject2D[0]->BindTexture(CManager::GetTexture()->Regist("data\\TEXTURE\\fade003.jpg"));
+	m_pObject2D[1]->BindTexture(CManager::GetTexture()->Regist("data\\TEXTURE\\fade003.jpg"));
+
+	m_state = STATE_START;
 
 	// 成功を返す
 	return S_OK;
@@ -87,7 +95,35 @@ void CGameManager::Update(void)
 {
 	if (m_state == STATE_START)
 	{
+		m_curtainInterbal++;
 
+		if (m_curtainInterbal > 60)
+		{
+			D3DXVECTOR3 scale;
+			D3DXVECTOR3 pos;
+
+			pos = m_pObject2D[0]->GetPosition();
+			scale = m_pObject2D[0]->GetScaling();
+			pos.x -= 1.5f;
+			scale.x -= 3.0f;
+			m_pObject2D[0]->SetPosition(pos);
+			m_pObject2D[0]->SetScaling(scale);
+
+			pos = m_pObject2D[1]->GetPosition();
+			scale = m_pObject2D[1]->GetScaling();
+			pos.x += 1.5f;
+			scale.x -= 3.0f;
+			m_pObject2D[1]->SetPosition(pos);
+			m_pObject2D[1]->SetScaling(scale);
+
+			if (m_pObject2D[0]->GetPosition().x < 0.0f)
+			{
+				CSceneGame::GetTimerManager()->Start();	// 計測を開始
+				m_state = STATE_NORMAL;
+				m_pObject2D[0]->Uninit();
+				m_pObject2D[1]->Uninit();
+			}
+		}
 	}
 	else
 	{
