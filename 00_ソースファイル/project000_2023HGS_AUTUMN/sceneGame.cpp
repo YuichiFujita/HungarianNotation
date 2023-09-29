@@ -28,9 +28,11 @@
 #define TIME_VAL_SPACE	(D3DXVECTOR3(TIME_VAL_SIZE.x, 0.0f, 0.0f))	// タイマー数字空白
 #define TIME_PART_SPACE	(D3DXVECTOR3(TIME_PART_SIZE.x, 0.0f, 0.0f))	// タイマー区切り空白
 
-#define SCO_POS		(D3DXVECTOR3(825.0f, 50.0f, 0.0f))		// スコア位置
-#define SCO_SIZE	(D3DXVECTOR3(60.0f, 80.0f, 0.0f))		// スコア大きさ
-#define SCO_SPACE	(D3DXVECTOR3(SCO_SIZE.x, 0.0f, 0.0f))	// スコア空白
+#define SCO_POS			(D3DXVECTOR3(625.0f, 50.0f, 0.0f))			// スコア位置
+#define SCO_SIZE_VALUE	(D3DXVECTOR3(60.0f, 80.0f, 0.0f))			// 数字のスコア大きさ
+#define SCO_SIZE_UNIT	(D3DXVECTOR3(80.0f, 80.0f, 0.0f))			// 単位のスコア大きさ
+#define SCO_SPACE_VALUE	(D3DXVECTOR3(SCO_SIZE_VALUE.x, 0.0f, 0.0f))	// 数字のスコア空白
+#define SCO_SPACE_UNIT	(D3DXVECTOR3(500.0f, 0.0f, 0.0f))			// 単位のスコア空白
 
 #define WARNING_SIZE	(D3DXVECTOR3(1000.0f, 500.0f, 0.0f))	// 警告大きさ
 
@@ -92,9 +94,11 @@ HRESULT CSceneGame::Init(void)
 	// スコアオブジェクトの生成
 	m_pScore = CScore::Create
 	( // 引数
-		SCO_POS,	// 位置
-		SCO_SIZE,	// 大きさ
-		SCO_SPACE	// 空白
+		SCO_POS,			// 位置
+		SCO_SIZE_VALUE,		// 数字の大きさ
+		SCO_SIZE_UNIT,		// 単位の大きさ
+		SCO_SPACE_VALUE,	// 数字の空白
+		SCO_SPACE_UNIT		// 単位の空白
 	);
 	if (m_pScore == NULL)
 	{ // 非使用中の場合

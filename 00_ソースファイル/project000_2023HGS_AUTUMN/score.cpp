@@ -11,6 +11,7 @@
 #include "manager.h"
 #include "renderer.h"
 #include "value.h"
+#include "texture.h"
 
 //************************************************************
 //	マクロ定義
@@ -30,10 +31,13 @@ CScore::CScore() : CObject(CObject::LABEL_NUMBER, DEFAULT_PRIO)
 {
 	// メンバ変数をクリア
 	memset(&m_apValue[0], 0, sizeof(m_apValue));	// 数値の情報
-	m_pos	= VEC3_ZERO;	// 位置
-	m_size	= VEC3_ZERO;	// 大きさ
-	m_space	= VEC3_ZERO;	// 空白
-	m_nNum	= 0;			// スコア
+	m_pUnit	= NULL;				// 単位の情報
+	m_pos	= VEC3_ZERO;		// 位置
+	m_sizeValue = VEC3_ZERO;	// 数字の大きさ
+	m_sizeUnit = VEC3_ZERO;		// 単位の大きさ
+	m_spaceValue = VEC3_ZERO;	// 数字の空白
+	m_spaceUnit = VEC3_ZERO;	// 単位の空白
+	m_nNum	= 0;				// スコア
 }
 
 //============================================================
@@ -51,10 +55,13 @@ HRESULT CScore::Init(void)
 {
 	// メンバ変数を初期化
 	memset(&m_apValue[0], 0, sizeof(m_apValue));	// 数値の情報
-	m_pos	= VEC3_ZERO;	// 位置
-	m_size	= VEC3_ZERO;	// 大きさ
-	m_space	= VEC3_ZERO;	// 空白
-	m_nNum	= 0;			// スコア
+	m_pUnit	= NULL;				// 単位の情報
+	m_pos	= VEC3_ZERO;		// 位置
+	m_sizeValue = VEC3_ZERO;	// 数字の大きさ
+	m_sizeUnit = VEC3_ZERO;		// 単位の大きさ
+	m_spaceValue = VEC3_ZERO;	// 数字の空白
+	m_spaceUnit = VEC3_ZERO;	// 単位の空白
+	m_nNum	= 0;				// スコア
 
 	for (int nCntScore = 0; nCntScore < MAX_SCORE; nCntScore++)
 	{ // スコアの桁数分繰り返す
@@ -73,6 +80,21 @@ HRESULT CScore::Init(void)
 		m_apValue[nCntScore]->SetPriority(SCORE_PRIO);
 	}
 
+	// 単位の生成
+	m_pUnit = CObject2D::Create(VEC3_ZERO);
+	if (m_pUnit == NULL)
+	{ // 生成に失敗した場合
+
+		// 失敗を返す
+		assert(false);
+		return E_FAIL;
+	}
+
+	// 優先順位を設定
+	m_pUnit->SetPriority(SCORE_PRIO);
+
+	m_pUnit->BindTexture(CManager::GetTexture()->Regist("data\\TEXTURE\\unit000.png"));
+
 	// 成功を返す
 	return S_OK;
 }
@@ -90,6 +112,9 @@ void CScore::Uninit(void)
 		m_apValue[nCntScore]->Uninit();
 	}
 
+	// 単位の終了
+	m_pUnit->Uninit();
+
 	// 自身のオブジェクトを破棄
 	Release();
 }
@@ -105,6 +130,9 @@ void CScore::Update(void)
 		// 数字の更新
 		m_apValue[nCntScore]->Update();
 	}
+
+	// 単位の更新
+	m_pUnit->Update();
 }
 
 //============================================================
@@ -120,9 +148,11 @@ void CScore::Draw(void)
 //============================================================
 CScore *CScore::Create
 (
-	const D3DXVECTOR3& rPos,	// 位置
-	const D3DXVECTOR3& rSize,	// 大きさ
-	const D3DXVECTOR3& rSpace	// 空白
+	const D3DXVECTOR3& rPos,		// 位置
+	const D3DXVECTOR3& rSizeValue,	// 数字の大きさ
+	const D3DXVECTOR3& rSizeUnit,	// 単位の大きさ
+	const D3DXVECTOR3& rSpaceValue,	// 数字の空白
+	const D3DXVECTOR3& rSpaceUnit	// 単位の空白
 )
 {
 	// ポインタを宣言
@@ -155,10 +185,12 @@ CScore *CScore::Create
 		pScore->SetPosition(rPos);
 
 		// 大きさを設定
-		pScore->SetScaling(rSize);
+		pScore->SetScalingValue(rSizeValue);
+		pScore->SetScalingUnit(rSizeUnit);
 
 		// 空白を設定
-		pScore->SetSpace(rSpace);
+		pScore->SetSpaceValue(rSpaceValue);
+		pScore->SetSpaceUnit(rSpaceUnit);
 
 		// 確保したアドレスを返す
 		return pScore;
@@ -215,18 +247,33 @@ void CScore::SetPosition(const D3DXVECTOR3& rPos)
 
 	// 数字の表示設定
 	SetDrawValue();
+
+	// 単位の表示設定
+	SetDrawUnit();
 }
 
 //============================================================
-//	大きさの設定処理
+//	数字の大きさ設定処理
 //============================================================
-void CScore::SetScaling(const D3DXVECTOR3& rSize)
+void CScore::SetScalingValue(const D3DXVECTOR3& rSize)
 {
 	// 引数の大きさを設定
-	m_size = rSize;
+	m_sizeValue = rSize;
 
 	// 数字の表示設定
 	SetDrawValue();
+}
+
+//============================================================
+//	単位の大きさ設定処理
+//============================================================
+void CScore::SetScalingUnit(const D3DXVECTOR3& rSize)
+{
+	// 引数の大きさを設定
+	m_sizeUnit = rSize;
+
+	// 単位の表示設定
+	SetDrawUnit();
 }
 
 //============================================================
@@ -235,22 +282,35 @@ void CScore::SetScaling(const D3DXVECTOR3& rSize)
 void CScore::SetColor(const D3DXCOLOR& rCol)
 {
 	for (int nCntScore = 0; nCntScore < MAX_SCORE; nCntScore++)
-	{
+	{ // 数字の総数分繰り返す
+
+		// 数字の色を設定
 		m_apValue[nCntScore]->SetColor(rCol);
 	}
-
 }
 
 //============================================================
-//	空白の設定処理
+//	数字の空白の設定処理
 //============================================================
-void CScore::SetSpace(const D3DXVECTOR3& rSpace)
+void CScore::SetSpaceValue(const D3DXVECTOR3& rSpace)
 {
 	// 引数の空白を設定
-	m_space = rSpace;
+	m_spaceValue = rSpace;
 
 	// 数字の表示設定
 	SetDrawValue();
+}
+
+//============================================================
+//	単位の空白の設定処理
+//============================================================
+void CScore::SetSpaceUnit(const D3DXVECTOR3& rSpace)
+{
+	// 引数の空白を設定
+	m_spaceUnit = rSpace;
+
+	// 単位の表示設定
+	SetDrawUnit();
 }
 
 //============================================================
@@ -331,7 +391,7 @@ D3DXVECTOR3 CScore::GetPosition(void) const
 D3DXVECTOR3 CScore::GetScaling(void) const
 {
 	// 大きさを返す
-	return m_size;
+	return m_sizeValue;
 }
 
 //============================================================
@@ -340,7 +400,24 @@ D3DXVECTOR3 CScore::GetScaling(void) const
 D3DXVECTOR3 CScore::GetSpace(void) const
 {
 	// 空白を返す
-	return m_space;
+	return m_spaceValue;
+}
+
+//============================================================
+//	単位の表示設定処理
+//============================================================
+void CScore::SetDrawUnit(void)
+{
+	if (m_apValue[0] != NULL)
+	{ // スコアの先頭の数値が使用されている場合
+
+		// 単位の位置を設定
+		m_pUnit->SetPosition(m_pos + m_spaceUnit);
+
+		// 単位の大きさを設定
+		m_pUnit->SetScaling(m_sizeUnit);
+	}
+	else { assert(false); }	// 非使用中
 }
 
 //============================================================
@@ -355,10 +432,10 @@ void CScore::SetDrawValue(void)
 		{ // スコアの桁数分繰り返す
 
 			// 数字の位置を設定
-			m_apValue[nCntScore]->SetPosition(m_pos + (m_space * (float)nCntScore));
+			m_apValue[nCntScore]->SetPosition(m_pos + (m_spaceValue * (float)nCntScore));
 
 			// 数字の大きさを設定
-			m_apValue[nCntScore]->SetScaling(m_size);
+			m_apValue[nCntScore]->SetScaling(m_sizeValue);
 		}
 	}
 	else { assert(false); }	// 非使用中
