@@ -82,7 +82,7 @@ void CBg::Update(void)
 	{ // モードがゲームの場合
 
 		// 縦座標の移動量設定
-		SetMoveV(-(CSceneGame::GetGameManager()->GetMap()->GetWorldMove() * 0.005f));
+		SetMoveV(-(CSceneGame::GetGameManager()->GetMap()->GetWorldSpeed() * 0.0005f));
 	}
 
 	// スクロール2Dの更新
