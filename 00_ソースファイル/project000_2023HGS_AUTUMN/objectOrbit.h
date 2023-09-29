@@ -61,8 +61,7 @@ public:
 		float		aOffset[MAX_OFFSET];	// 両端のオフセット
 		D3DXVECTOR3	*pPosPoint;				// 各頂点座標
 		D3DXCOLOR	*pColPoint;				// 各頂点カラー
-		D3DXVECTOR3	*pPosParent;			// 親の位置
-		D3DXVECTOR3	*pRotParent;			// 親の向き
+		CObject		*pParent;				// 親オブジェクト
 		D3DXVECTOR3	posVanish;				// 消失開始時の親の位置
 		D3DXVECTOR3	rotVanish;				// 消失開始時の親の向き
 		int nPart;		// 分割数
@@ -81,24 +80,24 @@ public:
 	// 静的メンバ関数
 	static CObjectOrbit *Create	// 生成
 	( // 引数
-		D3DXVECTOR3 *pPosParent,	// 親位置
-		const D3DXCOLOR& rCol,		// 色
-		const OFFSET offset,		// オフセット
+		CObject *pParent,		// 親オブジェクト
+		const D3DXCOLOR& rCol,	// 色
+		const OFFSET offset,	// オフセット
 		const int nPart = DEFAULT_PART,			// 分割数
 		const int nTexPart = DEFAULT_TEXPART,	// テクスチャ分割数
 		const bool bAlpha = true				// 透明化状況
 	);
 
 	// メンバ関数
-	void BindTexture(const int nTextureID);				// テクスチャ割当
-	void SetState(const STATE state);					// 状態設定
-	void SetPositionParent(D3DXVECTOR3 *pPosParent);	// 親位置設定
-	void SetColor(const D3DXCOLOR& rCol);				// 色設定
-	void SetOffset(const OFFSET offset);				// オフセット設定
-	void SetTexPart(const int nTexPart);				// テクスチャ分割数設定
-	void SetEnableAlpha(const bool bAlpha);				// 透明化状況設定
-	void SetEnableInit(const bool bInit);				// 初期化状況設定
-	HRESULT SetLength(const int nPart);					// 長さ設定
+	void BindTexture(const int nTextureID);	// テクスチャ割当
+	void SetState(const STATE state);		// 状態設定
+	void SetParent(CObject *pParent);		// 親オブジェクト設定
+	void SetColor(const D3DXCOLOR& rCol);	// 色設定
+	void SetOffset(const OFFSET offset);	// オフセット設定
+	void SetTexPart(const int nTexPart);	// テクスチャ分割数設定
+	void SetEnableAlpha(const bool bAlpha);	// 透明化状況設定
+	void SetEnableInit(const bool bInit);	// 初期化状況設定
+	HRESULT SetLength(const int nPart);		// 長さ設定
 
 protected:
 	// メンバ関数
