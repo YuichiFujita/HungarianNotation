@@ -21,6 +21,7 @@
 //==========================================
 class CPlayer;
 class CMap;
+class CObjectGauge2D;
 
 //************************************************************
 //	クラス定義
@@ -46,12 +47,14 @@ public:
 	static HRESULT Release(CGameManager *&prGameManager);	// 破棄
 	static CPlayer* GetPlayer(void) { return m_pPlayer; } //プレイヤーの取得
 	static CMap* GetMap(void) { return m_pMap; } //世界の取得
+	static CObjectGauge2D* GetObjectGauge2D(void) { return m_pObjectGauge2D; } //ゲージの取得
 
 private:
 
 	//静的メンバ変数
 	static CPlayer* m_pPlayer; //プレイヤーのポインタ
 	static CMap* m_pMap; //世界のポインタ
+	static CObjectGauge2D* m_pObjectGauge2D; //ゲージのポインタ
 
 };
 

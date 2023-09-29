@@ -33,6 +33,7 @@ public:
 	float GetMove(void) { return m_vecMove.y; } //Y•ûŒü‚ÌˆÚ“®‚ğæ“¾
 	bool GetMuteki(void) { return m_bMuteki; } //–³“G‚Ìæ“¾
 	bool GetMiss(void) { return m_bMiss; }
+	void SetMiss(void) { m_bMiss = true; }
 
 	void SwitchMuteki(void) { m_bMuteki = !m_bMuteki; } //–³“G‚ÌØ‚è‘Ö‚¦
 

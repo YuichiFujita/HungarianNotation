@@ -6,12 +6,14 @@
 //==========================================
 #include "player.h"
 #include "manager.h"
+#include "sceneGame.h"
 #include "gameManager.h"
 #include "debugproc.h"
 #include "input.h"
 #include "texture.h"
 #include "objectOrbit.h"
 #include "map.h"
+#include "score.h"
 
 //==========================================
 //  コンストラクタ
@@ -104,7 +106,7 @@ void CPlayer::Update(void)
 		SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 	}
 
-	if (GetPosition().y >= SCREEN_HEIGHT)
+	if (GetPosition().y >= SCREEN_HEIGHT + GetScaling().y)
 	{
 		m_bMiss = true;
 	}
@@ -204,6 +206,9 @@ void CPlayer::Move(D3DXVECTOR3 pos)
 
 		//次の地点を取得
 		m_posNext = CGameManager::GetMap()->GetHeightNext();
+
+		//スコアの加算
+		CSceneGame::GetScore()->Add((int)-m_vecMove.y);
 	}
 }
 
