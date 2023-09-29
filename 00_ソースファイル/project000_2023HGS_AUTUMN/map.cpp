@@ -12,7 +12,7 @@
 //==========================================
 //  Ã“Iƒƒ“ƒo•Ï”éŒ¾
 //==========================================
-const CMap::DIFF CMap::m_Diff = { 100, 200, 100, SCREEN_WIDTH - 300 };
+const CMap::DIFF CMap::m_Diff = { 200, 250, 100, SCREEN_WIDTH - 300 };
 float CMap::m_vecMove = 1.0f;
 
 //==========================================
@@ -64,12 +64,7 @@ void CMap::Uninit(void)
 //==========================================
 void CMap::Update(void)
 {
-	//¢ŠE‚Ì‰Á‘¬
-	if (CGameManager::GetPlayer()->GetMuteki() && GetHeightNext().y <= 600.0f)
-	{
-		m_fSpeed = m_vecMove * 100.0f;
-	}
-	else if (GetHeightMin().y <= SCREEN_CENT.y)
+	if (GetHeightMin().y <= SCREEN_CENT.y)
 	{
 		m_fSpeed = m_vecMove * 20.0f;
 	}
@@ -261,7 +256,7 @@ void CMap::SetSpot(void)
 			//Šî€À•WY‚É—”‚ð‰ÁŽZ
 			if (fHeight >= SCREEN_HEIGHT)
 			{
-				fHeight = SCREEN_HEIGHT - 100.0f;
+				fHeight = SCREEN_HEIGHT - 300.0f;
 			}
 			else
 			{

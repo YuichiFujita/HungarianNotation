@@ -8,6 +8,8 @@
 #define _SPOT_H_
 #include "object2D.h"
 
+class CEnemyGroup;
+
 //==========================================
 //  ƒNƒ‰ƒX’è‹`
 //==========================================
@@ -30,6 +32,8 @@ public:
 	static CSpot* Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);
 
 private:
+
+	CEnemyGroup *m_pGroup;
 
 };
 

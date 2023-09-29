@@ -45,7 +45,7 @@
     <ClCompile Include="useful.cpp" />
     <ClCompile Include="value.cpp" />
     <ClCompile Include="valueUI.cpp" />
-    <ClCompile Include="enemymanager.cpp" />
+    <ClCompile Include="enemygroup.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="anim2D.h" />
@@ -93,7 +93,7 @@
     <ClInclude Include="useful.h" />
     <ClInclude Include="value.h" />
     <ClInclude Include="valueUI.h" />
-    <ClInclude Include="enemymanager.h" />
+    <ClInclude Include="enemygroup.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

@@ -13,6 +13,7 @@
 #include "player.h"
 #include "map.h"
 #include "enemy.h"
+#include "score.h"
 #include "timerManager.h"
 #include "objectGauge2D.h"
 #include "score.h"
@@ -24,6 +25,7 @@
 CPlayer* CGameManager::m_pPlayer = nullptr;
 CMap* CGameManager::m_pMap = nullptr;
 CObject2D* CGameManager::m_pObject2D[2] = { nullptr , nullptr };
+
 CGameManager::STATE CGameManager::m_state = STATE_START;
 
 //************************************************************
@@ -78,6 +80,7 @@ HRESULT CGameManager::Init(void)
 //============================================================
 void CGameManager::Uninit(void)
 {
+	//世界の破壊
 	if (m_pMap != nullptr)
 	{
 		m_pMap->Uninit();
@@ -130,17 +133,16 @@ void CGameManager::Update(void)
 			m_pMap->Update();
 		}
 
-		if (CSceneGame::GetGameManager()->GetPlayer()->GetMiss()
-			|| CSceneGame::GetTimerManager()->GetState() == CTimerManager::STATE_END)
-		{ // プレイヤーが死亡した、またはタイマーの計測が終了済みの場合
+		if (CSceneGame::GetTimerManager()->GetState() == CTimerManager::STATE_END)
+		{ // タイマーの計測が終了済みの場合
 
 			// リザルトに遷移
-			CManager::SetScene(CScene::MODE_RESULT, 30);
+			TransitionResult(CRetentionManager::RESULT_CLEAR);
 		}
 		else if (CSceneGame::GetGameManager()->GetPlayer()->GetMiss())
 		{ // プレイヤーが死亡した場合
 
-		  // リザルトに遷移する
+			// リザルトに遷移する
 			TransitionResult(CRetentionManager::RESULT_FAILED);
 		}
 	}
@@ -221,3 +223,4 @@ HRESULT CGameManager::Release(CGameManager *&prGameManager)
 	}
 	else { assert(false); return E_FAIL; }	// 非使用中
 }
+
