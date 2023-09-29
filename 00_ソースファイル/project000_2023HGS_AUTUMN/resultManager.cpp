@@ -35,13 +35,13 @@
 #define SUB_RESULT_SCALE	(0.65f)	// リザルト表示拡大率の減算量
 
 #define SCORE_WAIT_CNT		(10)	// スコア表示状態への変更待機フレーム数
-#define POS_SCORE_LOGO		(D3DXVECTOR3(250.0f, 400.0f, 0.0f))	// スコアロゴ位置
+#define POS_SCORE_LOGO		(D3DXVECTOR3(300.0f, 350.0f, 0.0f))	// スコアロゴ位置
 #define SIZE_SCORE_LOGO		(D3DXVECTOR3(487.5f, 154.7f, 0.0f))	// スコアロゴ大きさ
-#define POS_SCORE			(D3DXVECTOR3(490.0f, 400.0f, 0.0f))	// スコア位置
+#define POS_SCORE			(D3DXVECTOR3(420.0f, 480.0f, 0.0f))	// スコア位置
 #define SIZE_SCORE_VALUE	(D3DXVECTOR3(94.0f, 112.0f, 0.0f))	// スコア大きさ
 #define SIZE_SCORE_UNIT		(D3DXVECTOR3(94.0f, 112.0f, 0.0f))	// スコア大きさ
 #define SPACE_SCORE_VALUE	(D3DXVECTOR3(SIZE_SCORE_VALUE.x, 0.0f, 0.0f))	// スコア空白
-#define SPACE_SCORE_UNIT	(D3DXVECTOR3(600.0f, 0.0f, 0.0f))				// スコア空白
+#define SPACE_SCORE_UNIT	(D3DXVECTOR3(750.0f, 0.0f, 0.0f))				// スコア空白
 #define SET_SCORE_SCALE		(8.0f)	// スコア表示の初期拡大率
 #define SUB_SCORE_SCALE		(0.4f)	// スコア表示拡大率の減算量
 
