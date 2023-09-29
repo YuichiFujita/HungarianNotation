@@ -34,7 +34,7 @@ CPlayer::~CPlayer()
 HRESULT CPlayer::Init(void)
 {
 	// ‹OÕ‚Ì¶¬
-	m_pOrbit = CObjectOrbit::Create(this, XCOL_BLUE, CObjectOrbit::OFFSET_PLAYER);
+	m_pOrbit = CObjectOrbit::Create(this, XCOL_BLUE, CObjectOrbit::OFFSET_PLAYER, 500);
 	m_pOrbit->SetLabel(LABEL_PLAYER);
 
 	//‰Šú‰»
