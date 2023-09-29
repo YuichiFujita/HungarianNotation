@@ -20,9 +20,9 @@
 //************************************************************
 #define TITLE_PRIO	(6)	// タイトルの優先順位
 
-#define POS_LOGO_MAGICAL	(D3DXVECTOR3(440.0f, 160.0f, 0.0f))	// タイトルロゴの位置 (MAGICAL)
-#define POS_LOGO_TOP		(D3DXVECTOR3(930.0f, 160.0f, 0.0f))	// タイトルロゴの位置 (TOP)
-#define SIZE_TITLE	(D3DXVECTOR3(666.0f, 214.2f, 0.0f))	// タイトルロゴの大きさ
+#define POS_LOGO_BLINK	(D3DXVECTOR3(360.0f, 160.0f, 0.0f))	// タイトルロゴの位置 (BLINK)
+#define POS_LOGO_ESCAPE	(D3DXVECTOR3(865.0f, 160.0f, 0.0f))	// タイトルロゴの位置 (ESCAPE)
+#define SIZE_TITLE	(D3DXVECTOR3(666.0f, 214.2f, 0.0f))		// タイトルロゴの大きさ
 #define INIT_SCALE	(15.0f)	// タイトルロゴの初期拡大率
 #define SUB_SCALE	(0.65f)	// タイトルロゴ拡大率の減算量
 
@@ -45,8 +45,8 @@
 //************************************************************
 const char *CTitleManager::mc_apLogoTextureFile[] =	// ロゴテクスチャ定数
 {
-	"data\\TEXTURE\\title000.png",	// MAGICALテクスチャ
-	"data\\TEXTURE\\title001.png",	// TOPテクスチャ
+	"data\\TEXTURE\\title000.png",	// BLINKテクスチャ
+	"data\\TEXTURE\\title001.png",	// ESCAPEテクスチャ
 };
 const char *CTitleManager::mc_apSelectTextureFile[] =	// 選択テクスチャ定数
 {
@@ -89,8 +89,8 @@ HRESULT CTitleManager::Init(void)
 	// 変数配列を宣言
 	D3DXVECTOR3 aPosLogo[] =	// ロゴの位置
 	{ // 初期値
-		POS_LOGO_MAGICAL,	// MAGICAL位置
-		POS_LOGO_TOP,		// TOP位置
+		POS_LOGO_BLINK,		// BLINK位置
+		POS_LOGO_ESCAPE,	// ESCAPE位置
 	};
 
 	// ポインタを宣言
