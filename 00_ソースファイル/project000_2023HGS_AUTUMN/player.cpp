@@ -8,6 +8,7 @@
 #include "manager.h"
 #include "debugproc.h"
 #include "input.h"
+#include "texture.h"
 #include "objectOrbit.h"
 
 //==========================================
@@ -114,6 +115,7 @@ CPlayer* CPlayer::Create(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize, cons
 			pPlayer->SetScaling(rSize);
 			pPlayer->SetRotation(rRot);
 			pPlayer->SetColor(rCol);
+			pPlayer->BindTexture(CManager::GetTexture()->Regist("data\\TEXTURE\\effect005.jpg"));
 		}
 	}
 
@@ -164,7 +166,7 @@ void CPlayer::Rotation()
 	D3DXVECTOR3 rot = GetRotation();
 
 	//移動ベクトルの角度を算出
-	float fAngle = atan2f(m_vecMove.y, m_vecMove.x);
+	float fAngle = atan2f(-m_vecMove.x, -m_vecMove.y);
 	rot.z = fAngle;
 
 	//角度を適用
