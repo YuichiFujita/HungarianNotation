@@ -15,6 +15,7 @@
 #include "enemy.h"
 #include "timerManager.h"
 #include "objectGauge2D.h"
+#include "score.h"
 
 //==========================================
 //  静的メンバ関数宣言
@@ -102,12 +103,12 @@ void CGameManager::Update(void)
 			// リザルトに遷移
 			CManager::SetScene(CScene::MODE_RESULT, 30);
 		}
-	}
-	else if (CSceneGame::GetGameManager()->GetPlayer()->GetMiss())
-	{ // プレイヤーが死亡した場合
+		else if (CSceneGame::GetGameManager()->GetPlayer()->GetMiss())
+		{ // プレイヤーが死亡した場合
 
-		// リザルトに遷移する
-		TransitionResult(CRetentionManager::RESULT_FAILED);
+		  // リザルトに遷移する
+			TransitionResult(CRetentionManager::RESULT_FAILED);
+		}
 	}
 }
 
