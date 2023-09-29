@@ -282,9 +282,4 @@ void CEnemy::Collision(D3DXVECTOR3 rPos, D3DXVECTOR3 rSize, D3DXVECTOR3 rRot)
 			}
 		}
 	}
-	else if (m_type == TYPE_CIRCLE)
-	{
-
-	}
 }
-
