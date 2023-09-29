@@ -15,6 +15,11 @@
 //************************************************************
 #include "main.h"
 
+//==========================================
+//  前方宣言
+//==========================================
+class CPlayer;
+
 //************************************************************
 //	クラス定義
 //************************************************************
@@ -36,6 +41,13 @@ public:
 	// 静的メンバ関数
 	static CGameManager *Create(void);	// 生成
 	static HRESULT Release(CGameManager *&prGameManager);	// 破棄
+	static CPlayer* GetPlayer(void) { return m_pPlayer; } //プレイヤーの取得
+
+private:
+
+	//静的メンバ変数
+	static CPlayer* m_pPlayer; //プレイヤーのポインタ
+
 };
 
 #endif	// _GAMEMANAGER_H_

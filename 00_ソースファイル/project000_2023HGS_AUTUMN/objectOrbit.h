@@ -56,13 +56,14 @@ public:
 	// 軌跡構造体
 	typedef struct
 	{
-		D3DXVECTOR3	aOffset[MAX_OFFSET];		// 両端のオフセット
-		D3DXCOLOR	aCol[MAX_OFFSET];			// 両端の基準色
-		D3DXMATRIX	aMtxWorldPoint[MAX_OFFSET];	// 両端のワールドマトリックス
-		D3DXVECTOR3	*pPosPoint;		// 各頂点座標
-		D3DXCOLOR	*pColPoint;		// 各頂点カラー
-		D3DXMATRIX	*pMtxParent;	// 親のマトリックス
-		D3DXMATRIX	mtxVanish;		// 消失開始時の親のマトリックス
+		D3DXVECTOR3	aPos[MAX_OFFSET];		// 両端の基準位置
+		D3DXCOLOR	aCol[MAX_OFFSET];		// 両端の基準色
+		float		aOffset[MAX_OFFSET];	// 両端のオフセット
+		D3DXVECTOR3	*pPosPoint;				// 各頂点座標
+		D3DXCOLOR	*pColPoint;				// 各頂点カラー
+		CObject		*pParent;				// 親オブジェクト
+		D3DXVECTOR3	posVanish;				// 消失開始時の親の位置
+		D3DXVECTOR3	rotVanish;				// 消失開始時の親の向き
 		int nPart;		// 分割数
 		int nTexPart;	// テクスチャ分割数
 		bool bAlpha;	// 透明化状況
@@ -79,7 +80,7 @@ public:
 	// 静的メンバ関数
 	static CObjectOrbit *Create	// 生成
 	( // 引数
-		D3DXMATRIX *pMtxParent,	// 親マトリックス
+		CObject *pParent,		// 親オブジェクト
 		const D3DXCOLOR& rCol,	// 色
 		const OFFSET offset,	// オフセット
 		const int nPart = DEFAULT_PART,			// 分割数
@@ -88,15 +89,15 @@ public:
 	);
 
 	// メンバ関数
-	void BindTexture(const int nTextureID);			// テクスチャ割当
-	void SetState(const STATE state);				// 状態設定
-	void SetMatrixParent(D3DXMATRIX *pMtxParent);	// 親のマトリックス設定
-	void SetColor(const D3DXCOLOR& rCol);			// 色設定
-	void SetOffset(const OFFSET offset);			// オフセット設定
-	void SetTexPart(const int nTexPart);			// テクスチャ分割数設定
-	void SetEnableAlpha(const bool bAlpha);			// 透明化状況設定
-	void SetEnableInit(const bool bInit);			// 初期化状況設定
-	HRESULT SetLength(const int nPart);				// 長さ設定
+	void BindTexture(const int nTextureID);	// テクスチャ割当
+	void SetState(const STATE state);		// 状態設定
+	void SetParent(CObject *pParent);		// 親オブジェクト設定
+	void SetColor(const D3DXCOLOR& rCol);	// 色設定
+	void SetOffset(const OFFSET offset);	// オフセット設定
+	void SetTexPart(const int nTexPart);	// テクスチャ分割数設定
+	void SetEnableAlpha(const bool bAlpha);	// 透明化状況設定
+	void SetEnableInit(const bool bInit);	// 初期化状況設定
+	HRESULT SetLength(const int nPart);		// 長さ設定
 
 protected:
 	// メンバ関数
@@ -104,7 +105,7 @@ protected:
 
 private:
 	// 静的メンバ変数
-	static const D3DXVECTOR3 mc_aOffset[][MAX_OFFSET];	// オフセットの位置加減量
+	static const float mc_aOffset[][MAX_OFFSET];	// オフセットの位置加減量
 
 	// メンバ変数
 	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;	// 頂点バッファへのポインタ

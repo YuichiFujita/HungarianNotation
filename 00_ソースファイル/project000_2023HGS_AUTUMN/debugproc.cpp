@@ -110,7 +110,7 @@ void CDebugProc::Draw(void)
 	if (m_bDisp == true)
 	{//デバックモードがオンの時
 		//テキストの描画
-		m_pFont->DrawText(NULL, &m_aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(0, 0, 0, 255));
+		m_pFont->DrawText(NULL, &m_aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(73, 224, 244, 255));
 	}
 
 	//デバッグ表示情報のクリア
