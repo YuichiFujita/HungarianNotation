@@ -257,6 +257,8 @@ HRESULT CResultManager::Init(void)
 	// タイマーマネージャーの生成
 	m_pTime = CTimerManager::Create
 	( // 引数
+		CTimerManager::TIME_MSEC,			// 設定タイム
+		0,									// 制限時間
 		POS_TIME,							// 位置
 		SIZE_TIME_VAL * SET_TIME_SCALE,		// 数字の大きさ
 		SIZE_TIME_PART * SET_TIME_SCALE,	// 区切りの大きさ
