@@ -10,11 +10,13 @@
 #include "gameManager.h"
 #include "manager.h"
 #include "player.h"
+#include "map.h"
 
 //==========================================
 //  静的メンバ関数宣言
 //==========================================
 CPlayer* CGameManager::m_pPlayer = nullptr;
+CMap* CGameManager::m_pMap = nullptr;
 
 //************************************************************
 //	親クラス [CGameManager] のメンバ関数
@@ -40,6 +42,13 @@ CGameManager::~CGameManager()
 //============================================================
 HRESULT CGameManager::Init(void)
 {
+	//世界の生成
+	if (m_pMap == nullptr)
+	{
+		m_pMap = new CMap;
+		m_pMap->Init();
+	}
+
 	//プレイヤーの生成
 	m_pPlayer = CPlayer::Create(SCREEN_CENT, D3DXVECTOR3(100.0f, 100.0f, 0.0f));
 
@@ -52,7 +61,12 @@ HRESULT CGameManager::Init(void)
 //============================================================
 void CGameManager::Uninit(void)
 {
-
+	if (m_pMap != nullptr)
+	{
+		m_pMap->Uninit();
+		delete m_pMap;
+		m_pMap = nullptr;
+	}
 }
 
 //============================================================
@@ -60,7 +74,10 @@ void CGameManager::Uninit(void)
 //============================================================
 void CGameManager::Update(void)
 {
-
+	if (m_pMap != nullptr)
+	{
+		m_pMap->Update();
+	}
 }
 
 //============================================================
