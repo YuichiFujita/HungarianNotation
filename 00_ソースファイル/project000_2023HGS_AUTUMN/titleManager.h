@@ -30,9 +30,9 @@ public:
 	// ƒƒS—ñ‹“
 	typedef enum
 	{
-		LOGO_MAGICAL = 0,	// MAGICALƒƒS
-		LOGO_TOP,			// TOPƒƒS
-		LOGO_MAX			// ‚±‚Ì—ñ‹“Œ^‚Ì‘”
+		LOGO_BLINK = 0,	// BLINKƒƒS
+		LOGO_ESCAPE,	// ESCAPEƒƒS
+		LOGO_MAX		// ‚±‚Ì—ñ‹“Œ^‚Ì‘”
 	}LOGO;
 
 	// ‘I‘ð—ñ‹“

@@ -115,7 +115,7 @@ CPlayer* CPlayer::Create(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize, cons
 			pPlayer->SetScaling(rSize);
 			pPlayer->SetRotation(rRot);
 			pPlayer->SetColor(rCol);
-			pPlayer->BindTexture(CManager::GetTexture()->Regist("data\\TEXTURE\\effect005.jpg"));
+			pPlayer->BindTexture(CManager::GetTexture()->Regist("data\\TEXTURE\\player000.png"));
 		}
 	}
 

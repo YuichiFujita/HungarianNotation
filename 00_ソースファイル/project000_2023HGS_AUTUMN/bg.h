@@ -1,56 +1,58 @@
 //============================================================
 //
-//	ゲームマネージャーヘッダー [gameManager.h]
+//	背景ヘッダー [bg.h]
 //	Author：藤田勇一
 //
 //============================================================
 //************************************************************
 //	二重インクルード防止
 //************************************************************
-#ifndef _GAMEMANAGER_H_
-#define _GAMEMANAGER_H_
+#ifndef _BG_H_
+#define _BG_H_
 
 //************************************************************
 //	インクルードファイル
 //************************************************************
 #include "main.h"
-
-//==========================================
-//  前方宣言
-//==========================================
-class CPlayer;
-class CMap;
+#include "scroll2D.h"
 
 //************************************************************
 //	クラス定義
 //************************************************************
-// ゲームマネージャークラス
-class CGameManager
+// 背景クラス
+class CBg : public CScroll2D
 {
 public:
+	// テクスチャ列挙
+	enum TEXTURE
+	{
+		TEXTURE_BG = 0,	// 背景テクスチャ
+		TEXTURE_MAX		// この列挙型の総数
+	};
+
 	// コンストラクタ
-	CGameManager();
+	CBg();
 
 	// デストラクタ
-	~CGameManager();
+	~CBg();
 
-	// メンバ関数
+	// オーバーライド関数
 	HRESULT Init(void);	// 初期化
 	void Uninit(void);	// 終了
 	void Update(void);	// 更新
+	void Draw(void);	// 描画
 
 	// 静的メンバ関数
-	static CGameManager *Create(void);	// 生成
-	static HRESULT Release(CGameManager *&prGameManager);	// 破棄
-	static CPlayer* GetPlayer(void) { return m_pPlayer; } //プレイヤーの取得
-	static CMap* GetMap(void) { return m_pMap; } //世界の取得
+	static CBg *Create	// 生成
+	( // 引数
+		const TEXTURE texture,		// テクスチャ
+		const D3DXVECTOR3& rPos,	// 位置
+		const D3DXVECTOR3& rSize	// 大きさ
+	);
 
 private:
-
-	//静的メンバ変数
-	static CPlayer* m_pPlayer; //プレイヤーのポインタ
-	static CMap* m_pMap; //世界のポインタ
-
+	// 静的メンバ変数
+	static const char *mc_apTextureFile[];	// テクスチャ定数
 };
 
-#endif	// _GAMEMANAGER_H_
+#endif	// _BG_H_
