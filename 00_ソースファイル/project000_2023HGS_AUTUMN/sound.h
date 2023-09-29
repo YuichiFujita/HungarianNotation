@@ -55,6 +55,9 @@ public:
 		LABEL_SE_STOMP,			// 植物踏みつけ音
 		LABEL_SE_WARNING,		// 警告音
 		LABEL_SE_LEVELUP,		// レベルアップ音
+
+		LABEL_SE_MOVE,			// 移動音
+
 		LABEL_MAX,				// この列挙型の総数
 	}LABEL;
 
