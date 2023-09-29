@@ -80,6 +80,7 @@ CSpot* CSpot::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 			//各データの設定
 			pSpot->SetPosition(pos);
 			pSpot->SetScaling(size);
+			pSpot->SetColor(D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f));
 		}
 	}
 

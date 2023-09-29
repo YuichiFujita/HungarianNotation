@@ -23,9 +23,8 @@
 //************************************************************
 //	前方宣言
 //************************************************************
-class CObject2D;		// オブジェクト2Dクラス
-class CScore;			// スコアオブジェクトクラス
-class CTimerManager;	// タイマーマネージャークラス
+class CObject2D;	// オブジェクト2Dクラス
+class CScore;		// スコアオブジェクトクラス
 
 //************************************************************
 //	クラス定義
@@ -53,8 +52,6 @@ public:
 		STATE_RESULT,		// リザルト表示状態
 		STATE_SCORE_WAIT,	// スコア表示待機状態
 		STATE_SCORE,		// スコア表示状態
-		STATE_TIME_WAIT,	// タイム表示待機状態
-		STATE_TIME,			// タイム表示状態
 		STATE_WAIT,			// 遷移待機状態
 		STATE_MAX			// この列挙型の総数
 	}STATE;
@@ -79,7 +76,6 @@ private:
 	void UpdateFade(void);		// フェードイン
 	void UpdateResult(void);	// リザルト表示
 	void UpdateScore(void);		// スコア表示
-	void UpdateTime(void);		// タイム表示
 	void UpdateBack(void);		// 遷移決定
 	void SkipStaging(void);		// 演出スキップ
 	void SetTexResult(void);	// リザルト表示のテクスチャ設定
@@ -91,10 +87,8 @@ private:
 	// メンバ変数
 	CObject2D *m_apResult[NUM_RESULT];	// リザルト表示の情報
 	CObject2D *m_pScoreLogo;	// スコアロゴの情報
-	CObject2D *m_pTimeLogo;		// タイムロゴの情報
 	CObject2D *m_pFade;		// フェードの情報
 	CScore *m_pScore;		// スコアの情報
-	CTimerManager *m_pTime;	// タイムの情報
 	STATE m_state;			// 状態
 	int m_nCounterState;	// 状態管理カウンター
 	float m_fScale;			// ポリゴン拡大率

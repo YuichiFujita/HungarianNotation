@@ -6,6 +6,8 @@
 //==========================================
 #include "map.h"
 #include "spot.h"
+#include "player.h"
+#include "gameManager.h"
 
 //==========================================
 //  Ã“Iƒƒ“ƒo•Ï”éŒ¾
@@ -19,7 +21,7 @@ float CMap::m_vecMove = 0.5f;
 CMap::CMap()
 {
 	m_nCntAdd = 0;
-	m_fSpeed = 0.0f;
+	m_fSpeed = m_vecMove;
 	for (int nCnt = 0; nCnt < NUM; nCnt++)
 	{
 		m_pSpot[nCnt] = nullptr;
@@ -62,13 +64,18 @@ void CMap::Uninit(void)
 //==========================================
 void CMap::Update(void)
 {
-	//¢ŠE‚ÌˆÚ“®—Ê
-	float fWorld = m_vecMove;
-
 	//¢ŠE‚Ì‰Á‘¬
-	if (GetHeightNext().y <= 150.0f)
+	if (CGameManager::GetPlayer()->GetMuteki() && GetHeightMin().y <= 600.0f)
 	{
-		fWorld *= 30.0f;
+		m_fSpeed = m_vecMove * 100.0f;
+	}
+	else if (GetHeightNext().y <= 150.0f || GetHeightMin().y <= 400.0f)
+	{
+		m_fSpeed = m_vecMove * 30.0f;
+	}
+	else
+	{
+		m_fSpeed = m_vecMove;
 	}
 
 	//ˆÊ’u‚ğXV
@@ -77,7 +84,7 @@ void CMap::Update(void)
 		if (m_pSpot[nCnt] != nullptr)
 		{
 			D3DXVECTOR3 pos = m_pSpot[nCnt]->GetPosition();
-			pos.y += fWorld;
+			pos.y += m_fSpeed;
 			m_pSpot[nCnt]->SetPosition(pos);
 			m_pSpot[nCnt]->Update();
 		}
@@ -217,15 +224,6 @@ void CMap::DeleteMin(void)
 			}
 		}
 	}
-}
-
-//==========================================
-//  ¢ŠE‚ğ‰Á‘¬‚·‚é
-//==========================================
-void CMap::SetAddMove(float fSpeed)
-{
-	//ˆÚ“®—Ê‚ğ‰ÁZ
-	m_fSpeed = fSpeed * 0.03f;
 }
 
 //==========================================
