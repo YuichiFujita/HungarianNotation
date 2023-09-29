@@ -191,9 +191,6 @@ void CPlayer::Move(D3DXVECTOR3 pos)
 	{
 		//ˆÚ“®æ‚ðÝ’è
 		SetPosition(m_posNext);
-		
-		//ŽG‹›‚ðŽE‚·
-		CGameManager::GetMap()->DeleteMin();
 
 		//ŽŸ‚Ì’n“_‚ðŽæ“¾
 		m_posNext = CGameManager::GetMap()->GetHeightNext();
@@ -203,6 +200,9 @@ void CPlayer::Move(D3DXVECTOR3 pos)
 
 		// ƒTƒEƒ“ƒh‚ÌÄ¶
 		CManager::GetSound()->Play(CSound::LABEL_SE_MOVE);	// Œˆ’è‰¹00
+
+		//ŽG‹›‚ðŽE‚·
+		CGameManager::GetMap()->DeleteMin();
 	}
 }
 
