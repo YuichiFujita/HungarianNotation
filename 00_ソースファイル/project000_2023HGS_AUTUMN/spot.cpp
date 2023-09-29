@@ -49,7 +49,6 @@ void CSpot::Update(void)
 	
 	//デバッグ表示
 	D3DXVECTOR3 pos = GetPosition();
-	CManager::GetDebugProc()->Print("世界の位置 : ( %f, %f )\n", pos.x, pos.y);
 }
 
 //==========================================
