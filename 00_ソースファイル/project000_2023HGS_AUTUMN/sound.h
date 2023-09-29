@@ -57,6 +57,8 @@ public:
 		LABEL_SE_LEVELUP,		// レベルアップ音
 
 		LABEL_SE_MOVE,			// 移動音
+		LABEL_SE_CURTAIN,		// カーテン
+		LABEL_SE_DAMAGE,		// ダメージ
 
 		LABEL_MAX,				// この列挙型の総数
 	}LABEL;

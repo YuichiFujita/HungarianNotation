@@ -59,6 +59,7 @@ public:
 		LABEL_UI,			// UI
 		LABEL_PLAYER,		// プレイヤー
 		LABEL_ENEMY,		// 敵
+		LABEL_GROUP,		// 敵
 		LABEL_BG,			// 背景
 		LABEL_TARGET,		// ターゲット
 		LABEL_MAGIC,		// 魔法
