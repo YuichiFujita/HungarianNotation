@@ -134,9 +134,6 @@
     <ClInclude Include="anim2D.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="camera.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="collision.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -149,13 +146,7 @@
     <ClInclude Include="effect2D.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="effect3D.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="fade.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="field.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="gameManager.h">
@@ -164,25 +155,10 @@
     <ClInclude Include="input.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="light.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="main.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="manager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="model.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="modelUI.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="motion.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="multiModel.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="multiValue.h">
@@ -194,49 +170,13 @@
     <ClInclude Include="object2D.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="object3D.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="objectBillboard.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="objectChara.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="objectGauge2D.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="objectGauge3D.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="objectMeshCube.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="objectMeshCylinder.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="objectMeshDome.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="objectMeshField.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="objectMeshWall.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="objectModel.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="objectOrbit.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="objectTornado.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="particle2D.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="particle3D.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="pause.h">
@@ -263,9 +203,6 @@
     <ClInclude Include="sceneResult.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="scenery.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="sceneTitle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -276,21 +213,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="scroll2D.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="scrollMeshField.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="shadow.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="shop.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="shopManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="sky.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="sound.h">
@@ -318,9 +240,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="valueUI.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="wall.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="retentionManager.h">
