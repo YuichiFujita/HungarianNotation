@@ -18,13 +18,17 @@
 //	マクロ定義
 //************************************************************
 #define TUTORIAL_PRIO	(6)	// チュートリアルの優先順位
+#define BUTTON_POS		(D3DXVECTOR3(1100.0f,600.0f,0.0f))		//ボタンの位置
+#define BUTTON_SIZE		(D3DXVECTOR3(300.0f,100.0f,0.0f))
 
 //************************************************************
 //	静的メンバ変数宣言
 //************************************************************
 const char *CTutorialManager::mc_apTextureFile[] =	// テクスチャ定数
 {
-	"data\\TEXTURE\\tutorial000.png",	// 説明テクスチャ
+	"data\\TEXTURE\\player000.png",		// ボタンテクスチャ
+	"data\\TEXTURE\\tutorial000.png",	// 説明テクスチャ1
+	"data\\TEXTURE\\sky000.png",	// 説明テクスチャ1
 };
 
 //************************************************************
@@ -36,7 +40,7 @@ const char *CTutorialManager::mc_apTextureFile[] =	// テクスチャ定数
 CTutorialManager::CTutorialManager()
 {
 	// メンバ変数をクリア
-	m_pExplain	= NULL;			// 説明表示の情報
+	memset(&m_apExplain[0], 0, sizeof(m_apExplain));	// 説明の情報
 	m_state		= STATE_NONE;	// 状態
 	m_nCounterState = 0;		// 状態管理カウンター
 	m_nCounterExplain = 0;		// 説明管理カウンター
@@ -59,18 +63,18 @@ HRESULT CTutorialManager::Init(void)
 	CTexture *pTexture = CManager::GetTexture();	// テクスチャへのポインタ
 
 	// メンバ変数を初期化
-	m_pExplain	= NULL;					// 説明表示の情報
-	m_state		= STATE_NORMAL;			// 状態
+	memset(&m_apExplain[0], 0, sizeof(m_apExplain));	// 説明の情報
+	m_state = STATE_NORMAL;			// 状態
 	m_nCounterState = 0;				// 状態管理カウンター
-	m_nCounterExplain = EXPLAIN_NORMAL;	// 説明管理カウンター
+	m_nCounterExplain = EXPLAIN_FIRST;	// 説明管理カウンター
 
 	// 選択背景の生成
-	m_pExplain = CObject2D::Create
+	m_apExplain[1] = CObject2D::Create
 	( // 引数
 		SCREEN_CENT,	// 位置
 		SCREEN_SIZE		// 大きさ
 	);
-	if (m_pExplain == NULL)
+	if (m_apExplain[1] == NULL)
 	{ // 生成に失敗した場合
 
 		// 失敗を返す
@@ -79,10 +83,31 @@ HRESULT CTutorialManager::Init(void)
 	}
 
 	// 優先順位を設定
-	m_pExplain->SetPriority(TUTORIAL_PRIO);
+	m_apExplain[1]->SetPriority(TUTORIAL_PRIO);
 
 	// 説明テクスチャを登録・割当
-	m_pExplain->BindTexture(pTexture->Regist(mc_apTextureFile[m_nCounterExplain]));
+	m_apExplain[1]->BindTexture(pTexture->Regist(mc_apTextureFile[m_nCounterExplain]));
+
+
+	// ボタンの生成
+	m_apExplain[0] = CObject2D::Create
+	( // 引数
+		BUTTON_POS,	// 位置
+		BUTTON_SIZE		// 大きさ
+	);
+	if (m_apExplain[0] == NULL)
+	{ // 生成に失敗した場合
+
+		// 失敗を返す
+		assert(false);
+		return E_FAIL;
+	}
+
+	// 優先順位を設定
+	m_apExplain[0]->SetPriority(TUTORIAL_PRIO);
+
+	// 説明テクスチャを登録・割当
+	m_apExplain[0]->BindTexture(pTexture->Regist(mc_apTextureFile[EXPLAIN_NORMAL]));
 
 	// 成功を返す
 	return S_OK;
@@ -93,8 +118,11 @@ HRESULT CTutorialManager::Init(void)
 //============================================================
 HRESULT CTutorialManager::Uninit(void)
 {
-	// 説明表示の終了
-	m_pExplain->Uninit();
+	for (int nCntExplain = 0; nCntExplain < MAX_TUTORIAL; nCntExplain++)
+	{
+		// 説明表示の終了
+		m_apExplain[nCntExplain]->Uninit();
+	}
 
 	// 成功を返す
 	return S_OK;
@@ -115,11 +143,8 @@ void CTutorialManager::Update(void)
 
 	case STATE_NORMAL:	// 通常状態
 
-		if (CManager::GetKeyboard()->GetTrigger(DIK_RETURN))
-		{
-			// シーンの設定
-			CManager::SetScene(CScene::MODE_TITLE);	// タイトル画面
-		}
+		//チュートリアルステップ更新
+		UpdateStep();
 
 		break;
 
@@ -128,8 +153,11 @@ void CTutorialManager::Update(void)
 		break;
 	}
 
-	// 説明表示の更新
-	m_pExplain->Update();
+	for (int nCntExplain = 0; nCntExplain < MAX_TUTORIAL; nCntExplain++)
+	{
+		// 説明表示の更新
+		m_apExplain[nCntExplain]->Update();
+	}
 }
 
 //============================================================
@@ -198,4 +226,28 @@ HRESULT CTutorialManager::Release(CTutorialManager *&prTutorialManager)
 		return S_OK;
 	}
 	else { assert(false); return E_FAIL; }	// 非使用中
+}
+
+//============================================================
+//	チュートリアルステップ更新処理
+//============================================================
+void CTutorialManager::UpdateStep(void)
+{
+	if (CManager::GetKeyboard()->GetTrigger(DIK_RETURN))
+	{
+		m_nCounterExplain++;		//次のステップへ
+	}
+
+	if (m_nCounterExplain >= EXPLAIN_MAX)
+	{
+		// シーンの設定
+		CManager::SetScene(CScene::MODE_TITLE);	// タイトル画面
+	}
+	else if (m_nCounterExplain < EXPLAIN_MAX)
+	{
+		CTexture *pTexture = CManager::GetTexture();	// テクスチャへのポインタ
+
+		// 説明テクスチャを登録・割当
+		m_apExplain[1]->BindTexture(pTexture->Regist(mc_apTextureFile[m_nCounterExplain]));
+	}
 }

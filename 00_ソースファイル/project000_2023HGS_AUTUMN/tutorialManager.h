@@ -16,6 +16,11 @@
 #include "main.h"
 
 //************************************************************
+//	マクロ定義
+//************************************************************
+#define MAX_TUTORIAL		(2)		//チュートリアルテクスチャの数
+
+//************************************************************
 //	前方宣言
 //************************************************************
 class CObject2D;	// オブジェクト2Dクラス
@@ -30,7 +35,9 @@ public:
 	// 説明列挙
 	enum EXPLAIN
 	{
-		EXPLAIN_NORMAL = 0,	// 説明テクスチャ
+		EXPLAIN_NORMAL = 0,	// ボタンテクスチャ
+		EXPLAIN_FIRST,		// 説明テクスチャ1
+		EXPLAIN_SECOND,		// 説明テクスチャ2
 		EXPLAIN_MAX			// この列挙型の総数
 	};
 
@@ -58,11 +65,13 @@ public:
 	static HRESULT Release(CTutorialManager *&prTutorialManager);	// 破棄
 
 private:
+	void UpdateStep(void);		//チュートリアルステップ更新処理
+
 	// 静的メンバ変数
 	static const char *mc_apTextureFile[];	// テクスチャ定数
 
 	// メンバ変数
-	CObject2D *m_pExplain;	// 説明表示の情報
+	CObject2D *m_apExplain[MAX_TUTORIAL];	// 説明表示の情報
 	STATE m_state;			// 状態
 	int m_nCounterState;	// 状態管理カウンター
 	int m_nCounterExplain;	// 説明管理カウンター
