@@ -18,7 +18,7 @@
 //	マクロ定義
 //************************************************************
 #define TUTORIAL_PRIO	(6)	// チュートリアルの優先順位
-#define BUTTON_POS		(D3DXVECTOR3(1100.0f,600.0f,0.0f))		//ボタンの位置
+#define BUTTON_POS		(D3DXVECTOR3(1100.0f,400.0f,0.0f))		//ボタンの位置
 #define BUTTON_SIZE		(D3DXVECTOR3(300.0f,100.0f,0.0f))
 
 //************************************************************
@@ -26,7 +26,7 @@
 //************************************************************
 const char *CTutorialManager::mc_apTextureFile[] =	// テクスチャ定数
 {
-	"data\\TEXTURE\\player000.png",		// ボタンテクスチャ
+	"data\\TEXTURE\\button000.png",		// ボタンテクスチャ
 	"data\\TEXTURE\\tutorial000.png",	// 説明テクスチャ1
 	"data\\TEXTURE\\tutorial001.png",	// 説明テクスチャ1
 };
